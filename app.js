@@ -20,17 +20,17 @@ app.use(express.static('/assets'))
 // Routes get, put, post, delete
 app.get('/login', (req, res) => {
  
-    res.render('login');
+    res.render('login', {title: 'Login'});
 })
 
 app.get('/registrering', (req,res)=>{
 
     
-    res.render('registrering');
+    res.render('registrering', {title: 'Registrering'});
 })
 
 app.get('/', (req,res)=>{
-    res.render('forside')
+    res.render('forside', {title: 'Forside'})
 })
 
 
