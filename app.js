@@ -29,6 +29,10 @@ app.get('/registrering', (req,res)=>{
     res.render('registrering');
 })
 
+app.get('/', (req,res)=>{
+    res.render('forside')
+})
+
 
 
 // Start server
