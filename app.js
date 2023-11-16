@@ -15,7 +15,7 @@ app.set('view engine', 'pug');
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
-app.use(express.static('assets'))
+app.use(express.static('/assets'))
 
 // Routes get, put, post, delete
 app.get('/login', (req, res) => {
