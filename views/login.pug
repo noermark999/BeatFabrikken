@@ -1,0 +1,14 @@
+include includes/header
+body
+    h2(class="text-center") Sessions main site
+    div(class=" w-100 mx-auto" style="max-width: 300px")
+        form(action="/login", method="POST")
+            div(class="form-floating mb-3")
+                input(type="text" class="form-control" id="floatingInput" placeholder="Username")
+                label(for="floatingInput") Username
+            div(class="form-floating mb-3")
+                input(type="password" class="form-control" id="floatingPassword" placeholder="Password")
+                label(for="floatingPassword") Password
+            button(type="submit" class="btn btn-primary w-100 py-2") Sign in
+    
+include includes/footer
