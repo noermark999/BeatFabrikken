@@ -16,37 +16,35 @@ app.set('view engine', 'pug');
 // Middleware
 
 app.use(express.json())
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('assets'))
 
 // Routes get, put, post, delete
 app.get('/login', (req, res) => {
- 
-    res.render('login', {title: 'Login'});
+
+    res.render('login', { title: 'Login' });
 })
 
-app.get('/registrering', (req,res)=>{
+app.get('/registrering', (req, res) => {
 
-    
-    res.render('registrering', {title: 'Registrering'});
+
+    res.render('registrering', { title: 'Registrering' });
 })
 
-
-app.post('/registrering', async (req, res) => {
-    
-})
-
-
-app.get('/', (req,res)=>{
-    res.render('forside', {title: 'Forside'})
+app.get('/', (req, res) => {
+    res.render('forside', { title: 'Forside' })
 })
 
 app.post('/registrering', async (req, res) => {
-    
-    const {username, password, email, mobilnummer} = req.body;
-    const user = {username: username, password: password, email: email, mobilnummer: mobilnummer}
-    let id = await loginDBFunctions.addUser(user);
-    res.redirect('/')
+    const { username, password, email, mobilnummer } = req.body;
+    if (username == "" || password == "" || email == "" || mobilnummer == "") {
+        res.redirect('/registrering')
+        console.log("Der mangles at indtaste noget");
+    } else {
+        const user = { username: username, password: password, email: email, mobilnummer: mobilnummer }
+        let id = await loginDBFunctions.addUser(user);
+        res.redirect('/')
+    }
 })
 
 /*app.get('/logout', (request, response)=>{ //LOGOUT PAGE
