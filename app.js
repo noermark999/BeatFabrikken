@@ -32,7 +32,7 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (request, response) =>{ // TJEKKER LOGIN VED HJÆLP AF VORES FUNCTION
     const {username, password} = request.body
-    if (checkLogInUser(username, password)) {
+    if (loginDBFunctions.checkLogInUser(username, password)) {
         request.session.isLoggedIn = true
         request.session.username = username
     }
@@ -69,16 +69,8 @@ app.get('/logout', (request, response)=>{ //LOGOUT PAGE
     request.session.destroy()
     response.redirect('/')
 }) 
-//Simulering af databaseopkald - Den her function skal komme ind når vi kommer til vores endpoint 
-function checkLogInUser (username, password) {
-    let returnvalue = false
-    if (username == 'BENT' && password == '123') {
-        returnvalue = true
-    }
-    return returnvalue
-}
 
-
+  
 // Start server
 app.listen(port, () => {
     console.log(`Running on port ${port}`);

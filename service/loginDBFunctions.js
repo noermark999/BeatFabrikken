@@ -50,5 +50,37 @@ async function hashPassword(password) {
 
   return hashedPassword;
 }
+const getUser = async (username) => {
+  try {
+    const userDocRef = doc(db, 'Bruger/' + username);
+    console.log(userDocRef)
+    const userQueryDoc = await getDoc(userDocRef);
 
-export default {addUser}
+    if (userQueryDoc.exists()) {
+      const user = userQueryDoc.data();
+      user.docID = userQueryDoc.id;
+      return user;
+    } else {
+      console.log('User not found');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error getting user:', error);
+    return null;
+  }
+};
+
+
+//Simulering af databaseopkald - Den her function skal komme ind når vi kommer til vores endpoint 
+async function checkLogInUser(username, password) {
+  const user = await getUser(username);
+  if (user) {
+      const hashedInputPassword = await hashPassword(password);
+      if (hashedInputPassword === user.password) {
+          return true;
+      }
+  }
+  return false; // Corrected indentation
+}
+
+export default {addUser,getUser,checkLogInUser}
