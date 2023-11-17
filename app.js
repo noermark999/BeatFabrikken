@@ -1,5 +1,6 @@
-import express from "express";
+import express, { response } from "express";
 import pug from "pug";
+import loginDBFunctions from "./service/loginDBFunctions.js"
 
 const app = express();
 
@@ -33,7 +34,12 @@ app.get('/', (req,res)=>{
     res.render('forside', {title: 'Forside'})
 })
 
-
+app.post('/registrering', async (req, res) => {
+    const {username, password, email, mobilnummer} = req.body;
+    const user = {username: username, password: password, email: email, mobilnummer: mobilnummer}
+    let id = await loginDBFunctions.addUser(user);
+    res.redirect('/')
+})
 
 // Start server
 app.listen(port, () => {
