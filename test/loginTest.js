@@ -6,17 +6,14 @@ const expect = chai.expect;
 
 describe('getUser Function', () => {
   it('should retrieve a user by username', async () => {
-    // Tilføj en testbruger til databasen
-    const testUser = { username: 'testuser', password: 'hashedpassword', email: 'test@example.com', mobilnummer: '12345678' };
-    await loginDBFunctions.addUser(testUser);
-
+    
     // Hent brugeren fra databasen
-    const retrievedUser = await loginDBFunctions.getUser(testUser.username);
+    const retrievedUser = await loginDBFunctions.getUser('testuser');
 
     expect(retrievedUser).to.not.be.null;
-    expect(retrievedUser.username).to.equal(testUser.username);
-    expect(retrievedUser.email).to.equal(testUser.email);
-    expect(retrievedUser.mobilnummer).to.equal(testUser.mobilnummer);
+    expect(retrievedUser.username).to.equal('testuser');
+    expect(retrievedUser.email).to.equal('test@example.com');
+    expect(retrievedUser.mobilnummer).to.equal('12345678');
   });
 });
 
