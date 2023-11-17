@@ -69,6 +69,14 @@ app.get('/logout', (request, response)=>{ //LOGOUT PAGE
     request.session.destroy()
     response.redirect('/')
 }) 
+//Simulering af databaseopkald - Den her function skal komme ind når vi kommer til vores endpoint 
+function checkLogInUser (username, password) {
+    let returnvalue = false
+    if (username == 'BENT' && password == '123') {
+        returnvalue = true
+    }
+    return returnvalue
+}
 
 
 // Start server
