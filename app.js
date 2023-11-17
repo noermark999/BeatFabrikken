@@ -18,18 +18,30 @@ app.set('view engine', 'pug');
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
-app.use(express.static('assets'))
+app.use(express.static('/assets'))
 
 // Routes get, put, post, delete
 app.get('/login', (req, res) => {
  
-    res.render('login');
+    res.render('login', {title: 'Login'});
+})
+
+app.get('/registrering', (req,res)=>{
+
+    
+    res.render('registrering', {title: 'Registrering'});
 })
 
 
 app.post('/registering', async (req, res) => {
     
 })
+
+
+app.get('/', (req,res)=>{
+    res.render('forside', {title: 'Forside'})
+})
+
 
 
 // Start server

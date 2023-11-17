@@ -1,0 +1,19 @@
+include includes/head
+include includes/header
+h1(class="text-center mb-4") Opret ny bruger
+div(class=" w-100 mx-auto" style="max-width: 300px")
+    form(action="/registrering", method="POST")
+        div(class="form-floating mb-3")
+            input(type="text" class="form-control" id="floatingInput" placeholder="Username")
+            label(for="floatingInput") Username
+        div(class="form-floating mb-3")
+            input(type="password" class="form-control" id="floatingPassword" placeholder="Password")
+            label(for="floatingPassword") Password
+        div(class="form-floating mb-3")
+            input(type="email" class="form-control" id="floatingPassword" placeholder="Email")
+            label(for="floatingPassword") Email
+        div(class="form-floating mb-3")
+            input(type="text" class="form-control" id="floatingPassword" placeholder="Mobilnummer")
+            label(for="floatingPassword") Mobilnummer
+        button(type="submit" class="btn btn-primary w-100 py-2") Opret bruger
+include includes/footer
