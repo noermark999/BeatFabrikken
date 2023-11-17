@@ -32,8 +32,6 @@ app.use(function(req, res, next) {
 
 // Routes get, put, post, delete
 app.get('/login', (req, res) => {
-
-
     res.render('login', { title: 'Login' });
 })
 
