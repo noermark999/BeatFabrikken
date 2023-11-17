@@ -26,6 +26,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const brugere = collection(db, 'Bruger')
 
+
+
 const addUser = async (user) => {
   user.password = await hashPassword(user.password);
   console.log(user);

@@ -2,6 +2,7 @@ import express, { response } from "express";
 import pug from "pug";
 import loginDBFunctions from "./service/loginDBFunctions.js"
 
+
 const app = express();
 
 const port = "1234";
@@ -30,6 +31,12 @@ app.get('/registrering', (req,res)=>{
     res.render('registrering', {title: 'Registrering'});
 })
 
+
+app.post('/registrering', async (req, res) => {
+    
+})
+
+
 app.get('/', (req,res)=>{
     res.render('forside', {title: 'Forside'})
 })
@@ -40,6 +47,12 @@ app.post('/registrering', async (req, res) => {
     let id = await loginDBFunctions.addUser(user);
     res.redirect('/')
 })
+
+/*app.get('/logout', (request, response)=>{ //LOGOUT PAGE
+    request.session.destroy()
+    response.redirect('/')
+}) */
+
 
 // Start server
 app.listen(port, () => {
