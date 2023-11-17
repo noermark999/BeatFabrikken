@@ -40,12 +40,21 @@ app.post('/login', (request, response) =>{ // TJEKKER LOGIN VED HJÆLP AF VORES 
 })
 
 
-app.get('/registrering', (req,res)=>{
-
-    
-    res.render('registrering', {title: 'Registrering'});
+app.post('/login', (request, response) =>{ // TJEKKER LOGIN VED HJÆLP AF VORES FUNCTION
+    const {username, password} = request.body
+    if (checkLogInUser(username, password)) {
+        request.session.isLoggedIn = true
+        request.session.username = username
+    }
+    response.redirect('/')
 })
 
+
+app.get('/registrering', (req, res) => {
+
+
+    res.render('registrering', { title: 'Registrering' });
+})
 
 app.post('/registrering', async (req, res) => {
     
@@ -61,10 +70,15 @@ app.get('/', (req, res) => {
 });
 
 app.post('/registrering', async (req, res) => {
-    const {username, password, email, mobilnummer} = req.body;
-    const user = {username: username, password: password, email: email, mobilnummer: mobilnummer}
-    let id = await loginDBFunctions.addUser(user);
-    res.redirect('/')
+    const { username, password, email, mobilnummer } = req.body;
+    if (username == "" || password == "" || email == "" || mobilnummer == "") {
+        res.redirect('/registrering')
+        console.log("Der mangles at indtaste noget");
+    } else {
+        const user = { username: username, password: password, email: email, mobilnummer: mobilnummer }
+        let id = await loginDBFunctions.addUser(user);
+        res.redirect('/')
+    }
 })
 
 app.get('/logout', (request, response)=>{ //LOGOUT PAGE
