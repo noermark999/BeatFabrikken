@@ -1,5 +1,8 @@
 import express from "express";
 import pug from "pug";
+import admin from "firebase-admin";
+
+import { getFirebaseconfig } from './firebaseconfig'
 
 const app = express();
 
@@ -22,6 +25,12 @@ app.get('/login', (req, res) => {
  
     res.render('login');
 })
+
+
+app.post('/registering', async (req, res) => {
+    
+})
+
 
 // Start server
 app.listen(port, () => {
