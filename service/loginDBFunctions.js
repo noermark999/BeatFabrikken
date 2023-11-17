@@ -7,7 +7,8 @@ import {
     doc,
     deleteDoc,
     addDoc,
-    updateDoc
+    updateDoc,
+    where
   } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -52,13 +53,15 @@ async function hashPassword(password) {
 }
 const getUser = async (username) => {
   try {
-    const userDocRef = doc(db, 'Bruger/' + username);
-    console.log(userDocRef)
-    const userQueryDoc = await getDoc(userDocRef);
+    // Opret en forespørgsel for at hente dokumentet baseret på brugernavn
+    const userQuerySnapshot = await getDocs(db);
+    
+    // Find det korrekte dokument baseret på brugernavn
+    const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === username);
 
-    if (userQueryDoc.exists()) {
-      const user = userQueryDoc.data();
-      user.docID = userQueryDoc.id;
+    if (userDoc) {
+      const user = userDoc.data();
+      user.docID = userDoc.id;
       return user;
     } else {
       console.log('User not found');
@@ -80,7 +83,8 @@ async function checkLogInUser(username, password) {
           return true;
       }
   }
-  return false; // Corrected indentation
+  console.log("Forkert kode og navn");
+  return false;
 }
 
 export default {addUser,getUser,checkLogInUser}

@@ -30,13 +30,15 @@ app.get('/login', (req, res) => {
     res.render('login', {title: 'Login'});
 })
 
-app.post('/login', (request, response) =>{ // TJEKKER LOGIN VED HJÆLP AF VORES FUNCTION
+app.post('/login', async (request, response) =>{ // TJEKKER LOGIN VED HJÆLP AF VORES FUNCTION
     const {username, password} = request.body
-    if (loginDBFunctions.checkLogInUser(username, password)) {
+    if (await loginDBFunctions.checkLogInUser(username, password)) {
         request.session.isLoggedIn = true
         request.session.username = username
+        response.redirect('/')
+    } else {
+        response.redirect('/login')
     }
-    response.redirect('/')
 })
 
 app.get('/registrering', (req, res) => {
