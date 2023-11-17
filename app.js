@@ -22,6 +22,11 @@ app.use(expressSession({
     resave: false,
     saveUninitialized: false
   }));
+app.use(function(req, res, next) {
+    //req.locals.session.isLoggedIn = req.session.isLoggedIn
+    console.log(req.session);
+    next()
+})
 
 // Routes get, put, post, delete
 app.get('/login', (req, res) => {
