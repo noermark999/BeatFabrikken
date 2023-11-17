@@ -9,9 +9,6 @@ const app = express();
 
 const port = "1234";
 
-// Functions
-
-
 // View engine
 app.set('view engine', 'pug');
 
@@ -19,19 +16,13 @@ app.set('view engine', 'pug');
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('assets'))
-// Middleware til at hente klientens IP-adresse
 
+// Middleware til at hente klientens IP-adresse
 app.use(expressSession({
     secret: uuidv4(),
     resave: false,
     saveUninitialized: false
 }));
-app.use(function(req, res, next) {
-    //req.locals.session.isLoggedIn = req.session.isLoggedIn
-    console.log(req.session);
-    next()
-})
-
 
 // Routes get, put, post, delete
 app.get('/login', (req, res) => {
@@ -52,9 +43,12 @@ app.post('/login', async (request, response) => { // TJEKKER LOGIN VED HJÆLP AF
 })
 
 app.get('/registrering', (req, res) => {
-
-
-    res.render('registrering', { title: 'Registrering' });
+    let isLoggedIn = false;
+    if (req.session && req.session.isLoggedIn) {
+        isLoggedIn = true;
+    }
+    console.log(isLoggedIn);
+    res.render('registrering', { title: 'Registrering', isLoggedIn: isLoggedIn  });
 })
 
 app.get('/', (req, res) => {
