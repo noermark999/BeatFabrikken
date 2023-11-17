@@ -2,18 +2,18 @@ include includes/head
 include includes/header
 h1(class="text-center mb-4") Opret ny bruger
 div(class=" w-100 mx-auto" style="max-width: 300px")
-    form(action="/registrering", method="POST")
+    form(action="/registrering", method="POST" class="needs-validation" novalidate)
         div(class="form-floating mb-3")
-            input(type="username" name="username" class="form-control" id="floatingUsername" placeholder="Username")
+            input(type="username" name="username" class="form-control" id="floatingUsername" placeholder="Username" required)
             label(for="floatingUsername") Username
         div(class="form-floating mb-3")
-            input(type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password")
+            input(type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required)
             label(for="floatingPassword") Password
         div(class="form-floating mb-3")
-            input(type="email" name="email" class="form-control" id="floatingEmail" placeholder="Email")
+            input(type="email" name="email" class="form-control" id="floatingEmail" placeholder="Email" required)
             label(for="floatingEmail") Email
         div(class="form-floating mb-3")
-            input(type="mobilnummer" name="mobilnummer" class="form-control" id="floatingMobilnummer" placeholder="Mobilnummer")
+            input(type="number" name="mobilnummer" class="form-control" id="floatingMobilnummer" placeholder="Mobilnummer" required)
             label(for="floatingMobilnummer") Mobilnummer
         button(type="submit" class="btn btn-primary w-100 py-2") Opret bruger
 include includes/footer
