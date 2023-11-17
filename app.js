@@ -2,6 +2,8 @@ import express, { response } from "express";
 import pug from "pug";
 import loginDBFunctions from "./service/loginDBFunctions.js"
 import expressSession from "express-session";
+import { v4 as uuidv4 } from 'uuid';
+import session from "express-session";
 
 const app = express();
 
@@ -15,23 +17,31 @@ app.set('view engine', 'pug');
 
 // Middleware
 app.use(express.json())
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('assets'))
+// Middleware til at hente klientens IP-adresse
+
 app.use(expressSession({
-    secret: '9acf12b4-a7a8-406d-8aba-d8f3b55b456d',
+    secret: uuidv4(),
     resave: false,
     saveUninitialized: false
-  }));
+}));
+app.use(function(req, res, next) {
+    //req.locals.session.isLoggedIn = req.session.isLoggedIn
+    console.log(req.session);
+    next()
+})
+
 
 // Routes get, put, post, delete
 app.get('/login', (req, res) => {
-    
- 
-    res.render('login', {title: 'Login'});
+
+
+    res.render('login', { title: 'Login' });
 })
 
-app.post('/login', async (request, response) =>{ // TJEKKER LOGIN VED HJÆLP AF VORES FUNCTION
-    const {username, password} = request.body
+app.post('/login', async (request, response) => { // TJEKKER LOGIN VED HJÆLP AF VORES FUNCTION
+    const { username, password } = request.body
     if (await loginDBFunctions.checkLogInUser(username, password)) {
         request.session.isLoggedIn = true
         request.session.username = username
@@ -67,15 +77,15 @@ app.post('/registrering', async (req, res) => {
     }
 })
 
-app.get('/logout', (request, response)=>{ //LOGOUT PAGE
+app.get('/logout', (request, response) => { //LOGOUT PAGE
     request.session.destroy()
     response.redirect('/')
-}) 
+})
 
-  
+
 // Start server
 app.listen(port, () => {
     console.log(`Running on port ${port}`);
 })
 
-export default {app}
+export default { app }
