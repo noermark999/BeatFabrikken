@@ -58,3 +58,5 @@ app.post('/registrering', async (req, res) => {
 app.listen(port, () => {
     console.log(`Running on port ${port}`);
 })
+
+export default {app}
