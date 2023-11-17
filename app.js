@@ -19,8 +19,6 @@ app.set('view engine', 'pug');
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('assets'))
-// Middleware til at hente klientens IP-adresse
-
 app.use(expressSession({
     secret: uuidv4(),
     resave: false,
