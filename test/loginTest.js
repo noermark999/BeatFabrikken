@@ -18,6 +18,11 @@ describe('getUser Function', () => {
   });
 });
 
+describe('checkLoginUser Function', ()=>{
+  it('Should return true if a user with the given password exists', async ()=>{
+    const userExistsWithPass = await loginDBFunctions.checkLogInUser('test', 'test')
 
-
+    expect(userExistsWithPass).to.be.true
+  })
+})
 
