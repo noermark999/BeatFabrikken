@@ -7,7 +7,8 @@ import {
     doc,
     deleteDoc,
     addDoc,
-    updateDoc
+    updateDoc,
+    where
   } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -50,5 +51,40 @@ async function hashPassword(password) {
 
   return hashedPassword;
 }
+const getUser = async (username) => {
+  try {
+    // Opret en forespørgsel for at hente dokumentet baseret på brugernavn
+    const userQuerySnapshot = await getDocs(db);
+    
+    // Find det korrekte dokument baseret på brugernavn
+    const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === username);
 
-export default {addUser}
+    if (userDoc) {
+      const user = userDoc.data();
+      user.docID = userDoc.id;
+      return user;
+    } else {
+      console.log('User not found');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error getting user:', error);
+    return null;
+  }
+};
+
+
+//Simulering af databaseopkald - Den her function skal komme ind når vi kommer til vores endpoint 
+async function checkLogInUser(username, password) {
+  const user = await getUser(username);
+  if (user) {
+      const hashedInputPassword = await hashPassword(password);
+      if (hashedInputPassword === user.password) {
+          return true;
+      }
+  }
+  console.log("Forkert kode og navn");
+  return false;
+}
+
+export default {addUser,getUser,checkLogInUser}
