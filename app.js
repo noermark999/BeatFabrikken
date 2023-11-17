@@ -9,9 +9,6 @@ const app = express();
 
 const port = "1234";
 
-// Functions
-
-
 // View engine
 app.set('view engine', 'pug');
 
@@ -24,7 +21,6 @@ app.use(expressSession({
     resave: false,
     saveUninitialized: false
 }));
-
 
 // Routes get, put, post, delete
 app.get('/login', (req, res) => {
@@ -45,9 +41,12 @@ app.post('/login', async (request, response) => { // TJEKKER LOGIN VED HJÆLP AF
 })
 
 app.get('/registrering', (req, res) => {
-
-
-    res.render('registrering', { title: 'Registrering' });
+    let isLoggedIn = false;
+    if (req.session && req.session.isLoggedIn) {
+        isLoggedIn = true;
+    }
+    console.log(isLoggedIn);
+    res.render('registrering', { title: 'Registrering', isLoggedIn: isLoggedIn  });
 })
 
 app.get('/', (req, res) => {
