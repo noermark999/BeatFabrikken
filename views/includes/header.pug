@@ -16,5 +16,9 @@ body
                 li 
                     a(href="https://www.stokkebroedans.dk/" class="nav-link px-2") Om os
             div(class="col-md-3 text-end")
-                button(type="button" class="btn btn-outline-primary me-2" onclick="location.href='/login'") Login
-                button(type="button" class="btn btn-primary" onclick="location.href='/registrering'") Opret bruger
+                if !isLoggedIn
+                    button(type="button" class="btn btn-outline-primary me-2" onclick="location.href='/login'") Login
+                    button(type="button" class="btn btn-primary" onclick="location.href='/registrering'") Opret bruger
+                else 
+                    button(type="button" class="btn btn-outline-primary me-2" onclick="location.href='/logout'") Logud
+                    button(type="button" class="btn btn-primary" onclick="location.href='#'") Profil

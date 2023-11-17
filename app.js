@@ -21,6 +21,14 @@ app.use(expressSession({
     resave: false,
     saveUninitialized: false
 }));
+app.use(function(req, res, next) {
+    let isLoggedIn = false;
+    if (req.session && req.session.isLoggedIn) {
+        isLoggedIn = true;
+    }
+    res.locals.isLoggedIn = isLoggedIn
+    next()
+})
 
 // Routes get, put, post, delete
 app.get('/login', (req, res) => {
@@ -41,32 +49,18 @@ app.post('/login', async (request, response) => { // TJEKKER LOGIN VED HJÆLP AF
 })
 
 app.get('/registrering', (req, res) => {
-    let isLoggedIn = false;
-    if (req.session && req.session.isLoggedIn) {
-        isLoggedIn = true;
-    }
-    console.log(isLoggedIn);
-    res.render('registrering', { title: 'Registrering', isLoggedIn: isLoggedIn  });
+    res.render('registrering', { title: 'Registrering', isLoggedIn: res.locals.isLoggedIn });
 })
 
 app.get('/', (req, res) => {
-    let isLoggedIn = false;
-    if (req.session && req.session.isLoggedIn) {
-        isLoggedIn = true;
-    }
-    res.render('forside', { title: 'Forside', isLoggedIn: isLoggedIn });
+    res.render('forside', { title: 'Forside', isLoggedIn: res.locals.isLoggedIn });
 });
 
 app.post('/registrering', async (req, res) => {
     const { username, password, email, mobilnummer } = req.body;
-    if (username == "" || password == "" || email == "" || mobilnummer == "") {
-        res.redirect('/registrering')
-        console.log("Der mangles at indtaste noget");
-    } else {
-        const user = { username: username, password: password, email: email, mobilnummer: mobilnummer }
-        let id = await loginDBFunctions.addUser(user);
-        res.redirect('/')
-    }
+    const user = { username: username, password: password, email: email, mobilnummer: mobilnummer }
+    let id = await loginDBFunctions.addUser(user);
+    res.redirect('/')
 })
 
 app.get('/logout', (request, response) => { //LOGOUT PAGE
