@@ -81,14 +81,6 @@ app.get('/logout', (request, response)=>{ //LOGOUT PAGE
     response.redirect('/')
 }) 
 
-function checkLogInUser (username, password) { 
-    let returnvalue = false
-    if (username == 'BENT' && password == '123') {
-        returnvalue = true
-    }
-    return returnvalue
-}
-
 
 // Start server
 app.listen(port, () => {
