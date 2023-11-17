@@ -39,17 +39,6 @@ app.post('/login', (request, response) =>{ // TJEKKER LOGIN VED HJÆLP AF VORES 
     response.redirect('/')
 })
 
-
-app.post('/login', (request, response) =>{ // TJEKKER LOGIN VED HJÆLP AF VORES FUNCTION
-    const {username, password} = request.body
-    if (checkLogInUser(username, password)) {
-        request.session.isLoggedIn = true
-        request.session.username = username
-    }
-    response.redirect('/')
-})
-
-
 app.get('/registrering', (req, res) => {
 
 
