@@ -42,6 +42,7 @@ app.get('/', (req,res)=>{
 })
 
 app.post('/registrering', async (req, res) => {
+    
     const {username, password, email, mobilnummer} = req.body;
     const user = {username: username, password: password, email: email, mobilnummer: mobilnummer}
     let id = await loginDBFunctions.addUser(user);
