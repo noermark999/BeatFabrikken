@@ -22,7 +22,7 @@ const firebaseConfig = {
 
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const firebase_app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const brugere = collection(db, 'Bruger')
 
