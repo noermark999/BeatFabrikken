@@ -4,6 +4,7 @@ import loginDBFunctions from '../service/loginDBFunctions.js';
 
 const expect = chai.expect;
 
+
 describe('getUser Function', () => {
   it('should retrieve a user by username', async () => {
     
@@ -16,4 +17,7 @@ describe('getUser Function', () => {
     expect(retrievedUser.mobilnummer).to.equal('12345678');
   });
 });
+
+
+
 
