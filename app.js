@@ -2,6 +2,7 @@ import express, { response } from "express";
 import pug from "pug";
 import loginDBFunctions from "./service/loginDBFunctions.js"
 import expressSession from "express-session";
+import { v4 as uuidv4 } from 'uuid';
 
 const app = express();
 
@@ -18,10 +19,16 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('assets'))
 app.use(expressSession({
-    secret: '9acf12b4-a7a8-406d-8aba-d8f3b55b456d',
+    secret: req.clientIp + '_' + uuidv4(),
     resave: false,
     saveUninitialized: false
   }));
+  // Middleware til at hente klientens IP-adresse
+app.use((req, res, next) => {
+    req.clientIp = req.ip || req.socket.remoteAddress;
+    next();
+  });
+  
 
 // Routes get, put, post, delete
 app.get('/login', (req, res) => {
