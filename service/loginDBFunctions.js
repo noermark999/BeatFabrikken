@@ -53,8 +53,7 @@ async function hashPassword(password) {
 }
 const getUser = async (username) => {
   try {
-    // Opret en forespørgsel for at hente dokumentet baseret på brugernavn
-    const userQuerySnapshot = await getDocs(db);
+    const userQuerySnapshot = await getDocs(brugere);
     
     // Find det korrekte dokument baseret på brugernavn
     const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === username);
