@@ -33,6 +33,10 @@ app.get('/', (req,res)=>{
     res.render('forside', {title: 'Forside'})
 })
 
+/*app.get('/logout', (request, response)=>{ //LOGOUT PAGE
+    request.session.destroy()
+    response.redirect('/')
+}) */
 
 
 // Start server
