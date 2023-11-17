@@ -4,10 +4,10 @@ h2(class="text-center mb-4") Login
 div(class=" w-100 mx-auto" style="max-width: 300px")
     form(action="/login", method="POST")
         div(class="form-floating mb-3")
-            input(type="text" class="form-control" id="floatingInput" placeholder="Username")
+            input(type="text" name="username" class="form-control" id="floatingInput" placeholder="Username")
             label(for="floatingInput") Username
         div(class="form-floating mb-3")
-            input(type="password" class="form-control" id="floatingPassword" placeholder="Password")
+            input(type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password")
             label(for="floatingPassword") Password
         button(type="submit" class="btn btn-primary w-100 py-2") Sign in
 include includes/footer
