@@ -1,9 +1,8 @@
-import express, { response } from "express";
+import express from "express";
 import pug from "pug";
 import loginDBFunctions from "./service/loginDBFunctions.js"
 import expressSession from "express-session";
 import { v4 as uuidv4 } from 'uuid';
-import session from "express-session";
 
 const app = express();
 
@@ -35,14 +34,14 @@ app.get('/login', (req, res) => {
     res.render('login', { title: 'Login' });
 })
 
-app.post('/login', async (request, response) => { // TJEKKER LOGIN VED HJÆLP AF VORES FUNCTION
-    const { username, password } = request.body
+app.post('/login', async (req, res) => { // TJEKKER LOGIN VED HJÆLP AF VORES FUNCTION
+    const { username, password } = req.body
     if (await loginDBFunctions.checkLogInUser(username, password)) {
-        request.session.isLoggedIn = true
-        request.session.username = username
-        response.redirect('/')
+        req.session.isLoggedIn = true
+        req.session.username = username
+        res.redirect('/')
     } else {
-        response.redirect('/login')
+        res.redirect('/login')
     }
 })
 
@@ -61,9 +60,9 @@ app.post('/registrering', async (req, res) => {
     res.redirect('/')
 })
 
-app.get('/logout', (request, response) => { //LOGOUT PAGE
-    request.session.destroy()
-    response.redirect('/')
+app.get('/logout', (req, res) => { //LOGOUT PAGE
+    req.session.destroy()
+    res.redirect('/')
 })
 
 
