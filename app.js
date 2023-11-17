@@ -1,8 +1,6 @@
 import express from "express";
 import pug from "pug";
-import admin from "firebase-admin";
 
-import { getFirebaseconfig } from './firebaseconfig'
 
 const app = express();
 
@@ -33,7 +31,7 @@ app.get('/registrering', (req,res)=>{
 })
 
 
-app.post('/registering', async (req, res) => {
+app.post('/registrering', async (req, res) => {
     
 })
 
