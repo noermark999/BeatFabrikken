@@ -56,11 +56,6 @@ app.get('/registrering', (req, res) => {
     res.render('registrering', { title: 'Registrering' });
 })
 
-app.post('/registrering', async (req, res) => {
-    
-})
-
-
 app.get('/', (req, res) => {
     let isLoggedIn = false;
     if (req.session && req.session.isLoggedIn) {
