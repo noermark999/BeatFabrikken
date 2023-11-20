@@ -36,7 +36,7 @@ app.get('/login', (req, res) => {
 
 app.post('/login', async (req, res) => { // TJEKKER LOGIN VED HJÆLP AF VORES FUNCTION
     const { username, password } = req.body
-    if (await loginDBFunctions.checkLogInUser(username, password)) {
+    if (await loginDBFunctions.checkLogInUser(username.toLowerCase(), password)) {
         req.session.isLoggedIn = true
         req.session.username = username
         res.redirect('/')
@@ -55,7 +55,7 @@ app.get('/', (req, res) => {
 
 app.post('/registrering', async (req, res) => {
     const { username, password, email, mobilnummer } = req.body;
-    const user = { username: username, password: password, email: email, mobilnummer: mobilnummer }
+    const user = { username: username.toLowerCase(), password: password, email: email, mobilnummer: mobilnummer }
     let id = await loginDBFunctions.addUser(user);
     res.redirect('/')
 })
