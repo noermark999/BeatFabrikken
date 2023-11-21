@@ -4,22 +4,22 @@ include includes/header
 .container.mt-4
     .row
         .col-md-8.offset-md-2
-            h1 Brugerprofil
+            h2(class="text-center mb-4") Brugerprofil
             .card
                 .card-body
-                    dl.row
-                        dt.col-sm-3 Navn
-                        dd.col-sm-9 #{username}
-
-                        dt.col-sm-3 E-mail
-                        dd.col-sm-9 #{email}
-
-                        dt.col-sm-3 Mobilnummer
-                        dd.col-sm-9 #{mobilnummer}
-
-            // Eventuelt tilføjelse af en redigeringsknap
-            a(href='/profil/edit' class='btn btn-primary mt-3') Rediger profil
+                    form
+                        .form-floating.mb-3
+                            input(type="text", class="form-control", id="floatingUsername", placeholder="Username", value=username, disabled)
+                            label(for="floatingUsername") Brugernavn
+                        .form-floating.mb-3
+                            input(type="email", class="form-control", id="floatingEmail", placeholder="Email", value=email, disabled)
+                            label(for="floatingEmail") E-mail
+                        .form-floating.mb-3
+                            input(type="text", class="form-control", id="floatingMobilnummer", placeholder="Mobilnummer", value=mobilnummer, disabled)
+                            label(for="floatingMobilnummer") Mobilnummer
+                    a(href='/profil/edit', class='btn btn-primary mt-3') Rediger profil
 
 include includes/footer
+
 
 
