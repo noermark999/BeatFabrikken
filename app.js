@@ -34,7 +34,7 @@ app.get('/login', (req, res) => {
     res.render('login', { title: 'Login' });
 })
 
-app.post('/login', async (req, res) => { // TJEKKER LOGIN VED HJÆLP AF VORES FUNCTION
+app.post('/login', async (req, res) => { 
     const { username, password } = req.body
     if (await loginDBFunctions.checkLogInUser(username.toLowerCase(), password)) {
         req.session.isLoggedIn = true
@@ -58,6 +58,10 @@ app.post('/registrering', async (req, res) => {
     const user = { username: username.toLowerCase(), password: password, firstname: firstName, lastname: lastName, email: email, mobilnummer: mobilnummer }
     let id = await loginDBFunctions.addUser(user);
     res.redirect('/')
+})
+
+app.get('/booking', (req, res) => {
+    res.render('booking', { title: 'Booking' });
 })
 
 app.get('/logout', (req, res) => { //LOGOUT PAGE
