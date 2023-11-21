@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 
 import loginRoute from './routes/loginRoutes.js'
 import registreringRoute from './routes/registreringRoute.js'
+import profilRoutes from './routes/profilRoutes.js'
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use(function(req, res, next) {
 
 app.use("/login", loginRoute)
 app.use("/registrering", registreringRoute)
+app.use("/profil", profilRoutes)
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -50,30 +52,6 @@ app.get('/logout', (req, res) => { //LOGOUT PAGE
     req.session.destroy()
     res.redirect('/')
 })
-
-app.get('/profil', async (req, res) => {
-    if (req.session.isLoggedIn) {
-        const username = req.session.username;
-        const user = await loginDBFunctions.getUser(username);
-        if (user) {
-            // Send brugeroplysninger til PUG-skabelonen
-            res.render('profil', { 
-                title: 'Profil', 
-                username: user.username,
-                email: user.email,
-                mobilnummer: user.mobilnummer
-            });
-        } else {
-            // Hvis brugeren ikke findes i databasen
-            res.redirect('/login');
-        }
-    } else {
-        // Hvis brugeren ikke er logget ind
-        res.redirect('/login');
-    }
-});
-
-
 
 
 // Start server
