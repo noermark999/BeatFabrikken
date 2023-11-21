@@ -42,10 +42,45 @@ app.get('/', (req, res) => {
     res.render('forside', { title: 'Forside', isLoggedIn: res.locals.isLoggedIn });
 });
 
+app.post('/registrering', async (req, res) => {
+    const { username, password, firstName, lastName, email, mobilnummer } = req.body;
+    const user = { username: username.toLowerCase(), password: password, firstname: firstName, lastname: lastName, email: email, mobilnummer: mobilnummer }
+    let id = await loginDBFunctions.addUser(user);
+    res.redirect('/')
+})
+
+app.get('/booking', (req, res) => {
+    res.render('booking', { title: 'Booking' });
+})
+
 app.get('/logout', (req, res) => { //LOGOUT PAGE
     req.session.destroy()
     res.redirect('/')
 })
+
+app.get('/profil', async (req, res) => {
+    if (req.session.isLoggedIn) {
+        const username = req.session.username;
+        const user = await loginDBFunctions.getUser(username);
+        if (user) {
+            // Send brugeroplysninger til PUG-skabelonen
+            res.render('profil', { 
+                title: 'Profil', 
+                username: user.username,
+                email: user.email,
+                mobilnummer: user.mobilnummer
+            });
+        } else {
+            // Hvis brugeren ikke findes i databasen
+            res.redirect('/login');
+        }
+    } else {
+        // Hvis brugeren ikke er logget ind
+        res.redirect('/login');
+    }
+});
+
+
 
 
 // Start server
