@@ -66,8 +66,19 @@ app.get('/logout', (req, res) => { //LOGOUT PAGE
 })
 
 app.get('/profil', (req, res) => {
-    res.render('profil', {title: 'Profil', isLoggedIn: res.locals.isLoggedIn})
-})
+    if (!req.session.isLoggedIn) {
+        // Hvis brugeren ikke er logget ind, omdiriger til login-side
+        res.redirect('/login');
+    } else {
+        // Hent brugeroplysninger fra session og vis profilsiden
+        const { username, email, mobilnummer } = req.session.user;
+        res.render('profil', {
+            username: username,
+            email: email,
+            mobilnummer: mobilnummer
+        });
+    }
+});
 
 
 // Start server
