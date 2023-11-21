@@ -60,6 +60,10 @@ app.post('/registrering', async (req, res) => {
     res.redirect('/')
 })
 
+app.get('/booking', (req, res) => {
+    res.render('booking', { title: 'Booking' });
+})
+
 app.get('/logout', (req, res) => { //LOGOUT PAGE
     req.session.destroy()
     res.redirect('/')
