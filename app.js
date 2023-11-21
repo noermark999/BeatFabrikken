@@ -42,13 +42,6 @@ app.get('/', (req, res) => {
     res.render('forside', { title: 'Forside', isLoggedIn: res.locals.isLoggedIn });
 });
 
-app.post('/registrering', async (req, res) => {
-    const { username, password, firstName, lastName, email, mobilnummer } = req.body;
-    const user = { username: username.toLowerCase(), password: password, firstname: firstName, lastname: lastName, email: email, mobilnummer: mobilnummer }
-    let id = await loginDBFunctions.addUser(user);
-    res.redirect('/')
-})
-
 app.get('/booking', (req, res) => {
     res.render('booking', { title: 'Booking' });
 })
