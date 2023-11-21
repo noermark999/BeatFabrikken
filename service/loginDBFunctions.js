@@ -51,6 +51,7 @@ async function hashPassword(password) {
 
   return hashedPassword;
 }
+
 const getUser = async (username) => {
   try {
     const userQuerySnapshot = await getDocs(brugere);
