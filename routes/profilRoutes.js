@@ -30,7 +30,7 @@ router.get('/edit', async (req, res) => {
       const username = req.session.username;
       const user = await loginDBFunctions.getUser(username);
       if (user) {
-          res.render('edit', {
+          res.render('editProfile', {
               title: 'Rediger Profil',
               username: user.username,
               email: user.email,
@@ -58,7 +58,7 @@ router.put('/edit', async (req, res) => {
           res.redirect('/profile');
       } catch (error) {
           console.error('Error updating user:', error);
-          res.redirect('/edit');
+          res.redirect('/editProfile');
       }
   } else {
       res.redirect('/login');
