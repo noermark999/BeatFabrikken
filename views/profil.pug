@@ -1,0 +1,25 @@
+include includes/head
+include includes/header
+
+.container.mt-4
+    .row
+        .col-md-8.offset-md-2
+            h1 Brugerprofil
+            .card
+                .card-body
+                    dl.row
+                        dt.col-sm-3 Navn
+                        dd.col-sm-9 #{username}
+
+                        dt.col-sm-3 E-mail
+                        dd.col-sm-9 #{email}
+
+                        dt.col-sm-3 Mobilnummer
+                        dd.col-sm-9 #{mobilnummer}
+
+            // Eventuelt tilføjelse af en redigeringsknap
+            a(href='/edit-profile' class='btn btn-primary mt-3') Rediger profil
+
+include includes/footer
+
+
