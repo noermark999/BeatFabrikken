@@ -1,6 +1,7 @@
 import express from "express";
 import pug from "pug";
 import expressSession from "express-session";
+import loginDBFunctions from "./service/loginDBFunctions.js";
 import { v4 as uuidv4 } from 'uuid';
 import bodyParser from "body-parser";
 
