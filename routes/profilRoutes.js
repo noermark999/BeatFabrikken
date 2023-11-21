@@ -1,14 +1,17 @@
 import express from "express";
-const router = express.Router();
 import loginDBFunctions from "../service/loginDBFunctions.js"
 import profileDBFunctions from "../service/profileDBFunctions.js";
 
+const router = express.Router();
+
+//-------------------------------------------------------------------------------------//
+
+// Route til at vise brugerprofilen, hvis brugeren er logget ind.
 router.get('/', async (req, res) => {
   if (req.session.isLoggedIn) {
       const username = req.session.username;
       const user = await loginDBFunctions.getUser(username);
       if (user) {
-          // Send brugeroplysninger til PUG-skabelonen
           res.render('profil', { 
               title: 'Profil', 
               username: user.username,
@@ -16,15 +19,16 @@ router.get('/', async (req, res) => {
               mobilnummer: user.mobilnummer
           });
       } else {
-          // Hvis brugeren ikke findes i databasen
           res.redirect('/login');
       }
   } else {
-      // Hvis brugeren ikke er logget ind
       res.redirect('/login');
   }
 });
 
+//-------------------------------------------------------------------------------------//
+
+// Route til at vise redigeringsformularen for brugerprofilen.
 router.get('/edit', async (req, res) => {
   if (req.session.isLoggedIn) {
       const username = req.session.username;
@@ -44,27 +48,30 @@ router.get('/edit', async (req, res) => {
   }
 });
 
+//-------------------------------------------------------------------------------------//
 
-router.put('/edit', async (req, res) => {
+//route til opdatering af siden og databasen
+router.post('/edit', async (req, res) => {
   if (req.session.isLoggedIn) {
-      const username = req.session.username;
+      const { username } = req.session;
       const { email, mobilnummer } = req.body;
 
       try {
-          // Opdater brugeroplysninger i databasen
           await profileDBFunctions.updateUser(username, email, mobilnummer);
 
-          // Omdiriger til profil siden med opdaterede oplysninger
-          res.redirect('/profile');
+          req.session.successMsg = 'Dine ændringer er blevet gemt.';
+          res.redirect('/profil');
       } catch (error) {
-          console.error('Error updating user:', error);
-          res.redirect('/editProfile');
+          req.session.errorMsg = 'Der opstod en fejl under opdateringen.';
+          res.redirect('/profil/edit');
       }
   } else {
+      // Brugeren er ikke logget ind og omdirigeres til login siden
       res.redirect('/login');
   }
 });
 
+//-------------------------------------------------------------------------------------//
 
 
 export default router;
