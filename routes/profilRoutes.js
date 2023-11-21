@@ -24,4 +24,28 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/edit', async (req, res) => {
+  if (req.session.isLoggedIn) {
+      const username = req.session.username;
+      const user = await loginDBFunctions.getUser(username);
+      if (user) {
+          res.render('edit', {
+              title: 'Rediger Profil',
+              username: user.username,
+              email: user.email,
+              mobilnummer: user.mobilnummer
+          });
+      } else {
+          res.redirect('/login');
+      }
+  } else {
+      res.redirect('/login');
+  }
+});
+
+router.put('/edit', async (req, res) => {
+  
+})
+
+
 export default router;
