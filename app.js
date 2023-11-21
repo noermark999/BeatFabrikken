@@ -34,7 +34,7 @@ app.get('/login', (req, res) => {
     res.render('login', { title: 'Login' });
 })
 
-app.post('/login', async (req, res) => { // TJEKKER LOGIN VED HJÆLP AF VORES FUNCTION
+app.post('/login', async (req, res) => { 
     const { username, password } = req.body
     if (await loginDBFunctions.checkLogInUser(username.toLowerCase(), password)) {
         req.session.isLoggedIn = true
@@ -60,14 +60,29 @@ app.post('/registrering', async (req, res) => {
     res.redirect('/')
 })
 
+app.get('/booking', (req, res) => {
+    res.render('booking', { title: 'Booking' });
+})
+
 app.get('/logout', (req, res) => { //LOGOUT PAGE
     req.session.destroy()
     res.redirect('/')
 })
 
 app.get('/profil', (req, res) => {
-    res.render('profil', {title: 'Profil', isLoggedIn: res.locals.isLoggedIn})
-})
+    if (!req.session.isLoggedIn) {
+        // Hvis brugeren ikke er logget ind, omdiriger til login-side
+        res.redirect('/login');
+    } else {
+        // Hent brugeroplysninger fra session og vis profilsiden
+        const { username, email, mobilnummer } = req.session.user;
+        res.render('profil', {
+            username: username,
+            email: email,
+            mobilnummer: mobilnummer
+        });
+    }
+});
 
 
 // Start server
