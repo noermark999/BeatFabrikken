@@ -1,8 +1,11 @@
 import express from "express";
 import pug from "pug";
-import loginDBFunctions from "./service/loginDBFunctions.js"
 import expressSession from "express-session";
 import { v4 as uuidv4 } from 'uuid';
+import bodyParser from "body-parser";
+
+import loginRoute from './routes/loginRoutes.js'
+import registreringRoute from './routes/registreringRoute.js'
 
 const app = express();
 
@@ -12,6 +15,7 @@ const port = "1234";
 app.set('view engine', 'pug');
 
 // Middleware
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('assets'))
@@ -29,36 +33,14 @@ app.use(function(req, res, next) {
     next()
 })
 
-// Routes get, put, post, delete
-app.get('/login', (req, res) => {
-    res.render('login', { title: 'Login' });
-})
+app.use("/login", loginRoute)
+app.use("/registrering", registreringRoute)
 
-app.post('/login', async (req, res) => { // TJEKKER LOGIN VED HJÆLP AF VORES FUNCTION
-    const { username, password } = req.body
-    if (await loginDBFunctions.checkLogInUser(username.toLowerCase(), password)) {
-        req.session.isLoggedIn = true
-        req.session.username = username
-        res.redirect('/')
-    } else {
-        res.redirect('/login')
-    }
-})
-
-app.get('/registrering', (req, res) => {
-    res.render('registrering', { title: 'Registrering', isLoggedIn: res.locals.isLoggedIn });
-})
+// ---------------------------------------------------------------------------------------------------
 
 app.get('/', (req, res) => {
     res.render('forside', { title: 'Forside', isLoggedIn: res.locals.isLoggedIn });
 });
-
-app.post('/registrering', async (req, res) => {
-    const { username, password, firstName, lastName, email, mobilnummer } = req.body;
-    const user = { username: username.toLowerCase(), password: password, firstname: firstName, lastname: lastName, email: email, mobilnummer: mobilnummer }
-    let id = await loginDBFunctions.addUser(user);
-    res.redirect('/')
-})
 
 app.get('/logout', (req, res) => { //LOGOUT PAGE
     req.session.destroy()
