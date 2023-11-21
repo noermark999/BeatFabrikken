@@ -10,6 +10,7 @@ import {
     updateDoc,
     where
   } from 'firebase/firestore'
+import regisreringDBFunctions from './registreringDBFunctions.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBA1THaQC10sV-iVeSrCm7WRgZKAGp9Wl0",
@@ -26,31 +27,6 @@ const firebaseConfig = {
 const firebase_app = initializeApp(firebaseConfig);
 const db = getFirestore(firebase_app);
 const brugere = collection(db, 'Bruger')
-
-
-
-const addUser = async (user) => {
-  user.password = await hashPassword(user.password);
-  console.log(user);
-  const docRef = await addDoc(brugere, user)
-  return docRef.id
-}
-
-// Funktion til at hashe adgangskoden med SHA-256
-async function hashPassword(password) {
-  // Konverterer adgangskoden til en Uint8Array
-  const encoder = new TextEncoder();
-  const data = encoder.encode(password);
-
-  // Hasher adgangskoden med SHA-256
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-
-  // Konverterer det hashede resultat til en hex-streng
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashedPassword = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-
-  return hashedPassword;
-}
 
 const getUser = async (username) => {
   try {
@@ -73,12 +49,10 @@ const getUser = async (username) => {
   }
 };
 
-
-//Simulering af databaseopkald - Den her function skal komme ind når vi kommer til vores endpoint 
 async function checkLogInUser(username, password) {
   const user = await getUser(username);
   if (user) {
-      const hashedInputPassword = await hashPassword(password);
+      const hashedInputPassword = await regisreringDBFunctions.hashPassword(password);
       if (hashedInputPassword === user.password) {
           return true;
       }
@@ -87,4 +61,4 @@ async function checkLogInUser(username, password) {
   return false;
 }
 
-export default {addUser,getUser,checkLogInUser}
+export default {getUser,checkLogInUser}
