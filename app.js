@@ -65,6 +65,10 @@ app.get('/logout', (req, res) => { //LOGOUT PAGE
     res.redirect('/')
 })
 
+app.get('/profil', (req, res) => {
+    res.render('profil', {title: 'Profil', isLoggedIn: res.locals.isLoggedIn})
+})
+
 
 // Start server
 app.listen(port, () => {
