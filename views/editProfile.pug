@@ -3,6 +3,7 @@ include includes/header
 h2(class="text-center mb-4") Rediger Profil
 div(class=" w-100 mx-auto" style="max-width: 300px")
     form(action="/profil/edit", method="POST", class="needs-validation", novalidate)
+
         div(class="form-floating mb-3")
             input(type="text", name="username", class="form-control", id="floatingUsername", placeholder="Username", value=username, required)
             label(for="floatingUsername") Brugernavn
@@ -14,5 +15,6 @@ div(class=" w-100 mx-auto" style="max-width: 300px")
         div(class="form-floating mb-3")
             input(type="text", name="mobilnummer", class="form-control", id="floatingMobilnummer", placeholder="Mobilnummer", value=mobilnummer, required)
             label(for="floatingMobilnummer") Mobilnummer
+            
         button(type="submit", class="btn btn-primary w-100 py-2") Gem ændringer
 include includes/footer
