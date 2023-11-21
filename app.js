@@ -34,7 +34,7 @@ app.get('/login', (req, res) => {
     res.render('login', { title: 'Login' });
 })
 
-app.post('/login', async (req, res) => { // TJEKKER LOGIN VED HJÆLP AF VORES FUNCTION
+app.post('/login', async (req, res) => { 
     const { username, password } = req.body
     if (await loginDBFunctions.checkLogInUser(username.toLowerCase(), password)) {
         req.session.isLoggedIn = true
