@@ -52,7 +52,8 @@ const getUser = async (username) => {
 async function checkLogInUser(username, password) {
   const user = await getUser(username);
   if (user) {
-      const hashedInputPassword = await regisreringDBFunctions.hashPassword(password);
+      const salt = regisreringDBFunctions.saltStringToUint8Array(user.salt)
+      const hashedInputPassword = await regisreringDBFunctions.hashPassword(password, salt);
       if (hashedInputPassword === user.password) {
           return true;
       }

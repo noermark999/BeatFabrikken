@@ -30,3 +30,28 @@ const brugere = collection(db, 'Bruger')
 const editUser = async (user) => {
     
   }
+
+
+  const updateUser = async (username, email, mobilnummer) => {
+    try {
+        const userQuerySnapshot = await getDocs(brugere);
+        const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === username);
+
+        if (userDoc) {
+            await updateDoc(doc(db, 'Bruger', userDoc.id), {
+                email: email,
+                mobilnummer: mobilnummer
+            });
+            console.log('User updated successfully');
+        } else {
+            console.log('User not found');
+        }
+    } catch (error) {
+        console.error('Error updating user:', error);
+        throw error;
+    }
+}
+
+export default {updateUser};
+
+
