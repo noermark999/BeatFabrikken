@@ -52,24 +52,28 @@ router.get('/edit', async (req, res) => {
 
 //route til opdatering af siden og databasen
 router.post('/edit', async (req, res) => {
-  if (req.session.isLoggedIn) {
-      const { username } = req.session;
-      const { email, mobilnummer } = req.body;
-
+    if (req.session.isLoggedIn) {
+      const oldUsername = req.session.username;
+      const { username: newUsername, email, mobilnummer } = req.body;
+  
       try {
-          await profileDBFunctions.updateUser(username, email, mobilnummer);
-
-          req.session.successMsg = 'Dine ændringer er blevet gemt.';
-          res.redirect('/profil');
+        await profileDBFunctions.updateUser(oldUsername, newUsername, email, mobilnummer);
+  
+        if (oldUsername !== newUsername) {
+          req.session.username = newUsername;
+        }
+  
+        req.session.successMsg = 'Dine ændringer er blevet gemt.';
+        res.redirect('/profil');
       } catch (error) {
-          req.session.errorMsg = 'Der opstod en fejl under opdateringen.';
-          res.redirect('/profil/edit');
+        req.session.errorMsg = 'Der opstod en fejl under opdateringen.';
+        res.redirect('/profil/edit');
       }
-  } else {
-      // Brugeren er ikke logget ind og omdirigeres til login siden
+    } else {
       res.redirect('/login');
-  }
-});
+    }
+  });
+  
 
 //-------------------------------------------------------------------------------------//
 

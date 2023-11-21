@@ -33,25 +33,27 @@ const editUser = async (user) => {
     
   }
 
-const updateUser = async (username, email, mobilnummer) => {
+const updateUser = async (oldUsername, newUsername, email, mobilnummer) => {
   try {
     const userQuerySnapshot = await getDocs(brugere);
-    const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === username);
-
+    const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === oldUsername);
+  
     if (userDoc) {
-      await updateDoc(doc(db, 'Bruger', userDoc.id), {
+        await updateDoc(doc(db, 'Bruger', userDoc.id), {
+        username: newUsername,
         email: email,
         mobilnummer: mobilnummer
-        });
-        console.log('User updated successfully');
-        } else {
-          console.log('User not found');
-        }
-    } catch (error) {
-        console.error('Error updating user:', error);
-        throw error;
+      });
+      console.log('User updated successfully');
+    } else {
+      console.log('User not found');
     }
+  } catch (error) {
+    console.error('Error updating user:', error);
+    throw error;
+  }
 }
+  
 
 
 
