@@ -69,20 +69,29 @@ app.get('/logout', (req, res) => { //LOGOUT PAGE
     res.redirect('/')
 })
 
-app.get('/profil', (req, res) => {
-    if (!req.session.isLoggedIn) {
-        // Hvis brugeren ikke er logget ind, omdiriger til login-side
-        res.redirect('/login');
+app.get('/profil', async (req, res) => {
+    if (req.session.isLoggedIn) {
+        const username = req.session.username;
+        const user = await loginDBFunctions.getUser(username);
+        if (user) {
+            // Send brugeroplysninger til PUG-skabelonen
+            res.render('profil', { 
+                title: 'Profil', 
+                username: user.username,
+                email: user.email,
+                mobilnummer: user.mobilnummer
+            });
+        } else {
+            // Hvis brugeren ikke findes i databasen
+            res.redirect('/login');
+        }
     } else {
-        // Hent brugeroplysninger fra session og vis profilsiden
-        const { username, email, mobilnummer } = req.session.user;
-        res.render('profil', {
-            username: username,
-            email: email,
-            mobilnummer: mobilnummer
-        });
+        // Hvis brugeren ikke er logget ind
+        res.redirect('/login');
     }
 });
+
+
 
 
 // Start server
