@@ -82,5 +82,18 @@ router.post('/edit', async (req, res) => {
 
 //-------------------------------------------------------------------------------------//
 
+router.get('/editPassword', async (req, res) => {
+  if(req.session.isLoggedIn){
+    res.render('editPassword', {title: 'Ændre Password'});
+  } else {
+    res.redirect('/login')
+  }
+});
+
+//-------------------------------------------------------------------------------------//
+
+router.post('/editPassword', async (req, res) => {
+  
+})
 
 export default router;
