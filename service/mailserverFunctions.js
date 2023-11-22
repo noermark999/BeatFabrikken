@@ -24,3 +24,5 @@ async function sendConfirmationEmail(email, bookingDetails){
     console.error('Fejl ved afsending af mail:', error);
   }
 }
+
+export {sendConfirmationEmail}
