@@ -12,6 +12,7 @@ import {
   } from 'firebase/firestore'
 
 import router from '../routes/profilRoutes.js';
+import registreringDBFunctions from "../service/registreringDBFunctions.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBA1THaQC10sV-iVeSrCm7WRgZKAGp9Wl0",
@@ -33,16 +34,18 @@ const editUser = async (user) => {
     
   }
 
-const updateUser = async (oldUsername, newUsername, email, mobilnummer) => {
+const updateUser = async (user, oldUsername) => {
   try {
     const userQuerySnapshot = await getDocs(brugere);
     const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === oldUsername);
-  
+
     if (userDoc) {
         await updateDoc(doc(db, 'Bruger', userDoc.id), {
-        username: newUsername,
-        email: email,
-        mobilnummer: mobilnummer
+        username: user.username,
+        email: user.email,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        mobilnummer: user.mobilnummer,
       });
       console.log('User updated successfully');
     } else {
@@ -53,11 +56,29 @@ const updateUser = async (oldUsername, newUsername, email, mobilnummer) => {
     throw error;
   }
 }
-  
+
+const updatePassword = async (username, newPassword) => {
+ const salt = registreringDBFunctions.getSalt();
+ const saltArray = registreringDBFunctions.saltStringToUint8Array(salt);
+ const hashedNewPassword = await registreringDBFunctions.hashPassword(newPassword, saltArray);
+
+ const userQuerySnapshot = await getDocs(brugere);
+ const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === username);
+ 
+ if (userDoc) {
+  await updateDoc(doc(db, 'Bruger', userDoc.id), {
+    password: hashedNewPassword,
+    salt: salt
+  });
+  console.log('Password updated successfully');
+} else {
+  console.log('User not found');
+}
+}
 
 
 
 
-export default {updateUser};
+export default {updateUser, updatePassword};
 
 

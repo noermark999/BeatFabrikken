@@ -76,4 +76,4 @@ function saltStringToUint8Array(saltString) {
     return uint8Array;
 }
 
-export default {addUser, hashPassword, saltStringToUint8Array}
+export default {addUser, hashPassword, saltStringToUint8Array, getSalt}

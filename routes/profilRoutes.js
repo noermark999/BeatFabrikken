@@ -2,6 +2,7 @@ import express from "express";
 import loginDBFunctions from "../service/loginDBFunctions.js"
 import profileDBFunctions from "../service/profileDBFunctions.js";
 
+
 const router = express.Router();
 
 //-------------------------------------------------------------------------------------//
@@ -15,6 +16,8 @@ router.get('/', async (req, res) => {
           res.render('profil', { 
               title: 'Profil', 
               username: user.username,
+              firstname: user.firstname,
+              lastname: user.lastname,
               email: user.email,
               mobilnummer: user.mobilnummer
           });
@@ -37,6 +40,8 @@ router.get('/edit', async (req, res) => {
           res.render('editProfile', {
               title: 'Rediger Profil',
               username: user.username,
+              firstname: user.firstname,
+              lastname: user.lastname,
               email: user.email,
               mobilnummer: user.mobilnummer
           });
@@ -54,13 +59,15 @@ router.get('/edit', async (req, res) => {
 router.post('/edit', async (req, res) => {
     if (req.session.isLoggedIn) {
       const oldUsername = req.session.username;
-      const { username: newUsername, email, mobilnummer } = req.body;
+      const { username, email, firstname, lastname, mobilnummer } = req.body;
+
+      let user = { username: username, email: email, firstname: firstname, lastname: lastname, mobilnummer: mobilnummer };
   
       try {
-        await profileDBFunctions.updateUser(oldUsername, newUsername, email, mobilnummer);
+        await profileDBFunctions.updateUser(user, oldUsername);
   
-        if (oldUsername !== newUsername) {
-          req.session.username = newUsername;
+        if (oldUsername !== username) {
+          req.session.username = username;
         }
   
         req.session.successMsg = 'Dine ændringer er blevet gemt.';
@@ -77,5 +84,34 @@ router.post('/edit', async (req, res) => {
 
 //-------------------------------------------------------------------------------------//
 
+router.get('/editPassword', async (req, res) => {
+  if(req.session.isLoggedIn){
+    res.render('editPassword', {title: 'Ændre Password'});
+  } else {
+    res.redirect('/login')
+  }
+});
+
+//-------------------------------------------------------------------------------------//
+
+router.post('/editPassword', async (req, res) => {
+  if (req.session.isLoggedIn) {
+    const username = req.session.username
+    const {newPassword, confirmNewPassword} = req.body
+    if (newPassword === confirmNewPassword) {
+      try {
+        await profileDBFunctions.updatePassword(username, newPassword)
+
+        req.session.successMsg = 'Dine ændringer er blevet gemt.';
+        res.redirect('/profil');
+      } catch (error) {
+        req.session.errorMsg = 'Der opstod en fejl under opdateringen.';
+        res.redirect('/profil/editPassword');
+      }
+    }
+  } else {
+    res.redirect('/login');
+  }
+})
 
 export default router;
