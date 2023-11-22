@@ -33,16 +33,19 @@ const editUser = async (user) => {
     
   }
 
-const updateUser = async (oldUsername, newUsername, email, mobilnummer) => {
+const updateUser = async (user) => {
   try {
     const userQuerySnapshot = await getDocs(brugere);
     const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === oldUsername);
   
     if (userDoc) {
         await updateDoc(doc(db, 'Bruger', userDoc.id), {
-        username: newUsername,
-        email: email,
-        mobilnummer: mobilnummer
+        username: user.username,
+        email: user.email,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        mobilnummer: user.mobilnummer,
+
       });
       console.log('User updated successfully');
     } else {

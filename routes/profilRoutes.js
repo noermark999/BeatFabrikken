@@ -1,7 +1,7 @@
 import express from "express";
 import loginDBFunctions from "../service/loginDBFunctions.js"
 import profileDBFunctions from "../service/profileDBFunctions.js";
-import registreringDBFunctions from "../service/registreringDBFunctions.js";
+
 
 const router = express.Router();
 
@@ -55,13 +55,15 @@ router.get('/edit', async (req, res) => {
 router.post('/edit', async (req, res) => {
     if (req.session.isLoggedIn) {
       const oldUsername = req.session.username;
-      const { username: newUsername, email, mobilnummer } = req.body;
+      const { username, email, firstname, lastname, mobilnummer } = req.body;
+
+      let user = { oldUsername, username, email, firstname, lastname, mobilnummer };
   
       try {
-        await profileDBFunctions.updateUser(oldUsername, newUsername, email, mobilnummer);
+        await profileDBFunctions.updateUser(user);
   
-        if (oldUsername !== newUsername) {
-          req.session.username = newUsername;
+        if (oldUsername !== username) {
+          req.session.username = username;
         }
   
         req.session.successMsg = 'Dine ændringer er blevet gemt.';
