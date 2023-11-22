@@ -59,10 +59,10 @@ router.post('/edit', async (req, res) => {
       const oldUsername = req.session.username;
       const { username, email, firstname, lastname, mobilnummer } = req.body;
 
-      let user = { oldUsername, username, email, firstname, lastname, mobilnummer };
+      let user = { username: username, email: email, firstname: firstname, lastname: lastname, mobilnummer: mobilnummer };
   
       try {
-        await profileDBFunctions.updateUser(user);
+        await profileDBFunctions.updateUser(user, oldUsername);
   
         if (oldUsername !== username) {
           req.session.username = username;

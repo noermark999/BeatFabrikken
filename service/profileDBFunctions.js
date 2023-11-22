@@ -34,13 +34,11 @@ const editUser = async (user) => {
     
   }
 
-const updateUser = async (user) => {
+const updateUser = async (user, oldUsername) => {
   try {
     const userQuerySnapshot = await getDocs(brugere);
     const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === oldUsername);
 
-    
-  
     if (userDoc) {
         await updateDoc(doc(db, 'Bruger', userDoc.id), {
         username: user.username,
