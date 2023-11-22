@@ -60,8 +60,8 @@ const updateUser = async (user, oldUsername) => {
 
 const updatePassword = async (username, newPassword) => {
  const salt = registreringDBFunctions.getSalt();
- const saltArray = saltStringToUint8Array(salt);
- const hashedNewPassword = await hashPassword(newPassword, saltArray);
+ const saltArray = registreringDBFunctions.saltStringToUint8Array(salt);
+ const hashedNewPassword = await registreringDBFunctions.hashPassword(newPassword, saltArray);
 
  const userQuerySnapshot = await getDocs(brugere);
  const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === username);
@@ -80,6 +80,6 @@ const updatePassword = async (username, newPassword) => {
 
 
 
-export default {updateUser};
+export default {updateUser, updatePassword};
 
 

@@ -93,7 +93,23 @@ router.get('/editPassword', async (req, res) => {
 //-------------------------------------------------------------------------------------//
 
 router.post('/editPassword', async (req, res) => {
-  
+  if (req.session.isLoggedIn) {
+    const username = req.session.username
+    const {newPassword, confirmNewPassword} = req.body
+    if (newPassword === confirmNewPassword) {
+      try {
+        await profileDBFunctions.updatePassword(username, newPassword)
+
+        req.session.successMsg = 'Dine ændringer er blevet gemt.';
+        res.redirect('/profil');
+      } catch (error) {
+        req.session.errorMsg = 'Der opstod en fejl under opdateringen.';
+        res.redirect('/profil/editPassword');
+      }
+    }
+  } else {
+    res.redirect('/login');
+  }
 })
 
 export default router;
