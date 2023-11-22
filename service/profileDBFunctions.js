@@ -58,7 +58,6 @@ const updateUser = async (user, oldUsername) => {
 }
 
 const updatePassword = async (username, newPassword) => {
-
  const salt = registreringDBFunctions.getSalt();
  const saltArray = registreringDBFunctions.saltStringToUint8Array(salt);
  const hashedNewPassword = await registreringDBFunctions.hashPassword(newPassword, saltArray);
