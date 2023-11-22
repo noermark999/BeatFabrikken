@@ -45,4 +45,8 @@ async function getLokaler() {
     return lokaler
 }
 
+async function getBookinger() {
+  
+} 
+
 export default {getLokale, getLokaler}
