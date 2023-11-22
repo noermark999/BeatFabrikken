@@ -2,10 +2,11 @@ include includes/head
 include includes/header
 h1(class="text-center mb-4") Opret ny bruger
 div(class=" w-100 mx-auto" style="max-width: 300px")
-    form(action="/registrering", method="POST" class="needs-validation" novalidate)
+    form(action="/registrering", method="POST" class="needs-validation" id="registrationForm" novalidate)
         div(class="form-floating mb-3")
             input(type="username" name="username" class="form-control" id="floatingUsername" placeholder="Username" required)
             label(for="floatingUsername") Brugernavn
+            div(class="invalid-feedback" id="username-exists") Brugernavn findes allerede
         div(class="form-floating mb-3")
             input(type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required)
             label(for="floatingPassword") Kodeord
@@ -22,5 +23,5 @@ div(class=" w-100 mx-auto" style="max-width: 300px")
         div(class="form-floating mb-3")
             input(type="number" name="mobilnummer" class="form-control" id="floatingMobilnummer" placeholder="Mobilnummer" required)
             label(for="floatingMobilnummer") Mobilnummer
-        button(type="submit" class="btn btn-primary w-100 py-2") Opret bruger
+        button(onclick="addUser()" class="btn btn-primary w-100 py-2") Opret bruger
 include includes/footer

@@ -10,6 +10,7 @@ import {
     updateDoc,
     where
 } from 'firebase/firestore'
+import loginDBFunctions from './loginDBFunctions.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBA1THaQC10sV-iVeSrCm7WRgZKAGp9Wl0",
@@ -29,13 +30,18 @@ const brugere = collection(db, 'Bruger')
 
 
 const addUser = async (user) => {
-    user.salt = getSalt();
-    console.log(user);
-    const salt = saltStringToUint8Array(user.salt)
-    user.password = await hashPassword(user.password, salt);
-    const docRef = await addDoc(brugere, user)
-    console.log(docRef.id);
-    return docRef.id
+    if (await loginDBFunctions.getUser(user.username) == null) {
+        console.log("help");
+        user.salt = getSalt();
+        console.log(user);
+        const salt = saltStringToUint8Array(user.salt)
+        user.password = await hashPassword(user.password, salt);
+        const docRef = await addDoc(brugere, user)
+        console.log(docRef.id);
+        return docRef.id   
+    } else {
+        return false
+    }
 }
 
 // Funktion til at hashe adgangskoden med SHA-256
