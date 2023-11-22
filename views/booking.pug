@@ -118,8 +118,6 @@ div(class="container mt-4")
       div(class="ms-auto mx-auto w-340px")
         div(class="form-floating")
           select(class="form-select" id="floatingSelect" aria-label="Floating label select example")
-            option(selected) Open this select menu
-            option(value="1") One
-            option(value="2") Two
-            option(value="3") Three
-          label(for="floatingSelect") Works with selects
+            each lokale in lokaler
+              option(selected) #{lokale.docID}
+          label(for="floatingSelect") Vælg lokale
