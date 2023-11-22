@@ -1,6 +1,7 @@
 import express from "express";
 import loginDBFunctions from "../service/loginDBFunctions.js"
 import profileDBFunctions from "../service/profileDBFunctions.js";
+import registreringDBFunctions from "../service/registreringDBFunctions.js";
 
 const router = express.Router();
 
