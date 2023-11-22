@@ -46,7 +46,6 @@ const updateUser = async (user, oldUsername) => {
         firstname: user.firstname,
         lastname: user.lastname,
         mobilnummer: user.mobilnummer,
-
       });
       console.log('User updated successfully');
     } else {
