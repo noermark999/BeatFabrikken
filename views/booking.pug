@@ -118,9 +118,6 @@ div(class="container mt-4")
       div(class="ms-auto mx-auto w-340px")
         div(class="form-floating")
           select(class="form-select" id="floatingSelect" aria-label="Floating label select example")
-            option(selected) DanceZone-Sal
-            option(value="1") Sal 1
-            option(value="2") Sal 2
-          label(for="floatingSelect") Lokaler
-          br
-        button(type="submit" class="btn btn-primary w-100 py-2") Book  
+            each lokale in lokaler
+              option(selected) #{lokale.docID}
+          label(for="floatingSelect") Vælg lokale
