@@ -65,10 +65,8 @@ const updatePassword = async (username, newPassword) => {
 
  const userQuerySnapshot = await getDocs(brugere);
  const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === username);
- console.log('Virker metoden')
-
+ 
  if (userDoc) {
-  console.log('update her???')
   await updateDoc(doc(db, 'Bruger', userDoc.id), {
     password: hashedNewPassword,
     salt: salt

@@ -16,6 +16,8 @@ router.get('/', async (req, res) => {
           res.render('profil', { 
               title: 'Profil', 
               username: user.username,
+              firstname: user.firstname,
+              lastname: user.lastname,
               email: user.email,
               mobilnummer: user.mobilnummer
           });
