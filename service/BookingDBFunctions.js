@@ -25,7 +25,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebase_app = initializeApp(firebaseConfig);
 const db = getFirestore(firebase_app);
-const lokaler = collection(db, 'Lokaler')
+const lokalerCollection = collection(db, 'Lokaler')
 
 async function getLokale(lokaleID) {
 const docRef = doc(db, 'Lokaler', lokaleID)
@@ -36,7 +36,7 @@ const docRef = doc(db, 'Lokaler', lokaleID)
 }
 
 async function getLokaler() {
-    let lokalerQueryDocs = await getDocs(lokaler)
+    let lokalerQueryDocs = await getDocs(lokalerCollection)
     let lokaler = lokalerQueryDocs.docs.map(doc => {
       let data = doc.data()
       data.docID = doc.id
@@ -45,3 +45,4 @@ async function getLokaler() {
     return lokaler
 }
 
+export default {getLokale, getLokaler}
