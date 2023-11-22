@@ -59,14 +59,16 @@ const updateUser = async (user, oldUsername) => {
 }
 
 const updatePassword = async (username, newPassword) => {
+
  const salt = registreringDBFunctions.getSalt();
- const saltArray = saltStringToUint8Array(salt);
- const hashedNewPassword = await hashPassword(newPassword, saltArray);
+ const hashedNewPassword = await registreringDBFunctions.hashPassword(newPassword, salt);
 
  const userQuerySnapshot = await getDocs(brugere);
  const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === username);
+ console.log('Virker metoden')
 
  if (userDoc) {
+  console.log('update her???')
   await updateDoc(doc(db, 'Bruger', userDoc.id), {
     password: hashedNewPassword,
     salt: salt
@@ -80,6 +82,6 @@ const updatePassword = async (username, newPassword) => {
 
 
 
-export default {updateUser};
+export default {updateUser, updatePassword};
 
 
