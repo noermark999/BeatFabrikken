@@ -27,9 +27,9 @@ async function addUser() {
         let data = {username: username, password: password, firstName: firstName, lastName: lastName, email: email, mobilnummer: mobileNumber}
         let url = '/registrering';
         const response = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {'Content-Type': 'application/json'}
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {'Content-Type': 'application/json'}
         })
         if (response.status == 200) {
             window.location = "/login";
@@ -38,7 +38,7 @@ async function addUser() {
             usernameInput.classList.add("is-invalid")
             const usernameExistsAlert = document.getElementById("username-exists")
             usernameExistsAlert.classList.remove("visually-hidden")
-        }}
+    }}
 }
 
 
