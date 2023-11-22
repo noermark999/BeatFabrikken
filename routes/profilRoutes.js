@@ -38,6 +38,8 @@ router.get('/edit', async (req, res) => {
           res.render('editProfile', {
               title: 'Rediger Profil',
               username: user.username,
+              firstname: user.firstname,
+              lastname: user.lastname,
               email: user.email,
               mobilnummer: user.mobilnummer
           });

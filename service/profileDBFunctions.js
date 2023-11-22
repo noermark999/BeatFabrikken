@@ -12,6 +12,7 @@ import {
   } from 'firebase/firestore'
 
 import router from '../routes/profilRoutes.js';
+import registreringDBFunctions from "../service/registreringDBFunctions.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBA1THaQC10sV-iVeSrCm7WRgZKAGp9Wl0",
@@ -33,10 +34,12 @@ const editUser = async (user) => {
     
   }
 
-const updateUser = async (oldUsername, newUsername, email, mobilnummer) => {
+const updateUser = async (oldUsername, newUsername, email, mobilnummer, hashedNewPassword, salt) => {
   try {
     const userQuerySnapshot = await getDocs(brugere);
     const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === oldUsername);
+
+    
   
     if (userDoc) {
         await updateDoc(doc(db, 'Bruger', userDoc.id), {
