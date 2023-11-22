@@ -5,7 +5,7 @@ h1(class="text-center mb-4") Booking
 br
 div(class="container mt-4")
   div(class="row")
-    div(class="col-md-1")
+    div(class="col")
       div(class="mx-auto")
         table(class="table table-bordered")
           thead
@@ -49,9 +49,9 @@ div(class="container mt-4")
               td 21:00
             tr
               td 22:00
-    div(class="col-md-6")
+    div(class="col")
       div(class="mx-auto")
-        div(class="dropdown-menu d-block position-static p-2 mx-auto ms-auto me-2 shadow rounded-3 w-340px")
+        div(class="dropdown-menu d-block position-static p-2 mx-auto shadow rounded-3 w-340px")
           div(class="d-grid gap-1")
             div(class="cal")
               div(class="cal-month")
@@ -114,11 +114,12 @@ div(class="container mt-4")
                 button(class="btn cal-btn" type="button") 28
                 button(class="btn cal-btn" type="button") 29
                 button(class="btn cal-btn" type="button") 30
-
-div(class="form-floating")
-  select(class="form-select" id="floatingSelect" aria-label="Floating label select example")
-    option(selected) Open this select menu
-    option(value="1") One
-    option(value="2") Two
-    option(value="3") Three
-  label(for="floatingSelect") Works with selects
+      br
+      div(class="ms-auto mx-auto w-340px")
+        div(class="form-floating")
+          select(class="form-select" id="floatingSelect" aria-label="Floating label select example")
+            option(selected) Open this select menu
+            option(value="1") One
+            option(value="2") Two
+            option(value="3") Three
+          label(for="floatingSelect") Works with selects
