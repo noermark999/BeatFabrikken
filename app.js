@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import loginRoute from './routes/loginRoutes.js'
 import registreringRoute from './routes/registreringRoute.js'
 import profilRoutes from './routes/profilRoutes.js'
+import bookingRoutes from './routes/bookingRoutes.js'
 
 const app = express();
 
@@ -37,16 +38,13 @@ app.use(function(req, res, next) {
 app.use("/login", loginRoute)
 app.use("/registrering", registreringRoute)
 app.use("/profil", profilRoutes)
+app.use("/booking", bookingRoutes)
 
 // ---------------------------------------------------------------------------------------------------
 
 app.get('/', (req, res) => {
     res.render('forside', { title: 'Forside', isLoggedIn: res.locals.isLoggedIn });
 });
-
-app.get('/booking', (req, res) => {
-    res.render('booking', { title: 'Booking' });
-})
 
 app.get('/logout', (req, res) => { //LOGOUT PAGE
     req.session.destroy()
