@@ -46,7 +46,6 @@ const updateUser = async (user, oldUsername) => {
         firstname: user.firstname,
         lastname: user.lastname,
         mobilnummer: user.mobilnummer,
-
       });
       console.log('User updated successfully');
     } else {
@@ -61,7 +60,8 @@ const updateUser = async (user, oldUsername) => {
 const updatePassword = async (username, newPassword) => {
 
  const salt = registreringDBFunctions.getSalt();
- const hashedNewPassword = await registreringDBFunctions.hashPassword(newPassword, salt);
+ const saltArray = registreringDBFunctions.saltStringToUint8Array(salt);
+ const hashedNewPassword = await registreringDBFunctions.hashPassword(newPassword, saltArray);
 
  const userQuerySnapshot = await getDocs(brugere);
  const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === username);
