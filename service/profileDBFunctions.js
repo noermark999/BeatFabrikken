@@ -57,7 +57,25 @@ const updateUser = async (user, oldUsername) => {
     throw error;
   }
 }
-  
+
+const updatePassword = async (username, newPassword) => {
+ const salt = registreringDBFunctions.getSalt();
+ const saltArray = saltStringToUint8Array(salt);
+ const hashedNewPassword = await hashPassword(newPassword, saltArray);
+
+ const userQuerySnapshot = await getDocs(brugere);
+ const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === username);
+
+ if (userDoc) {
+  await updateDoc(doc(db, 'Bruger', userDoc.id), {
+    password: hashedNewPassword,
+    salt: salt
+  });
+  console.log('Password updated successfully');
+} else {
+  console.log('User not found');
+}
+}
 
 
 

@@ -24,13 +24,7 @@ div(class=" w-100 mx-auto" style="max-width: 300px")
             input(type="text", name="mobilnummer", class="form-control", id="floatingMobilnummer", placeholder="Mobilnummer", value=mobilnummer, required)
             label(for="floatingMobilnummer") Mobilnummer
 
-        div(class="form-floating mb-3")
-            input(type="password", name="newPassword", class="form-control", id="floatingNewPassword", placeholder="Ny adgangskode")
-            label(for="floatingNewPassword") Ny adgangskode
-
-        div(class="form-floating mb-3")
-            input(type="password", name="confirmNewPassword", class="form-control", id="floatingConfirmNewPassword", placeholder="Bekræft ny adgangskode")
-            label(for="floatingConfirmNewPassword") Bekræft ny adgangskode
             
         button(type="submit", class="btn btn-primary w-100 py-2") Gem ændringer
+    a(href='/profil/editPassword', class='btn btn-secondary mt-3 w-100') Ændre Password
 include includes/footer
