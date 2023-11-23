@@ -62,4 +62,4 @@ async function getBookinger() {
   return bookinger
 } 
 
-export default { getLokale, getLokaler, addBooking }
+export default { getLokale, getLokaler, addBooking, getBookinger }
