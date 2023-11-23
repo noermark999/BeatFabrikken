@@ -52,4 +52,14 @@ async function addBooking(booking) {
   return docRef.id
 }
 
+async function getBookinger() {
+  let bookingQueryDocs = await getDocs(bookingCollection)
+  let bookinger = bookingQueryDocs.docs.map(doc => {
+    let data = doc.data()
+    data.docID = doc.id
+    return data
+  })
+  return bookinger
+} 
+
 export default { getLokale, getLokaler, addBooking }

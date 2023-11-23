@@ -64,14 +64,20 @@ router.post('/edit', async (req, res) => {
       let user = { username: username, email: email, firstname: firstname, lastname: lastname, mobilnummer: mobilnummer };
   
       try {
-        await profileDBFunctions.updateUser(user, oldUsername);
-  
-        if (oldUsername !== username) {
+        const updatedUser = await profileDBFunctions.updateUser(user, oldUsername);
+        if (updatedUser) {
+           if (oldUsername !== username) {
           req.session.username = username;
         }
   
         req.session.successMsg = 'Dine ændringer er blevet gemt.';
-        res.redirect('/profil');
+        res.status(200)
+        res.end()
+        } else {
+          res.status(204)
+          res.end()
+        }
+      
       } catch (error) {
         req.session.errorMsg = 'Der opstod en fejl under opdateringen.';
         res.redirect('/profil/edit');
@@ -108,6 +114,8 @@ router.post('/editPassword', async (req, res) => {
         req.session.errorMsg = 'Der opstod en fejl under opdateringen.';
         res.redirect('/profil/editPassword');
       }
+    } else {
+      res.redirect('/profil/editPassword');
     }
   } else {
     res.redirect('/login');
