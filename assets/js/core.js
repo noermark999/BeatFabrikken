@@ -41,9 +41,6 @@ async function addUser() {
     }}
 }
 
-
-
-
-
-
+//Sætter start value for datepicker til at være i dag
+document.getElementById('datepicker').valueAsDate = new Date();
 
