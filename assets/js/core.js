@@ -50,6 +50,7 @@ async function book() {
     let idag = new Date();
     let bookDato = new Date();
     bookDato.setHours(tid.substring(0,2));
+    bookDato.setFullYear(date.substring(0,4), date.substring(5,7), date.substring(8,10))
     if (bookDato.getTime() < idag.getTime()) {
         const bookingDateFailureAlert = document.getElementById("BookingDateFailureAlert")
         bookingDateFailureAlert.classList.remove("visually-hidden")
