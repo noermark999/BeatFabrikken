@@ -108,6 +108,8 @@ router.post('/editPassword', async (req, res) => {
         req.session.errorMsg = 'Der opstod en fejl under opdateringen.';
         res.redirect('/profil/editPassword');
       }
+    } else {
+      res.redirect('/profil/editPassword');
     }
   } else {
     res.redirect('/login');
