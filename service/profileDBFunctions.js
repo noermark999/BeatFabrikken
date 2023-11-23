@@ -13,6 +13,7 @@ import {
 
 import router from '../routes/profilRoutes.js';
 import registreringDBFunctions from "../service/registreringDBFunctions.js";
+import loginDBFunctions from "../service/loginDBFunctions.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBA1THaQC10sV-iVeSrCm7WRgZKAGp9Wl0",
@@ -36,8 +37,10 @@ const editUser = async (user) => {
 
 const updateUser = async (user, oldUsername) => {
   try {
-    const userQuerySnapshot = await getDocs(brugere);
-    const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === oldUsername);
+    const existingUser = await loginDBFunctions.getUser(user.username);
+    if (existingUser == null) {
+      const userQuerySnapshot = await getDocs(brugere);
+      const userDoc = userQuerySnapshot.docs.find(doc => doc.data().username === oldUsername);
 
     if (userDoc) {
         await updateDoc(doc(db, 'Bruger', userDoc.id), {
@@ -48,10 +51,16 @@ const updateUser = async (user, oldUsername) => {
         mobilnummer: user.mobilnummer,
       });
       console.log('User updated successfully');
+      return true;
     } else {
       console.log('User not found');
+      return false
     }
-  } catch (error) {
+  } else {
+    return false;
+  }
+    }
+    catch (error) {
     console.error('Error updating user:', error);
     throw error;
   }

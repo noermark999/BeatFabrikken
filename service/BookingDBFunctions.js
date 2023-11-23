@@ -26,6 +26,7 @@ const firebaseConfig = {
 const firebase_app = initializeApp(firebaseConfig);
 const db = getFirestore(firebase_app);
 const lokalerCollection = collection(db, 'Lokaler')
+const bookingerCollection = collection(db, 'bookinger')
 
 async function getLokale(lokaleID) {
 const docRef = doc(db, 'Lokaler', lokaleID)
@@ -46,7 +47,13 @@ async function getLokaler() {
 }
 
 async function getBookinger() {
-  
+  let bookingQueryDocs = await getDocs(bookingerCollection)
+  let bookinger = bookingQueryDocs.docs.map(doc => {
+    let data = doc.data()
+    data.docID = doc.id
+    return data
+  })
+  return bookinger
 } 
 
 export default {getLokale, getLokaler}

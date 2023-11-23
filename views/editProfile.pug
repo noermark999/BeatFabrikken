@@ -2,11 +2,12 @@ include includes/head
 include includes/header
 h2(class="text-center mb-4") Rediger Profil
 div(class=" w-100 mx-auto" style="max-width: 300px")
-    form(action="/profil/edit", method="POST", class="needs-validation", novalidate)
+    form(action="/profil/edit", id="redigeringsForm" method="POST", class="needs-validation", novalidate)
 
         div(class="form-floating mb-3")
             input(type="text", name="username", class="form-control", id="floatingUsername", placeholder="Username", value=username, required)
             label(for="floatingUsername") Brugernavn
+            div(class="invalid-feedback visually-hidden" id="username-exists") Brugernavn findes allerede
         
         div(class="form-floating mb-3")
             input(type="email", name="email", class="form-control", id="floatingEmail", placeholder="Email", value=email, required)
@@ -25,6 +26,6 @@ div(class=" w-100 mx-auto" style="max-width: 300px")
             label(for="floatingMobilnummer") Mobilnummer
 
             
-        button(type="submit", class="btn btn-primary w-100 py-2") Gem ændringer
+        button(onclick="updateUser()", class="btn btn-primary w-100 py-2") Gem ændringer
     a(href='/profil/editPassword', class='btn btn-secondary mt-3 w-100') Ændre Password
 include includes/footer
