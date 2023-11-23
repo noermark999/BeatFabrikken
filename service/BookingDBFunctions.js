@@ -1,15 +1,15 @@
 import { initializeApp } from "firebase/app";
 import {
-    getFirestore,
-    collection,
-    getDocs,
-    getDoc,
-    doc,
-    deleteDoc,
-    addDoc,
-    updateDoc,
-    where
-  } from 'firebase/firestore'
+  getFirestore,
+  collection,
+  getDocs,
+  getDoc,
+  doc,
+  deleteDoc,
+  addDoc,
+  updateDoc,
+  where
+} from 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: "AIzaSyBA1THaQC10sV-iVeSrCm7WRgZKAGp9Wl0",
@@ -26,9 +26,10 @@ const firebaseConfig = {
 const firebase_app = initializeApp(firebaseConfig);
 const db = getFirestore(firebase_app);
 const lokalerCollection = collection(db, 'Lokaler')
+const bookingCollection = collection(db, 'Bookinger')
 
 async function getLokale(lokaleID) {
-const docRef = doc(db, 'Lokaler', lokaleID)
+  const docRef = doc(db, 'Lokaler', lokaleID)
   const lokaleQueryDoc = await getDoc(docRef)
   let lokale = lokaleQueryDoc.data()
   lokale.docID = lokaleQueryDoc.id
@@ -36,17 +37,29 @@ const docRef = doc(db, 'Lokaler', lokaleID)
 }
 
 async function getLokaler() {
-    let lokalerQueryDocs = await getDocs(lokalerCollection)
-    let lokaler = lokalerQueryDocs.docs.map(doc => {
-      let data = doc.data()
-      data.docID = doc.id
-      return data
-    })
-    return lokaler
+  let lokalerQueryDocs = await getDocs(lokalerCollection)
+  let lokaler = lokalerQueryDocs.docs.map(doc => {
+    let data = doc.data()
+    data.docID = doc.id
+    return data
+  })
+  return lokaler
+}
+
+async function addBooking(booking) {
+  const docRef = await addDoc(bookingCollection, booking)
+  console.log(docRef.id);
+  return docRef.id
 }
 
 async function getBookinger() {
-  
+  let bookingQueryDocs = await getDocs(bookingCollection)
+  let bookinger = bookingQueryDocs.docs.map(doc => {
+    let data = doc.data()
+    data.docID = doc.id
+    return data
+  })
+  return bookinger
 } 
 
-export default {getLokale, getLokaler}
+export default { getLokale, getLokaler, addBooking, getBookinger }

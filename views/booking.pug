@@ -1,6 +1,10 @@
 include includes/head
 include includes/header
 
+div(class="alert alert-success visually-hidden text-center container" role="alert" id="BookingSuccessAlert") Booking er blevet oprettet!
+div(class="alert alert-danger visually-hidden text-center container" role="alert" id="BookingLoginFailureAlert") Du er ikke logget ind!
+div(class="alert alert-danger visually-hidden text-center container" role="alert" id="BookingDateFailureAlert") Datoen du har valgt er udgået!
+
 h1(class="text-center mb-4") Booking
 br
 div(class="container mt-4")
@@ -51,33 +55,36 @@ div(class="container mt-4")
               td 22:00
     div(class="col")
       div(class="mx-auto w-340px")
-        input(type="date" id="datepicker" placeholder="dd-mm-yyyy")
+        input(type="date" id="datepicker")
       br
       div(class="ms-auto mx-auto w-340px")
         div(class="form-floating")
-          select(class="form-select" id="floatingSelect" aria-label="Floating label select example")
+          select(class="form-select" id="lokaleSelect" aria-label="Floating label select example")
             each lokale in lokaler
-              option(selected) #{lokale.docID}
-          label(for="floatingSelect") Vælg lokale
+              option(selected value=`'${lokale.docID}'`) #{lokale.docID}
+          label(for="lokaleSelect") Vælg lokale
       br
       div(class="ms-auto mx-auto w-340px")
         div(class="form-floating")
-          select(class="form-select" id="floatingSelect" aria-label="Floating label select example")
-              option(selected value="0") 08:00
-              option(value="1") 09:00
-              option(value="2") 10:00
-              option(value="3") 11:00
-              option(value="4") 12:00
-              option(value="5") 13:00
-              option(value="6") 14:00
-              option(value="7") 15:00
-              option(value="8") 16:00
-              option(value="9") 17:00
-              option(value="10") 18:00
-              option(value="11") 19:00
-              option(value="12") 20:00
-              option(value="13") 21:00
-              option(value="14") 22:00
-          label(for="floatingSelect") Vælg tid
+          select(class="form-select" id="tidSelect" aria-label="Floating label select example")
+              option(selected value="08:00") 08:00
+              option(value="09:00") 09:00
+              option(value="10:00") 10:00
+              option(value="11:00") 11:00
+              option(value="12:00") 12:00
+              option(value="13:00") 13:00
+              option(value="14:00") 14:00
+              option(value="15:00") 15:00
+              option(value="16:00") 16:00
+              option(value="17:00") 17:00
+              option(value="18:00") 18:00
+              option(value="19:00") 19:00
+              option(value="20:00") 20:00
+              option(value="21:00") 21:00
+              option(value="22:00") 22:00
+          label(for="tidSelect") Vælg tid
           br
-        button(type="submit" class="btn btn-primary w-100 py-2") Book 
+        button(onclick="book()" class="btn btn-primary w-100 py-2") Book 
+
+script.
+  document.getElementById('datepicker').valueAsDate = new Date();
