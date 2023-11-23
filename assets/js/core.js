@@ -1,5 +1,4 @@
 async function addUser() {
-    console.log("lort")
     document.getElementById('registrationForm').addEventListener('submit', function(event) {
         event.preventDefault();
     });
@@ -46,7 +45,6 @@ async function addUser() {
 document.getElementById('datepicker').valueAsDate = new Date();
 
 async function updateUser() {
-    console.log("pis")
     document.getElementById('redigeringsForm').addEventListener('submit', function(event) {
         event.preventDefault();
     });
@@ -71,7 +69,7 @@ async function updateUser() {
         const firstName = inputFields[2].value.trim();
         const lastName = inputFields[3].value.trim();
         const mobileNumber = inputFields[4].value.trim();
-        let data = {username: username, firstName: firstName, lastName: lastName, email: email, mobilnummer: mobileNumber}
+        let data = {username: username, email: email, firstname: firstName, lastname: lastName, mobilnummer: mobileNumber}
         let url = '/profil/edit';
         const response = await fetch(url, {
             method: 'POST',
