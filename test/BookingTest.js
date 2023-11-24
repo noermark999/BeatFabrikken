@@ -7,6 +7,7 @@ import BookingDBFunctions from '../service/BookingDBFunctions.js';
 import e from 'express';
 
 const app = appModule.app;
+const request = supertest(app);
 
 const assert = chai.assert;
 
@@ -35,7 +36,7 @@ describe('test af booking', () => {
   });
 });
 
-describe('Booking API test', () => {
+describe('Booking ikke logget ind', () => {
   it('skal returnere 208, når brugeren ikke er logget ind', (done) => {
     supertest(app)
     .post('/booking')
@@ -48,4 +49,27 @@ describe('Booking API test', () => {
   })
 })
 
+describe('getBooking test', () => {
+  it('skal finde en eksisterende booking', async () => {
+    const expectedDato = '2023-11-24';
+    const expectedTid = '15:00';
+    const expectedLokaleId = 'Sal 1';
 
+    const booking = await BookingDBFunctions.getBooking(expectedDato, expectedTid, expectedLokaleId);
+
+    expect(booking).to.not.be.undefined;
+    expect(booking.dato).to.equal(expectedDato);
+    expect(booking.tid).to.equal(expectedTid);
+    expect(booking.lokaleId).to.equal(expectedLokaleId)
+  });
+
+  it('skal returnere undefined for en ikke-eksisterende booking', async () => {
+    const dato = '2024-01-01';
+    const tid = '10:00';
+    const lokaleId = 'UkendtLokale';
+
+    const booking = await BookingDBFunctions.getBooking(dato, tid, lokaleId);
+
+    expect(booking).to.be.undefined;
+  });
+});
