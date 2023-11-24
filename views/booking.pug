@@ -4,6 +4,7 @@ include includes/header
 div(class="alert alert-success visually-hidden text-center container" role="alert" id="BookingSuccessAlert") Booking er blevet oprettet!
 div(class="alert alert-danger visually-hidden text-center container" role="alert" id="BookingLoginFailureAlert") Du er ikke logget ind!
 div(class="alert alert-danger visually-hidden text-center container" role="alert" id="BookingDateFailureAlert") Datoen du har valgt er udgået!
+div(class="alert alert-danger visually-hidden text-center container" role="alert" id="BookingFailureAlert") Der er allerede booket på dette tidspunkt! Se kalender for ledige tider!
 
 h1(class="text-center mb-4") Booking
 br
@@ -61,7 +62,7 @@ div(class="container mt-4")
         div(class="form-floating")
           select(class="form-select" id="lokaleSelect" aria-label="Floating label select example")
             each lokale in lokaler
-              option(selected value=`'${lokale.docID}'`) #{lokale.docID}
+              option(selected value=`${lokale.docID}`) #{lokale.docID}
           label(for="lokaleSelect") Vælg lokale
       br
       div(class="ms-auto mx-auto w-340px")
