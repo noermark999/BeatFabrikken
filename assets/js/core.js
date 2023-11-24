@@ -62,12 +62,18 @@ async function book() {
             body: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json' }
         })
+        document.querySelectorAll('[role="alert"]').forEach((e) =>{
+            e.classList.add("visually-hidden")
+        })
         if (response.status == 200) {
             const bookingOprettetAlert = document.getElementById("BookingSuccessAlert")
             bookingOprettetAlert.classList.remove("visually-hidden")
         } else if (response.status == 208) {
             const bookingLoginFailureAlert = document.getElementById("BookingLoginFailureAlert")
             bookingLoginFailureAlert.classList.remove("visually-hidden")
+        } else if (response.status == 210) {
+            const bookingFailureAlert = document.getElementById("BookingFailureAlert")
+            bookingFailureAlert.classList.remove("visually-hidden")
         }
     }
 }

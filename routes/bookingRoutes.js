@@ -13,14 +13,20 @@ router.post('/', async (req, res) => {
         const { date, lokaleId, tid } = req.body
         const username = req.session.username;
         const user = await loginDBFunctions.getUser(username);
-        const booking = {dato: date, lokaleId: lokaleId, tid: tid, user: user}
-        let id = await bookingDBFunctions.addBooking(booking)
-        if (id != false) {
-            res.status(200)
+        const booking = { dato: date, lokaleId: lokaleId, tid: tid, user: user }
+        const svar = await bookingDBFunctions.getBooking(date, tid, lokaleId);
+        if (svar) {
+            res.status(210)
             res.end()
         } else {
-            res.status(204)
-            res.end()
+            let id = await bookingDBFunctions.addBooking(booking)
+            if (id != false) {
+                res.status(200)
+                res.end()
+            } else {
+                res.status(204)
+                res.end()
+            }
         }
     } else {
         res.status(208)

@@ -48,7 +48,6 @@ async function getLokaler() {
 
 async function addBooking(booking) {
   const docRef = await addDoc(bookingCollection, booking)
-  console.log(docRef.id);
   return docRef.id
 }
 
@@ -68,15 +67,14 @@ async function getBooking(dato, tid, lokaleId) {
     const bookingDoc = bookingQueryDocs.docs.find(doc => doc.data().dato === dato && doc.data().tid === tid && doc.data().lokaleId === lokaleId)
     if (bookingDoc) {
       const booking = bookingDoc.data()
-      console.log(booking)
       return booking
     } else {
       console.log('Booking not found')
-      return null
+      return undefined
     }
   } catch(error) {
     console.error('Error getting booking', error)
-    return null
+    return undefined
   }
 }
 
