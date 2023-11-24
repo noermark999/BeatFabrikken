@@ -79,10 +79,10 @@ let bookinger = bookingQueryDocs.docs
 
   return bookinger;
 }
-console.log(await getBookingForEnDag("2023-11-24", "Sal 1"))
+//console.log(await getBookingForEnDag("2023-11-24", "Sal 1"))
 
 async function getBookingerForUgen(mandagsDato, lokale) {
-  let mandag = new Date();
+  let mandag = new Date()
   let result = [];
   mandag.setFullYear(mandagsDato.substring(0,4), mandagsDato.substring(5,7), mandagsDato.substring(8,10))
   for (let i = 0; i < 7; i++) {
@@ -91,7 +91,7 @@ async function getBookingerForUgen(mandagsDato, lokale) {
   }
   return result;
 } 
-//console.log(await getBookingerForUgen("2023-11-20", "Sal 1"))
+//console.log(await getBookingerForUgen(, "Sal 1"))
 
 
 async function getBooking(dato, tid, lokaleId) {
