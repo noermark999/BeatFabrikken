@@ -66,18 +66,18 @@ async function getBookinger() {
 async function getBookingForEnDag(dato, lokale) {
   let bookingQueryDocs = await getDocs(bookingCollection);
 
-  let bookinger = bookingQueryDocs.docs
-  .map(doc => {
-    let data = doc.data();
-    if (data) {
-      data.docID = doc.id;
-      return data;
-    }
-    return null; // Hvis data er undefined, returner null
-  })
-  .filter(data => data && data.dato === dato && data.lokaleId === lokale);
+let bookinger = bookingQueryDocs.docs
+    .map(doc => {
+      let data = doc.data();
+      if (data) {
+        data.docID = doc.id;
+        return data;
+      }
+      return null; // Hvis data er undefined, returner null
+    })
+    .filter(data => data && data.dato === dato && data.lokaleId === lokale);
 
-return bookinger;
+  return bookinger;
 }
 console.log(await getBookingForEnDag("2023-11-24", "Sal 1"))
 
