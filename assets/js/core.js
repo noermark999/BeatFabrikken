@@ -135,16 +135,32 @@ async function updateCalendar() {
     const theadTh = document.querySelectorAll("thead th")
     const lokaleId = document.getElementById("lokaleSelect").value;
     const date = document.getElementById("datepicker").value;
-    const getPrevMonday = getPreviousMonday(date);
-
-    let url = '/booking/' + getPrevMonday.toISOString().slice(0, 10) + '/' + lokaleId;
+    const getPrevMonday = getPreviousMonday(date).toISOString().slice(0, 10);
+    const time = document.querySelectorAll("tbody td")
+    
+    let url = '/booking/' + getPrevMonday + '/' + lokaleId;
     const response = await fetch(url)
     const data = await response.json();
-
+    console.log(data);
+    
     for (let i = 0; i < theadTh.length - 1; i++) {
+        let currentDay = new Date(getPreviousMonday(date).setDate(getPreviousMonday(date).getDate() + i)).toISOString().slice(0, 10)
+        let h = 0
         tbodyTr.forEach(tr => {
-            const td = tr.insertCell(-1)
-            td.classList.add("text-bg-success")
+            let boxCreated = false
+            for (let k = 0; k < data.length; k++) {
+                if (data[k].tid === time[h].innerHTML && data[k].dato === currentDay) {
+                    const td = tr.insertCell(-1)
+                    td.classList.add("text-bg-danger")
+                    boxCreated = true
+                    break
+                }
+            }
+            if (!boxCreated) {
+                const td = tr.insertCell(-1)
+                td.classList.add("text-bg-success")
+            }
+            h++
         });
     }
 }
