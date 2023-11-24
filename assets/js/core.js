@@ -112,5 +112,29 @@ async function updateUser() {
             const usernameExistsAlert = document.getElementById("username-exists")
             usernameExistsAlert.classList.remove("visually-hidden")
     }}
+}
 
+const getPreviousMonday = (date = null) => {
+    const prevMonday = date && new Date(date.valueOf()) || new Date()
+    prevMonday.setDate(prevMonday.getDate() - (prevMonday.getDay() + 6) % 7)
+    return prevMonday
+  }
+
+if (window.location.pathname=='/booking') {
+    const tbodyTr = document.querySelectorAll("tbody tr")
+    const theadTh = document.querySelectorAll("thead th")
+    const lokaleId = document.getElementById("lokaleSelect").value;
+    const date = document.getElementById("datepicker").value;
+    const getPrevMonday = getPreviousMonday(date);
+
+    let url = '/booking/' + getPrevMonday.toISOString().slice(0, 10) + '/' + lokaleId;
+    const response = await fetch(url)
+    console.log(response.json());
+
+    for (let i = 0; i < theadTh.length - 1; i++) {
+        tbodyTr.forEach(tr => {
+            const td = tr.insertCell(-1)
+            td.classList.add("text-bg-success")
+        });
+    }
 }
