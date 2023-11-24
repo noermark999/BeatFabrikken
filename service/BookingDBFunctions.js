@@ -69,13 +69,14 @@ async function getBookingForEnDag(dato, lokale) {
   let bookinger = bookingQueryDocs.docs.map(doc => {
     let data = doc.data();
     data.docID = doc.id;
-    
-    if (data.dato === dato && data.lokale === lokale) {
+    if (data.dato === dato && data.lokaleId === lokale) {
+      console.log("test")
       return data;
     }
   });
   return bookinger;
 }
+console.log(await getBookingForEnDag("2023-11-24", "Sal 1"))
 
 async function getBookingerForUgen(mandagsDato, lokale) {
   let mandag = new Date();
@@ -83,11 +84,11 @@ async function getBookingerForUgen(mandagsDato, lokale) {
   mandag.setFullYear(mandagsDato.substring(0,4), mandagsDato.substring(5,7), mandagsDato.substring(8,10))
   for (let i = 0; i < 7; i++) {
     mandag.setDate(new Date().getDate() + i)
-    result.push(getBookingForEnDag(mandag.toISOString().slice(0, 10)))
+    result.push(await getBookingForEnDag(mandag.toISOString().slice(0, 10), lokale))
   }
   return result;
 } 
-console.log(getBookingerForUgen("2023-11-24", "Sal 1"))
+//console.log(await getBookingerForUgen("2023-11-20", "Sal 1"))
 
 
 async function getBooking(dato, tid, lokaleId) {
