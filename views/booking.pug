@@ -61,7 +61,7 @@ div(class="container mt-4")
         div(class="form-floating")
           select(class="form-select" id="lokaleSelect" aria-label="Floating label select example")
             each lokale in lokaler
-              option(selected value=`'${lokale.docID}'`) #{lokale.docID}
+              option(selected value=`${lokale.docID}`) #{lokale.docID}
           label(for="lokaleSelect") Vælg lokale
       br
       div(class="ms-auto mx-auto w-340px")
