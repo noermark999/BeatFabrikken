@@ -128,8 +128,17 @@ const getPreviousMonday = (date = null) => {
 
 if (window.location.pathname=='/booking') {
     document.getElementById('datepicker').valueAsDate = new Date();
+    let date = document.getElementById("datepicker").value;
+    let getPrevMonday = getPreviousMonday(date).toISOString().slice(0, 10)
     const inputField = document.getElementById("datepicker")
-    inputField.addEventListener("input", clearCalendar);
+    inputField.addEventListener("input", function() {
+        date = document.getElementById("datepicker").value;
+        const currentMonday = getPreviousMonday(date).toISOString().slice(0, 10)
+        if (currentMonday != getPrevMonday) {
+            clearCalendar()
+            getPrevMonday = getPreviousMonday(date).toISOString().slice(0, 10)
+        }
+    });
     updateCalendar()
 }
 
