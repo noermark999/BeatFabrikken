@@ -62,4 +62,22 @@ async function getBookinger() {
   return bookinger
 } 
 
-export default { getLokale, getLokaler, addBooking, getBookinger }
+async function getBooking(dato, tid, lokaleId) {
+  try {
+    let bookingQueryDocs = await getDocs(bookingCollection)
+    const bookingDoc = bookingQueryDocs.docs.find(doc => doc.data().dato === dato && doc.data().tid === tid && doc.data().lokaleId === lokaleId)
+    if (bookingDoc) {
+      const booking = bookingDoc.data()
+      console.log(booking)
+      return booking
+    } else {
+      console.log('Booking not found')
+      return null
+    }
+  } catch(error) {
+    console.error('Error getting booking', error)
+    return null
+  }
+}
+
+export default { getLokale, getLokaler, addBooking, getBookinger, getBooking }
