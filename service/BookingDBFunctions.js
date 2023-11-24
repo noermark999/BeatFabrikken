@@ -98,7 +98,7 @@ async function getBookingerForUgen(mandagsDato, lokale) {
 
   return result;
 } 
-console.log(await getBookingerForUgen("2023-11-20", "Sal 1"))
+//console.log(await getBookingerForUgen("2023-11-20", "Sal 1"))
 
 
 async function getBooking(dato, tid, lokaleId) {

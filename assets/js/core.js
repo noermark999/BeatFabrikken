@@ -127,6 +127,10 @@ const getPreviousMonday = (date = null) => {
   }
 
 if (window.location.pathname=='/booking') {
+    updateCalendar()
+}
+
+async function updateCalendar() {
     const tbodyTr = document.querySelectorAll("tbody tr")
     const theadTh = document.querySelectorAll("thead th")
     const lokaleId = document.getElementById("lokaleSelect").value;
@@ -135,7 +139,7 @@ if (window.location.pathname=='/booking') {
 
     let url = '/booking/' + getPrevMonday.toISOString().slice(0, 10) + '/' + lokaleId;
     const response = await fetch(url)
-    console.log(response.json());
+    const data = await response.json();
 
     for (let i = 0; i < theadTh.length - 1; i++) {
         tbodyTr.forEach(tr => {
