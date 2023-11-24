@@ -44,6 +44,11 @@ async function addUser() {
 
 //Booking function
 async function book() {
+    //Fjerner alerts
+    document.querySelectorAll('[role="alert"]').forEach((e) =>{
+        e.classList.add("visually-hidden")
+    })
+
     const date = document.getElementById("datepicker").value;
     const lokaleId = document.getElementById("lokaleSelect").value;
     const tid = document.getElementById("tidSelect").value;
@@ -51,6 +56,8 @@ async function book() {
     let bookDato = new Date();
     bookDato.setHours(tid.substring(0,2));
     bookDato.setFullYear(date.substring(0,4), date.substring(5,7), date.substring(8,10))
+    bookDato.setMonth(bookDato.getMonth() - 1)
+
     if (bookDato.getTime() < idag.getTime()) {
         const bookingDateFailureAlert = document.getElementById("BookingDateFailureAlert")
         bookingDateFailureAlert.classList.remove("visually-hidden")
@@ -61,9 +68,6 @@ async function book() {
             method: 'POST',
             body: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json' }
-        })
-        document.querySelectorAll('[role="alert"]').forEach((e) =>{
-            e.classList.add("visually-hidden")
         })
         if (response.status == 200) {
             const bookingOprettetAlert = document.getElementById("BookingSuccessAlert")
@@ -106,7 +110,7 @@ async function updateUser() {
         let data = {username: username, email: email, firstname: firstName, lastname: lastName, mobilnummer: mobileNumber}
         let url = '/profil/edit';
         const response = await fetch(url, {
-            method: 'POST',
+            method: 'PUT',
             body: JSON.stringify(data),
             headers: {'Content-Type': 'application/json'}
         })
