@@ -1,7 +1,12 @@
 import chai, { expect } from 'chai';
+import supertest from 'supertest';
+import appModule from '../app.js';
 import { getFirestore, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import loginDBFunctions from '../service/loginDBFunctions.js';
 import BookingDBFunctions from '../service/BookingDBFunctions.js';
+import e from 'express';
+
+const app = appModule.app;
 
 const assert = chai.assert;
 
@@ -29,3 +34,18 @@ describe('test af booking', () => {
     expect(updatedUserData.mobilnummer).to.equal(newUserData.mobilnummer);
   });
 });
+
+describe('Booking API test', () => {
+  it('skal returnere 208, når brugeren ikke er logget ind', (done) => {
+    supertest(app)
+    .post('/booking')
+    .send({ date: '2023-01-01', lokeleId: '1', tid: '10:00' })
+    .expect(208)
+    .end((err, res) => {
+      if(err) return done(err);
+      done();
+    })
+  })
+})
+
+
