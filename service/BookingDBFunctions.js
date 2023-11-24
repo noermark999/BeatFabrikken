@@ -51,6 +51,8 @@ async function addBooking(booking) {
   return docRef.id
 }
 
+
+
 async function getBookinger() {
   let bookingQueryDocs = await getDocs(bookingCollection)
   let bookinger = bookingQueryDocs.docs.map(doc => {
@@ -60,6 +62,33 @@ async function getBookinger() {
   })
   return bookinger
 } 
+
+async function getBookingForEnDag(dato, lokale) {
+  let bookingQueryDocs = await getDocs(bookingCollection);
+
+  let bookinger = bookingQueryDocs.docs.map(doc => {
+    let data = doc.data();
+    data.docID = doc.id;
+    
+    if (data.dato === dato && data.lokale === lokale) {
+      return data;
+    }
+  });
+  return bookinger;
+}
+
+async function getBookingerForUgen(mandagsDato, lokale) {
+  let mandag = new Date();
+  let result = [];
+  mandag.setFullYear(mandagsDato.substring(0,4), mandagsDato.substring(5,7), mandagsDato.substring(8,10))
+  for (let i = 0; i < 7; i++) {
+    mandag.setDate(new Date().getDate() + i)
+    result.push(getBookingForEnDag(mandag.toISOString().slice(0, 10)))
+  }
+  return result;
+} 
+console.log(getBookingerForUgen("2023-11-24", "Sal 1"))
+
 
 async function getBooking(dato, tid, lokaleId) {
   try {
@@ -78,4 +107,4 @@ async function getBooking(dato, tid, lokaleId) {
   }
 }
 
-export default { getLokale, getLokaler, addBooking, getBookinger, getBooking }
+export default { getLokale, getLokaler, addBooking, getBookinger, getBookingerForUgen, getBooking }
