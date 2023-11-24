@@ -127,6 +127,9 @@ const getPreviousMonday = (date = null) => {
   }
 
 if (window.location.pathname=='/booking') {
+    document.getElementById('datepicker').valueAsDate = new Date();
+    const inputField = document.getElementById("datepicker")
+    inputField.addEventListener("input", clearCalendar);
     updateCalendar()
 }
 
@@ -141,7 +144,7 @@ async function updateCalendar() {
     let url = '/booking/' + getPrevMonday + '/' + lokaleId;
     const response = await fetch(url)
     const data = await response.json();
-    console.log(data);
+
     
     for (let i = 0; i < theadTh.length - 1; i++) {
         let currentDay = new Date(getPreviousMonday(date).setDate(getPreviousMonday(date).getDate() + i)).toISOString().slice(0, 10)
@@ -163,4 +166,17 @@ async function updateCalendar() {
             h++
         });
     }
+}
+
+function clearCalendar() {
+    const tbodyTr = document.querySelectorAll("tbody tr")
+    tbodyTr.forEach(tr => {
+        const tds = tr.querySelectorAll("td")
+        tds.forEach(td => {
+            if (td.innerHTML == '') {
+                td.remove()
+            }
+        })
+    })
+    updateCalendar()
 }
