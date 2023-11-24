@@ -79,19 +79,26 @@ let bookinger = bookingQueryDocs.docs
 
   return bookinger;
 }
-//console.log(await getBookingForEnDag("2023-11-24", "Sal 1"))
+//console.log(await getBookingForEnDag("2023-11-25", "Sal 1"))
 
 async function getBookingerForUgen(mandagsDato, lokale) {
-  let mandag = new Date()
+  let mandag = new Date(mandagsDato); // Parse the input date
   let result = [];
-  mandag.setFullYear(mandagsDato.substring(0,4), mandagsDato.substring(5,7), mandagsDato.substring(8,10))
+
   for (let i = 0; i < 7; i++) {
-    mandag.setDate(new Date().getDate() + i)
-    result.push(await getBookingForEnDag(mandag.toISOString().slice(0, 10), lokale))
+    let currentDay = new Date(mandag); // Create a new date object to avoid modifying the original date
+    currentDay.setDate(mandag.getDate() + i);
+    
+    // Fetch bookings for the current day
+    let bookingsForDay = await getBookingForEnDag(currentDay.toISOString().slice(0, 10), lokale);
+    
+    // Concatenate the array of bookings to the result array
+    result = result.concat(bookingsForDay);
   }
+
   return result;
 } 
-//console.log(await getBookingerForUgen(, "Sal 1"))
+console.log(await getBookingerForUgen("2023-11-20", "Sal 1"))
 
 
 async function getBooking(dato, tid, lokaleId) {
