@@ -1,10 +1,11 @@
 include includes/head
 include includes/header
 
-div(class="alert alert-success visually-hidden text-center container" role="alert" id="BookingSuccessAlert") Booking er blevet oprettet!
-div(class="alert alert-danger visually-hidden text-center container" role="alert" id="BookingLoginFailureAlert") Du er ikke logget ind!
-div(class="alert alert-danger visually-hidden text-center container" role="alert" id="BookingDateFailureAlert") Datoen du har valgt er udgået!
-div(class="alert alert-danger visually-hidden text-center container" role="alert" id="BookingFailureAlert") Der er allerede booket på dette tidspunkt! Se kalender for ledige tider!
+div(class="container")
+  div(class="alert alert-success visually-hidden text-center" role="alert" id="BookingSuccessAlert") Booking er blevet oprettet!
+  div(class="alert alert-danger visually-hidden text-center" role="alert" id="BookingLoginFailureAlert") Du er ikke logget ind!
+  div(class="alert alert-danger visually-hidden text-center" role="alert" id="BookingDateFailureAlert") Datoen du har valgt er udgået!
+  div(class="alert alert-danger visually-hidden text-center" role="alert" id="BookingFailureAlert") Der er allerede booket på dette tidspunkt! Se kalender for ledige tider!
 
 h1(class="text-center mb-4") Booking
 br
@@ -12,8 +13,8 @@ div(class="container mt-4")
   div(class="row")
     div(class="col")
       div(class="mx-auto")
-        table(class="table table-bordered")
-          thead
+        table(class="table table-bordered table-striped")
+          thead(class="text-center")
             tr
               th
               th Mandag
@@ -60,7 +61,7 @@ div(class="container mt-4")
       br
       div(class="ms-auto mx-auto w-340px")
         div(class="form-floating")
-          select(class="form-select" id="lokaleSelect" aria-label="Floating label select example")
+          select(class="form-select" id="lokaleSelect" onChange="clearCalendar()" aria-label="Floating label select example")
             each lokale in lokaler
               option(selected value=`${lokale.docID}`) #{lokale.docID}
           label(for="lokaleSelect") Vælg lokale
@@ -85,7 +86,4 @@ div(class="container mt-4")
               option(value="22:00") 22:00
           label(for="tidSelect") Vælg tid
           br
-        button(onclick="book()" class="btn btn-primary w-100 py-2") Book 
-
-script.
-  document.getElementById('datepicker').valueAsDate = new Date();
+        button(onclick="book()" class="btn btn-primary w-100 py-2") Book

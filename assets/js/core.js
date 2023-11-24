@@ -122,5 +122,74 @@ async function updateUser() {
             const usernameExistsAlert = document.getElementById("username-exists")
             usernameExistsAlert.classList.remove("visually-hidden")
     }}
+}
 
+const getPreviousMonday = (date = null) => {
+    const prevMonday = date && new Date(date.valueOf()) || new Date()
+    prevMonday.setDate(prevMonday.getDate() - (prevMonday.getDay() + 6) % 7)
+    return prevMonday
+  }
+
+if (window.location.pathname=='/booking') {
+    document.getElementById('datepicker').valueAsDate = new Date();
+    let date = document.getElementById("datepicker").value;
+    let getPrevMonday = getPreviousMonday(date).toISOString().slice(0, 10)
+    const inputField = document.getElementById("datepicker")
+    inputField.addEventListener("input", function() {
+        date = document.getElementById("datepicker").value;
+        const currentMonday = getPreviousMonday(date).toISOString().slice(0, 10)
+        if (currentMonday != getPrevMonday) {
+            clearCalendar()
+            getPrevMonday = getPreviousMonday(date).toISOString().slice(0, 10)
+        }
+    });
+    updateCalendar()
+}
+
+async function updateCalendar() {
+    const tbodyTr = document.querySelectorAll("tbody tr")
+    const theadTh = document.querySelectorAll("thead th")
+    const lokaleId = document.getElementById("lokaleSelect").value;
+    const date = document.getElementById("datepicker").value;
+    const getPrevMonday = getPreviousMonday(date).toISOString().slice(0, 10);
+    const time = document.querySelectorAll("tbody td")
+    
+    let url = '/booking/' + getPrevMonday + '/' + lokaleId;
+    const response = await fetch(url)
+    const data = await response.json();
+
+    
+    for (let i = 0; i < theadTh.length - 1; i++) {
+        let currentDay = new Date(getPreviousMonday(date).setDate(getPreviousMonday(date).getDate() + i)).toISOString().slice(0, 10)
+        let h = 0
+        tbodyTr.forEach(tr => {
+            let boxCreated = false
+            for (let k = 0; k < data.length; k++) {
+                if (data[k].tid === time[h].innerHTML && data[k].dato === currentDay) {
+                    const td = tr.insertCell(-1)
+                    td.classList.add("text-bg-danger")
+                    boxCreated = true
+                    break
+                }
+            }
+            if (!boxCreated) {
+                const td = tr.insertCell(-1)
+                td.classList.add("text-bg-success")
+            }
+            h++
+        });
+    }
+}
+
+function clearCalendar() {
+    const tbodyTr = document.querySelectorAll("tbody tr")
+    tbodyTr.forEach(tr => {
+        const tds = tr.querySelectorAll("td")
+        tds.forEach(td => {
+            if (td.innerHTML == '') {
+                td.remove()
+            }
+        })
+    })
+    updateCalendar()
 }
