@@ -31,7 +31,13 @@ router.post('/', async (req, res) => {
         res.status(208)
         res.end()
     }
-
 })
+
+router.get('/:dato/:lokale', async (req, res) => {
+    let bookinger = await bookingDBFunctions.getBookingerForUgen(req.params.dato, req.params.lokale);
+    res.json(bookinger);
+})
+
+router.get
 
 export default router;

@@ -56,7 +56,7 @@ router.get('/edit', async (req, res) => {
 //-------------------------------------------------------------------------------------//
 
 //route til opdatering af siden og databasen
-router.post('/edit', async (req, res) => {
+router.put('/edit', async (req, res) => {
     if (req.session.isLoggedIn) {
       const oldUsername = req.session.username;
       const { username, email, firstname, lastname, mobilnummer } = req.body;
