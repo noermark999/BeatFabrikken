@@ -123,6 +123,8 @@ router.post('/editPassword', async (req, res) => {
   }
 })
 
+//-------------------------------------------------------------------------------------//
+
 router.get('/manageBookings', async (req, res) => {
   if (req.session.isLoggedIn) {
     const username = req.session.username;
@@ -145,6 +147,8 @@ router.get('/manageBookings', async (req, res) => {
     res.redirect('/login');
   }
 });
+
+//-------------------------------------------------------------------------------------//
 
 router.post('/manageBookings/delete/:bookingId', async (req, res) => {
   if (req.session.isLoggedIn) {
