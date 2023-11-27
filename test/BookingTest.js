@@ -14,25 +14,24 @@ const assert = chai.assert;
 describe('test af booking', () => {
   it('burde oprette en booking', async () => {
     // data for at lave bookningen
-    const user = loginDBFunctions.getUser("testbooking");
-    const lokale = BookingDBFunctions.getLokale("DanceZone-sal")
+    const lokale = await BookingDBFunctions.getLokale("DanceZone-sal")
     const dato = "2023-11-29"
-    const tid = "10:00"
+    const tid = "12:00"
+    const booking = {lokaleId: 'Sal 1', dato: dato, tid: tid, username: 'test'}
+
+    supertest(app).post('/login').send({username: 'test', password: 'test'})
 
     // kald på funktionen der opretter bookningen
-    await profileDBFunctions.updateUser(newUserData, usernameToUpdate);
+    await BookingDBFunctions.addBooking(booking);
 
     // hent bookningen og tjek om det er korrekt
-    const oprettetBooking = await BookingDBFunctions.getBooking()
-    const updatedUserData = await loginDBFunctions.getUser(newUsername);
+    const oprettetBooking = await BookingDBFunctions.getBooking(dato, tid, 'Sal 1')
 
     // Assertions
-    expect(updatedUserData).to.not.be.null;
-    expect(updatedUserData.username).to.equal(newUserData.username);
-    expect(updatedUserData.email).to.equal(newUserData.email);
-    expect(updatedUserData.firstname).to.equal(newUserData.firstname);
-    expect(updatedUserData.lastname).to.equal(newUserData.lastname);
-    expect(updatedUserData.mobilnummer).to.equal(newUserData.mobilnummer);
+    expect(oprettetBooking).to.not.be.null;
+    expect(oprettetBooking.dato).to.equal(dato);
+    expect(oprettetBooking.tid).to.equal(tid);
+    expect(oprettetBooking.username).to.equal('test');
   });
 });
 
