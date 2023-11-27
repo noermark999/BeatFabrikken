@@ -1,6 +1,7 @@
 import express from "express";
 import loginDBFunctions from "../service/loginDBFunctions.js"
 import profileDBFunctions from "../service/profileDBFunctions.js";
+import BookingDBFunctions from "../service/BookingDBFunctions.js";
 
 
 const router = express.Router();
@@ -121,5 +122,42 @@ router.post('/editPassword', async (req, res) => {
     res.redirect('/login');
   }
 })
+
+router.get('/manageBookings', async (req, res) => {
+  if (req.session.isLoggedIn) {
+    const username = req.session.username;
+    try {
+      const user = await loginDBFunctions.getUser(username);
+      if (user) {
+        const bookinger = await BookingDBFunctions.getBookingerByUser(user.username); // Antaget funktion
+        res.render('manageBookings', { 
+            title: 'Mine Bookinger', 
+            bookinger: bookinger
+        });
+      } else {
+        res.redirect('/login');
+      }
+    } catch (error) {
+      console.error('Fejl ved hentning af bookinger:', error);
+      res.redirect('/profil');
+    }
+  } else {
+    res.redirect('/login');
+  }
+});
+
+router.post('/manageBookings/delete/:bookingId', async (req, res) => {
+  if (req.session.isLoggedIn) {
+    const bookingId = req.params.bookingId;
+    const deleted = await BookingDBFunctions.deleteBooking(bookingId);
+    if (deleted) {
+      res.redirect('/profil/manageBookings'); // Redirect tilbage til booking management side
+    } else {
+      res.status(500).send('Kunne ikke slette bookingen');
+    }
+  } else {
+    res.redirect('/login');
+  }
+});
 
 export default router;

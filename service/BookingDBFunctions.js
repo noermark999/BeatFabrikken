@@ -118,4 +118,31 @@ async function getBooking(dato, tid, lokaleId) {
   }
 }
 
-export default { getLokale, getLokaler, addBooking, getBookinger, getBookingerForUgen, getBooking }
+async function getBookingerByUser(username) {
+  let bookingQueryDocs = await getDocs(bookingCollection);
+  let userBookinger = bookingQueryDocs.docs
+    .map(doc => {
+      let data = doc.data();
+      if (data && data.username === username) {
+        data.docID = doc.id;
+        return data;
+      }
+      return null; // Hvis data er undefined, returner null
+    })
+    .filter(booking => booking !== null);
+
+  return userBookinger;
+}
+
+async function deleteBooking(bookingId) {
+  try {
+    const docRef = doc(db, 'Bookinger', bookingId);
+    await deleteDoc(docRef);
+    return true;
+  } catch (error) {
+    console.error('Error deleting booking', error);
+    return false;
+  }
+}
+
+export default { getLokale, getLokaler, addBooking, getBookinger, getBookingerForUgen, getBooking, getBookingerByUser, deleteBooking }

@@ -1,0 +1,27 @@
+include includes/head
+include includes/header
+
+div(class="container mt-4")
+    h2(class="text-center mb-4") Administrer Bookinger
+    if bookinger && bookinger.length > 0
+        table(class="table")
+            thead
+                tr
+                    th Dato
+                    th Tid
+                    th Lokale
+                    th Handling
+            tbody
+                each booking in bookinger
+                    tr
+                        td #{booking.dato}
+                        td #{booking.tid}
+                        td #{booking.lokaleId}
+                        td
+                            form(action=`/profil/manageBookings/delete/${booking.docID}` method="post")
+                              button(type="submit" onclick="return confirm('Er du sikker på, at du vil slette denne booking?');" class="btn btn-danger") Slet
+    else
+        p Ingen bookinger fundet.
+
+include includes/footer
+
