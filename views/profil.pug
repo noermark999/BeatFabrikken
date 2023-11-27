@@ -23,7 +23,9 @@ div(class="container mt-4")
                         div(class="form-floating mb-3")
                             input(type="text", class="form-control", id="floatingMobilnummer", placeholder="Mobilnummer", value=mobilnummer, disabled)
                             label(for="floatingMobilnummer") Mobilnummer
-                    a(href='/profil/edit', class='btn btn-primary mt-3') Rediger profil
+                        div(class="d-flex justify-content-between mt-3")
+                            a(href='/profil/edit', class='btn btn-primary') Rediger profil
+                            a(href='/profil/manageBookings', class='btn btn-primary') Se Bookinger
 
 include includes/footer
 
