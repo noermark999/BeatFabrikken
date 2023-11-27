@@ -1,6 +1,7 @@
 import chai from 'chai';
 import { getFirestore, collection, doc, getDoc } from 'firebase/firestore';
 import loginDBFunctions from '../service/loginDBFunctions.js';
+import registreringDBFunctions from '../service/registreringDBFunctions.js';
 
 const expect = chai.expect;
 
@@ -13,7 +14,7 @@ describe('addUser Function', () => {
       mobilnummer: '12345678'
     };
 
-    const userId = await loginDBFunctions.addUser(testUser);
+    const userId = await registreringDBFunctions.addUser(testUser);
 
     const db = getFirestore(loginDBFunctions.firebase_app);
     const brugere = collection(db, 'Bruger');
