@@ -40,4 +40,6 @@ router.get('/:dato/:lokale', async (req, res) => {
 
 router.get
 
+
+
 export default router;
