@@ -27,6 +27,11 @@ const firebase_app = initializeApp(firebaseConfig);
 const db = getFirestore(firebase_app);
 const holdCollection = collection(db, 'Hold')
 
+async function addHold(hold) {
+  const docRef = await addDoc(holdCollection, hold)
+  return docRef.id
+}
+
 async function getHold(holdID) {
     const docRef = doc(db, 'Hold', holdID)
     const holdQueryDoc = await getDoc(docRef)
