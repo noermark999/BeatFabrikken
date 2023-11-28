@@ -86,5 +86,12 @@ div(class="container mt-4")
               option(value="22:00") 22:00
           label(for="tidSelect") Vælg tid
           br
+          if isAdmin
+            div(class="btn-group" role="group" aria-label="Basic checkbox toggle button group")
+              input(type="checkbox" class="btn-check" id="btncheck1" autocomplete="off")
+              label(class="btn btn-outline-primary" for="btncheck1") Fast booking
+          if btncheck1
+            p Vælg 
+        br  
         button(onclick="book()" class="btn btn-primary w-100 py-2") Book
 include includes/footer
