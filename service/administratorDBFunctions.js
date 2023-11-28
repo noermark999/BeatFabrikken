@@ -40,7 +40,7 @@ async function getHold(holdNavn) {
   }
 
   async function getAlleHold() {
-    let alleHoldQueryDocs = await getDocs(lokalerCollection)
+    let alleHoldQueryDocs = await getDocs(holdCollection)
     let alleHold = alleHoldQueryDocs.docs.map(doc => {
       let data = doc.data()
       data.docID = doc.id

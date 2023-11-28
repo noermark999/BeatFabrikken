@@ -73,4 +73,33 @@ describe('getBooking test', () => {
   });
 });
 
+describe('Delete Booking Test', () => {
+  let bookingId;
+
+  before(async () => {
+    // Opret en testbooking
+    bookingId = await BookingDBFunctions.addBooking({
+      dato: '2023-12-12',
+      lokaleId: 'Sal 1',
+      tid: '10:00',
+      username: 'test'
+    });
+    expect(bookingId).to.not.be.null;
+  });
+
+  it('skal slette en eksisterende booking', async () => {
+    // Forsøg at slette bookingen
+    const deletionResult = await BookingDBFunctions.deleteBooking(bookingId);
+    expect(deletionResult).to.be.true;
+
+    // Kontroller, at bookingen er slettet
+    const booking = await BookingDBFunctions.getBooking('2023-12-12', '10:00', 'Sal 1');
+    expect(booking).to.be.undefined;
+  });
+
+  after(async () => {
+    // Ryd op (hvis testbookingen ikke blev slettet)
+    await BookingDBFunctions.deleteBooking(bookingId);
+  });
+});
 

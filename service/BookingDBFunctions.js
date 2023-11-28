@@ -131,7 +131,7 @@ async function getBookingerByUser(username) {
 
         let bookingDato = new Date(data.dato);
         data.erFremtidig = bookingDato >= idag;
-        
+
         return data;
       }
       return null; // Hvis data er undefined, returner null
@@ -143,6 +143,7 @@ async function getBookingerByUser(username) {
   return userBookinger;
 }
 
+//vi skal teste deleteBooking
 
 
 async function deleteBooking(bookingId) {

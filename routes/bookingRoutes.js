@@ -2,10 +2,13 @@ import express from "express";
 const router = express.Router();
 import bookingDBFunctions from "../service/BookingDBFunctions.js"
 import loginDBFunctions from "../service/loginDBFunctions.js"
+import administratorDBFunctions from "../service/administratorDBFunctions.js"
 
 router.get('/', async (req, res) => {
     let lokaler = await bookingDBFunctions.getLokaler();
-    res.render('booking', { title: 'Booking', lokaler: lokaler });
+    let hold = await administratorDBFunctions.getAlleHold();
+    console.log(hold);
+    res.render('booking', { title: 'Booking', lokaler: lokaler, hold: hold });
 })
 
 router.post('/', async (req, res) => {
