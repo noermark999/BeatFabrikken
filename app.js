@@ -28,10 +28,15 @@ app.use(expressSession({
 }));
 app.use(function(req, res, next) {
     let isLoggedIn = false;
+    let isAdmin = false;
     if (req.session && req.session.isLoggedIn) {
         isLoggedIn = true;
     }
+    if (req.session && req.session.isAdmin) {
+        isAdmin = true;
+    }
     res.locals.isLoggedIn = isLoggedIn
+    res.locals.isAdmin = isAdmin
     next()
 })
 

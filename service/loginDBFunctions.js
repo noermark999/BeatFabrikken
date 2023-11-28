@@ -62,4 +62,14 @@ async function checkLogInUser(username, password) {
   return false;
 }
 
-export default {getUser,checkLogInUser}
+async function checkIsAdmin(username) {
+  const user = await getUser(username);
+  if (user) {
+    if (user.admin) {
+      return true
+    }
+  }
+  return false
+}
+
+export default {getUser,checkLogInUser, checkIsAdmin}

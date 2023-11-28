@@ -12,6 +12,7 @@ router.post('/', async (req, res) => { // TJEKKER LOGIN VED HJÆLP AF VORES FUNC
     if (await loginDBFunctions.checkLogInUser(username.toLowerCase(), password)) {
         req.session.isLoggedIn = true
         req.session.username = username
+        req.session.isAdmin = await loginDBFunctions.checkIsAdmin(username)
         res.redirect('/')
     } else {
         res.redirect('/login')

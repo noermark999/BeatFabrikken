@@ -31,6 +31,7 @@ const brugere = collection(db, 'Bruger')
 
 const addUser = async (user) => {
     if (await loginDBFunctions.getUser(user.username) == null) {
+        user.admin = false
         user.salt = getSalt();
         console.log(user);
         const salt = saltStringToUint8Array(user.salt)
