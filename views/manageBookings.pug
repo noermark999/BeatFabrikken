@@ -18,10 +18,14 @@ div(class="container mt-4")
                         td #{booking.tid}
                         td #{booking.lokaleId}
                         td
-                            form(action=`/profil/manageBookings/delete/${booking.docID}` method="post")
-                              button(type="submit" onclick="return confirm('Er du sikker på, at du vil slette denne booking?');" class="btn btn-danger") Slet
+                            if booking.erFremtidig
+                                form(action=`/profil/manageBookings/delete/${booking.docID}` method="post")
+                                    button(type="submit" onclick="return confirm('Er du sikker på, at du vil slette denne booking?');" class="btn btn-danger") Annuller
+                            else
+                              span.text-succes Færdig
     else
         p Ingen bookinger fundet.
 
 include includes/footer
+
 
