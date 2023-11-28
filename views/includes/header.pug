@@ -11,7 +11,9 @@ body
                     a(href="/booking" class="nav-link px-2") Booking
                 li 
                     a(href="https://www.stokkebroedans.dk/" class="nav-link px-2") Om os
-            div(class="col-md-3 text-end")
+            div(class="col-md-4 text-end")
+                if isAdmin
+                    button(type="button" class="btn btn-primary me-2" onclick="location.href='/admin'") Administration
                 if !isLoggedIn
                     button(type="button" class="btn btn-primary me-2" onclick="location.href='/registrering'") Opret bruger
                     button(type="button" class="btn btn-outline-primary" onclick="location.href='/login'") Login
@@ -19,5 +21,5 @@ body
                     button(type="button" class="btn btn-primary me-2" onclick="location.href='/profil'") Profil
                     button(type="button" class="btn btn-outline-primary" onclick="location.href='/logout'") Logud
                 
-                button(type="button" class="btn btn-primary me-2" onclick="location.href='/admin'") Administration
+            
 

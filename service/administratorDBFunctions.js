@@ -32,11 +32,10 @@ async function addHold(hold) {
   return docRef.id
 }
 
-async function getHold(holdID) {
-    const docRef = doc(db, 'Hold', holdID)
+async function getHold(holdNavn) {
+    const docRef = doc(db, 'Hold', holdNavn)
     const holdQueryDoc = await getDoc(docRef)
     let hold = holdQueryDoc.data()
-    hold.docID = holdQueryDoc.id
     return hold
   }
 
@@ -51,4 +50,4 @@ async function getHold(holdID) {
   }
 
 
-  export default {getHold, getAlleHold }
+  export default {getHold, getAlleHold, addHold }
