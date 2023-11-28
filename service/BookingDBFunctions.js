@@ -129,8 +129,9 @@ async function getBookingerByUser(username) {
       }
       return null; // Hvis data er undefined, returner null
     })
-    .filter(booking => booking !== null);
-
+    .filter(booking => booking !== null)
+    .sort((a, b) => new Date(a.dato) - new Date(b.dato));
+    
   return userBookinger;
 }
 
