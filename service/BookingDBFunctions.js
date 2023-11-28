@@ -157,4 +157,8 @@ async function deleteBooking(bookingId) {
   }
 }
 
-export default { getLokale, getLokaler, addBooking, getBookinger, getBookingerForUgen, getBooking, getBookingerByUser, deleteBooking }
+async function addFastBooking(fastBooking) {
+
+}
+
+export default { getLokale, getLokaler, addBooking, getBookinger, getBookingerForUgen, getBooking, getBookingerByUser, deleteBooking, addFastBooking }
