@@ -8,6 +8,7 @@ import loginRoute from './routes/loginRoutes.js'
 import registreringRoute from './routes/registreringRoute.js'
 import profilRoutes from './routes/profilRoutes.js'
 import bookingRoutes from './routes/bookingRoutes.js'
+import adminRoutes from './routes/adminRoutes.js'
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use("/login", loginRoute)
 app.use("/registrering", registreringRoute)
 app.use("/profil", profilRoutes)
 app.use("/booking", bookingRoutes)
+app.use("/admin", adminRoutes)
 
 // ---------------------------------------------------------------------------------------------------
 
