@@ -120,20 +120,30 @@ async function getBooking(dato, tid, lokaleId) {
 
 async function getBookingerByUser(username) {
   let bookingQueryDocs = await getDocs(bookingCollection);
+  let idag = new Date();
+  idag.setHours(0, 0, 0, 0);
+
   let userBookinger = bookingQueryDocs.docs
     .map(doc => {
       let data = doc.data();
       if (data && data.username === username) {
         data.docID = doc.id;
+
+        let bookingDato = new Date(data.dato);
+        data.erFremtidig = bookingDato >= idag;
+        
         return data;
       }
       return null; // Hvis data er undefined, returner null
     })
     .filter(booking => booking !== null)
-    .sort((a, b) => new Date(a.dato) - new Date(b.dato));
+
+    userBookinger.sort((a, b) => new Date(a.dato) - new Date(b.dato) || a.tid.localeCompare(b.tid));
     
   return userBookinger;
 }
+
+
 
 async function deleteBooking(bookingId) {
   try {
