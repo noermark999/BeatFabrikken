@@ -9,11 +9,11 @@ describe('getUser Function', () => {
   it('should retrieve a user by username', async () => {
     
     // Hent brugeren fra databasen
-    const retrievedUser = await loginDBFunctions.getUser('testgetuser');
+    const retrievedUser = await loginDBFunctions.getUser('test');
 
     expect(retrievedUser).to.not.be.null;
-    expect(retrievedUser.username).to.equal('testgetuser');
-    expect(retrievedUser.email).to.equal('test@example.com');
+    expect(retrievedUser.username).to.equal('test');
+    expect(retrievedUser.email).to.equal('test@test.com');
     expect(retrievedUser.mobilnummer).to.equal('12345678');
   });
 });
