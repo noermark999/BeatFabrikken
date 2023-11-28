@@ -90,8 +90,11 @@ div(class="container mt-4")
             div(class="btn-group" role="group" aria-label="Basic checkbox toggle button group")
               input(type="checkbox" class="btn-check" id="btncheck1" autocomplete="off")
               label(class="btn btn-outline-primary" for="btncheck1") Fast booking
-          if btncheck1
-            p Vælg 
+            select(class="form-select" id="lokaleSelect" onChange="clearCalendar()" aria-label="Floating label select example")
+              each h in hold
+                option(selected value=`${h.Holdnavn}`) #{lokale.Holdnavn}
+              option(value="åben træning") Åben træning  
+              label(for="lokaleSelect") Vælg for hvilket hold eller åben træning
         br  
         button(onclick="book()" class="btn btn-primary w-100 py-2") Book
 include includes/footer
