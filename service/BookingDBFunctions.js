@@ -55,6 +55,8 @@ async function getLokaler() {
 }
 
 async function addBooking(booking) {
+  let dato = new Date(booking.dato);
+  booking.dato = dato.toISOString().slice(0, 10)
   const docRef = await addDoc(bookingCollection, booking)
   return docRef.id
 }
@@ -168,14 +170,14 @@ async function deleteBooking(bookingId) {
 async function addFastBooking(fastBooking, startDate, slutDate) {
   let res = [];
   let done = false
-  
+
   while (!done) {
     res.push(await addBooking(fastBooking));
 
     if (startDate.getTime() > slutDate.getTime()) {
       done = true;
     } else {
-      fastBooking.dato = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate()
+      fastBooking.dato = startDate
       startDate.setDate(startDate.getDate() + 7)
     }
   }

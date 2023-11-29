@@ -63,7 +63,7 @@ router.post('/fastbooking', async (req, res) => {
                 if (loopdate.getTime() > slutDate.getTime()) {
                     done = true;
                 } else {
-                    fastbooking.dato = loopdate.getFullYear() + "-" + (loopdate.getMonth() + 1) + "-" + loopdate.getDate()
+                    fastbooking.dato = loopdate
                     loopdate.setDate(loopdate.getDate() + 7)
                 }
             }
