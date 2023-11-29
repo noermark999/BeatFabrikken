@@ -42,6 +42,42 @@ async function addUser() {
     }
 }
 
+async function addHold() {
+    document.getElementById('registrationForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+    });
+    const inputFields = document.querySelectorAll(".form-control")
+    let validationFailed = false
+    inputFields.forEach(elem => {
+        if (elem.value.trim() === '') {
+            validationFailed = true;
+            return
+        }
+    })
+    if (!validationFailed) {
+        const alder = inputFields[0].value.trim();
+        const holdNavn = inputFields[1].value.trim();
+        const instruktør = inputFields[2].value.trim();
+        const pris = inputFields[3].value.trim();
+        let data = {alder: alder, holdNavn: holdNavn, instruktør: instruktør, pris: pris}
+        let url = '/opretHold'
+        const response = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: { 'Content-Type': 'application/json' }
+        })
+        if (response.status == 200) {
+            window.location = "/admin";
+        } else {
+            const holdNavnInput = document.getElementById("floatingHoldnavn")
+            holdNavnInput.classList.add("is-invalid")
+            const holdNavnExistsAlert = document.getElementById("holdNavn-exists")
+            holdNavnExistsAlert.classList.remove("visually-hidden")
+        }
+
+    }
+}
+
 //Booking function
 async function book() {
     //Fjerner alerts
@@ -190,6 +226,7 @@ async function updateCalendar() {
     const response = await fetch(url)
     const data = await response.json();
 
+    console.log(data);
 
     for (let i = 0; i < theadTh.length - 1; i++) {
         let currentDay = new Date(getPreviousMonday(date).setDate(getPreviousMonday(date).getDate() + i)).toISOString().slice(0, 10)
@@ -200,6 +237,10 @@ async function updateCalendar() {
                 if (data[k].tid === time[h].innerHTML && data[k].dato === currentDay) {
                     const td = tr.insertCell(-1)
                     td.classList.add("text-bg-danger")
+                    if (data[k].username == "åben træning") {
+                        td.classList.add("aaben")
+                        td.innerHTML = "åben træning"
+                    }
                     boxCreated = true
                     break
                 }
@@ -218,7 +259,7 @@ function clearCalendar() {
     tbodyTr.forEach(tr => {
         const tds = tr.querySelectorAll("td")
         tds.forEach(td => {
-            if (td.innerHTML == '') {
+            if (td.innerHTML == '' || td.innerHTML == "åben træning") {
                 td.remove()
             }
         })
