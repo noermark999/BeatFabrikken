@@ -228,8 +228,6 @@ async function updateCalendar() {
     const response = await fetch(url)
     const data = await response.json();
 
-    console.log(data);
-
     for (let i = 0; i < theadTh.length - 1; i++) {
         let currentDay = new Date(getPreviousMonday(date).setDate(getPreviousMonday(date).getDate() + i)).toISOString().slice(0, 10)
         let h = 0
