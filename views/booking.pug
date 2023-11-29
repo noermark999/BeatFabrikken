@@ -13,7 +13,7 @@ div(class="container")
   div(class="row")
     div(class="col")
       div(class="mx-auto")
-        table(class="table table-bordered table-striped")
+        table(class="table table-bordered table-striped bookingTable")
           thead(class="text-center")
             tr
               th
@@ -55,8 +55,23 @@ div(class="container")
               td 21:00
             tr
               td 22:00
+        table(class="table")
+          tbody(class="text-start d-inline-flex")
+            tr
+              td
+              td(class="text-bg-success")
+              td = Ledig
+              td(class="text-bg-danger")
+              td = Optaget
+              td(class="text-bg-warning")
+              td = Fritræning
+              td(class="text-bg-primary")
+              td = Event
+              
     div(class="col")
       div(class="mx-auto w-340px")
+        label Vælg dato
+        br
         input(type="date" id="datepicker")
       br
       div(class="ms-auto mx-auto w-340px")
@@ -100,8 +115,9 @@ div(class="container")
                   option(value="åben træning") Åben træning
                 label(for="holdSelect") Vælg for hvilket hold eller åben træning
               br
-              label(for="datepickerSlut")  Vælg slutdato for træning
               div(class="mx-auto w-340px")
+                label(for="datepickerSlut")  Vælg slutdato for træning
+                br
                 input(type="date" id="datepickerSlut")
               br  
         button(onclick="book()" class="btn btn-primary w-100 py-2") Book

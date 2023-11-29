@@ -83,7 +83,7 @@ input[type=number] {
   opacity: .1;
 }
 
-table th {
+.bookingTable th {
   padding:2px !important;
   width: 12.5%;
 }

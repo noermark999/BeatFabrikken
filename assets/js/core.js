@@ -217,12 +217,12 @@ if (window.location.pathname == '/booking') {
 }
 
 async function updateCalendar() {
-    const tbodyTr = document.querySelectorAll("tbody tr")
-    const theadTh = document.querySelectorAll("thead th")
+    const tbodyTr = document.querySelectorAll(".bookingTable tbody tr")
+    const theadTh = document.querySelectorAll(".bookingTable thead th")
     const lokaleId = document.getElementById("lokaleSelect").value;
     const date = document.getElementById("datepicker").value;
     const getPrevMonday = getPreviousMonday(date).toISOString().slice(0, 10);
-    const time = document.querySelectorAll("tbody td")
+    const time = document.querySelectorAll(".bookingTable tbody td")
 
     let url = '/booking/' + getPrevMonday + '/' + lokaleId;
     const response = await fetch(url)
@@ -255,7 +255,7 @@ async function updateCalendar() {
 }
 
 function clearCalendar() {
-    const tbodyTr = document.querySelectorAll("tbody tr")
+    const tbodyTr = document.querySelectorAll(".bookingTable tbody tr")
     tbodyTr.forEach(tr => {
         const tds = tr.querySelectorAll("td")
         tds.forEach(td => {
