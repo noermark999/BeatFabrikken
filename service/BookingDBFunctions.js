@@ -12,14 +12,22 @@ import {
 } from 'firebase/firestore'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBA1THaQC10sV-iVeSrCm7WRgZKAGp9Wl0",
-  authDomain: "beatfabrikken.firebaseapp.com",
-  projectId: "beatfabrikken",
-  storageBucket: "beatfabrikken.appspot.com",
-  messagingSenderId: "58921661526",
-  appId: "1:58921661526:web:85724090a059e129cff7f7",
-  measurementId: "G-RP8EPZ4RKR"
+
+  apiKey: "AIzaSyDou4WSQ61qMHdL6G9qu-mwWzVv2Ihp5QE",
+
+  authDomain: "beatfabrikkenreincarnated.firebaseapp.com",
+
+  projectId: "beatfabrikkenreincarnated",
+
+  storageBucket: "beatfabrikkenreincarnated.appspot.com",
+
+  messagingSenderId: "709925552016",
+
+  appId: "1:709925552016:web:a44066f7ef79182794fd15"
+
 };
+
+
 
 
 // Initialize Firebase
@@ -61,12 +69,12 @@ async function getBookinger() {
     return data
   })
   return bookinger
-} 
+}
 
 async function getBookingForEnDag(dato, lokale) {
   let bookingQueryDocs = await getDocs(bookingCollection);
 
-let bookinger = bookingQueryDocs.docs
+  let bookinger = bookingQueryDocs.docs
     .map(doc => {
       let data = doc.data();
       if (data) {
@@ -88,16 +96,16 @@ async function getBookingerForUgen(mandagsDato, lokale) {
   for (let i = 0; i < 7; i++) {
     let currentDay = new Date(mandag); // Create a new date object to avoid modifying the original date
     currentDay.setDate(mandag.getDate() + i);
-    
+
     // Fetch bookings for the current day
     let bookingsForDay = await getBookingForEnDag(currentDay.toISOString().slice(0, 10), lokale);
-    
+
     // Concatenate the array of bookings to the result array
     result = result.concat(bookingsForDay);
   }
 
   return result;
-} 
+}
 //console.log(await getBookingerForUgen("2023-11-20", "Sal 1"))
 
 
@@ -112,7 +120,7 @@ async function getBooking(dato, tid, lokaleId) {
       console.log('Booking not found')
       return undefined
     }
-  } catch(error) {
+  } catch (error) {
     console.error('Error getting booking', error)
     return undefined
   }
@@ -138,8 +146,8 @@ async function getBookingerByUser(username) {
     })
     .filter(booking => booking !== null)
 
-    userBookinger.sort((a, b) => new Date(a.dato) - new Date(b.dato) || a.tid.localeCompare(b.tid));
-    
+  userBookinger.sort((a, b) => new Date(a.dato) - new Date(b.dato) || a.tid.localeCompare(b.tid));
+
   return userBookinger;
 }
 
@@ -157,8 +165,21 @@ async function deleteBooking(bookingId) {
   }
 }
 
-async function addFastBooking(fastBooking) {
+async function addFastBooking(fastBooking, startDate, slutDate) {
+  let res = [];
+  let done = false
+  
+  while (!done) {
+    res.push(await addBooking(fastBooking));
 
+    if (startDate.getTime() > slutDate.getTime()) {
+      done = true;
+    } else {
+      fastBooking.dato = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate()
+      startDate.setDate(startDate.getDate() + 7)
+    }
+  }
+  return res;
 }
 
 export default { getLokale, getLokaler, addBooking, getBookinger, getBookingerForUgen, getBooking, getBookingerByUser, deleteBooking, addFastBooking }

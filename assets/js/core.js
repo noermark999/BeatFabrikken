@@ -50,18 +50,7 @@ async function book() {
     })
 
     if (document.getElementById('btncheck1').checked) {
-        const date = document.getElementById("datepicker").value;
-        const lokaleId = document.getElementById("lokaleSelect").value;
-        const tid = document.getElementById("tidSelect").value;
-        const hold = document.getElementById('holdSelect').value;
-        const slutDato = document.getElementById('datepickerSlut').value;
-        let data = { date: date, lokaleId: lokaleId, tid: tid, hold: hold, slutDato: slutDato }
-        let url = '/fastbooking';
-        const response = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' }
-        })
+        await fastBook();
     } else {
 
         const date = document.getElementById("datepicker").value;
@@ -95,6 +84,32 @@ async function book() {
                 bookingFailureAlert.classList.remove("visually-hidden")
             }
         }
+    }
+}
+
+async function fastBook() {
+    const date = document.getElementById("datepicker").value;
+    const lokaleId = document.getElementById("lokaleSelect").value;
+    const tid = document.getElementById("tidSelect").value;
+    const hold = document.getElementById('holdSelect').value;
+    const slutDato = document.getElementById('datepickerSlut').value;
+    let data = { date: date, lokaleId: lokaleId, tid: tid, hold: hold, slutDato: slutDato }
+    let url = '/booking/fastbooking';
+    const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+    })
+
+    if (response.status == 200) {
+        const bookingOprettetAlert = document.getElementById("BookingSuccessAlert")
+        bookingOprettetAlert.classList.remove("visually-hidden")
+    } else if (response.status == 208) {
+        const bookingLoginFailureAlert = document.getElementById("BookingLoginFailureAlert")
+        bookingLoginFailureAlert.classList.remove("visually-hidden")
+    } else if (response.status == 210) {
+        const bookingFailureAlert = document.getElementById("BookingFailureAlert")
+        bookingFailureAlert.classList.remove("visually-hidden")
     }
 }
 
