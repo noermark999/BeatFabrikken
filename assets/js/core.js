@@ -102,7 +102,7 @@ async function book() {
             const bookingDateFailureAlert = document.getElementById("BookingDateFailureAlert")
             bookingDateFailureAlert.classList.remove("visually-hidden")
         } else {
-            let data = { date: date, lokaleId: lokaleId, tid: tid }
+            let data = { date: bookDato, lokaleId: lokaleId, tid: tid }
             let url = '/booking';
             const response = await fetch(url, {
                 method: 'POST',
@@ -112,6 +112,7 @@ async function book() {
             if (response.status == 200) {
                 const bookingOprettetAlert = document.getElementById("BookingSuccessAlert")
                 bookingOprettetAlert.classList.remove("visually-hidden")
+                clearCalendar()
             } else if (response.status == 208) {
                 const bookingLoginFailureAlert = document.getElementById("BookingLoginFailureAlert")
                 bookingLoginFailureAlert.classList.remove("visually-hidden")
@@ -140,6 +141,7 @@ async function fastBook() {
     if (response.status == 200) {
         const bookingOprettetAlert = document.getElementById("BookingSuccessAlert")
         bookingOprettetAlert.classList.remove("visually-hidden")
+        clearCalendar()
     } else if (response.status == 208) {
         const bookingLoginFailureAlert = document.getElementById("BookingLoginFailureAlert")
         bookingLoginFailureAlert.classList.remove("visually-hidden")
@@ -236,10 +238,10 @@ async function updateCalendar() {
             for (let k = 0; k < data.length; k++) {
                 if (data[k].tid === time[h].innerHTML && data[k].dato === currentDay) {
                     const td = tr.insertCell(-1)
-                    td.classList.add("text-bg-danger")
                     if (data[k].username == "åben træning") {
-                        td.classList.add("aaben")
-                        td.innerHTML = "åben træning"
+                        td.classList.add("text-bg-warning")
+                    } else {
+                        td.classList.add("text-bg-danger")
                     }
                     boxCreated = true
                     break
@@ -259,7 +261,7 @@ function clearCalendar() {
     tbodyTr.forEach(tr => {
         const tds = tr.querySelectorAll("td")
         tds.forEach(td => {
-            if (td.innerHTML == '' || td.innerHTML == "åben træning") {
+            if (td.innerHTML == '') {
                 td.remove()
             }
         })
