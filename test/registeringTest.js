@@ -12,7 +12,8 @@ describe('addUser Function', () => {
       username: 'testuser',
       password: 'testpassword',
       email: 'test@example.com',
-      mobilnummer: '12345678'
+      mobilnummer: '12345678',
+      admin: false
     };
 
     const userId = await registreringDBFunctions.addUser(testUser);
