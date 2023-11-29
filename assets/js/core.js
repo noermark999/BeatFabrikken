@@ -43,10 +43,14 @@ async function addUser() {
 }
 
 async function addHold() {
-    document.getElementById('registrationForm').addEventListener('submit', function (event) {
+    console.log("vi er her")
+    document.getElementById('opretHoldForm').addEventListener('submit', function (event) {
         event.preventDefault();
     });
     const inputFields = document.querySelectorAll(".form-control")
+    inputFields.forEach(elem => {
+        console.log(elem.value)
+    })
     let validationFailed = false
     inputFields.forEach(elem => {
         if (elem.value.trim() === '') {
@@ -60,7 +64,7 @@ async function addHold() {
         const instruktør = inputFields[2].value.trim();
         const pris = inputFields[3].value.trim();
         let data = {alder: alder, holdNavn: holdNavn, instruktør: instruktør, pris: pris}
-        let url = '/opretHold'
+        let url = '/admin/opretHold'
         const response = await fetch(url, {
             method: 'POST',
             body: JSON.stringify(data),
@@ -69,8 +73,8 @@ async function addHold() {
         if (response.status == 200) {
             window.location = "/admin";
         } else {
-            const holdNavnInput = document.getElementById("floatingHoldnavn")
-            holdNavnInput.classList.add("is-invalid")
+            const usernameInput = document.getElementById("floatingHoldNavn")
+            usernameInput.classList.add("is-invalid")
             const holdNavnExistsAlert = document.getElementById("holdNavn-exists")
             holdNavnExistsAlert.classList.remove("visually-hidden")
         }
