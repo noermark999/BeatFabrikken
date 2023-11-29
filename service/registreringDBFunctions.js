@@ -13,14 +13,22 @@ import {
 import loginDBFunctions from './loginDBFunctions.js';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBA1THaQC10sV-iVeSrCm7WRgZKAGp9Wl0",
-    authDomain: "beatfabrikken.firebaseapp.com",
-    projectId: "beatfabrikken",
-    storageBucket: "beatfabrikken.appspot.com",
-    messagingSenderId: "58921661526",
-    appId: "1:58921661526:web:85724090a059e129cff7f7",
-    measurementId: "G-RP8EPZ4RKR"
+
+    apiKey: "AIzaSyDou4WSQ61qMHdL6G9qu-mwWzVv2Ihp5QE",
+
+    authDomain: "beatfabrikkenreincarnated.firebaseapp.com",
+
+    projectId: "beatfabrikkenreincarnated",
+
+    storageBucket: "beatfabrikkenreincarnated.appspot.com",
+
+    messagingSenderId: "709925552016",
+
+    appId: "1:709925552016:web:a44066f7ef79182794fd15"
+
 };
+
+
 
 
 // Initialize Firebase
@@ -38,7 +46,7 @@ const addUser = async (user) => {
         user.password = await hashPassword(user.password, salt);
         const docRef = await addDoc(brugere, user)
         console.log(docRef.id);
-        return docRef.id   
+        return docRef.id
     } else {
         return false
     }
@@ -76,4 +84,4 @@ function saltStringToUint8Array(saltString) {
     return uint8Array;
 }
 
-export default {addUser, hashPassword, saltStringToUint8Array, getSalt}
+export default { addUser, hashPassword, saltStringToUint8Array, getSalt }

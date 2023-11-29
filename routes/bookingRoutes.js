@@ -7,7 +7,6 @@ import administratorDBFunctions from "../service/administratorDBFunctions.js"
 router.get('/', async (req, res) => {
     let lokaler = await bookingDBFunctions.getLokaler();
     let hold = await administratorDBFunctions.getAlleHold();
-    console.log(hold);
     res.render('booking', { title: 'Booking', lokaler: lokaler, hold: hold });
 })
 
@@ -43,30 +42,34 @@ router.post('/fastbooking', async (req, res) => {
 
             let startDate = new Date();
             startDate.setFullYear(date.substring(0, 4), date.substring(5, 7), date.substring(8, 10))
-            startDate.setMonth(bookDato.getMonth() - 1)
+            startDate.setMonth(startDate.getMonth() - 1)
 
             let slutDate = new Date();
             slutDate.setFullYear(slutDato.substring(0, 4), slutDato.substring(5, 7), slutDato.substring(8, 10))
             slutDate.setMonth(slutDate.getMonth() - 1)
 
-            const fastbooking = { dato: startDate, lokaleId: lokaleId, tid: tid, username: hold, slutDato: slutDate }
+            let loopdate = new Date(startDate);
+
+            const fastbooking = { dato: date, lokaleId: lokaleId, tid: tid, username: hold }
             let done = false;
+            let index = 0;
+            const bookinger = await bookingDBFunctions.getBookinger();
             while (!done) {
-                const svar = await bookingDBFunctions.getBooking(date, tid, lokaleId);
-                if (svar) {
+                if (bookinger[index].dato == fastbooking.dato && bookinger[index].lokaleId == fastbooking.lokaleId
+                    && bookinger[index].tid == fastbooking.tid && bookinger[index].username == fastbooking.username) {
                     res.status(210)
                     res.end()
                 }
-            
-                if (startDate.getTime() > slutDate.getTime()) {
+                if (loopdate.getTime() > slutDate.getTime()) {
                     done = true;
                 } else {
-                    startDate.setDate(startDate.getDate() + 7)
+                    fastbooking.dato = loopdate.getFullYear() + "-" + (loopdate.getMonth() + 1) + "-" + loopdate.getDate()
+                    loopdate.setDate(loopdate.getDate() + 7)
                 }
             }
-            //Her kommer den kun til hvis der kan bokkes alle uger så lav
-            let ids = await bookingDBFunctions.addFastBooking(fastbooking);
-            if (id != false) {
+            //Her kommer den kun til hvis der kan bokkes alle uger
+            let ids = await bookingDBFunctions.addFastBooking(fastbooking, startDate, slutDate);
+            if (ids) {
                 res.status(200)
                 res.end()
             } else {
