@@ -230,6 +230,7 @@ async function updateCalendar() {
     const response = await fetch(url)
     const data = await response.json();
 
+    console.log(data);
 
     for (let i = 0; i < theadTh.length - 1; i++) {
         let currentDay = new Date(getPreviousMonday(date).setDate(getPreviousMonday(date).getDate() + i)).toISOString().slice(0, 10)
@@ -240,6 +241,10 @@ async function updateCalendar() {
                 if (data[k].tid === time[h].innerHTML && data[k].dato === currentDay) {
                     const td = tr.insertCell(-1)
                     td.classList.add("text-bg-danger")
+                    if (data[k].username == "åben træning") {
+                        td.classList.add("aaben")
+                        td.innerHTML = "åben træning"
+                    }
                     boxCreated = true
                     break
                 }
@@ -258,10 +263,30 @@ function clearCalendar() {
     tbodyTr.forEach(tr => {
         const tds = tr.querySelectorAll("td")
         tds.forEach(td => {
-            if (td.innerHTML == '') {
+            if (td.innerHTML == '' || td.innerHTML == "åben træning") {
                 td.remove()
             }
         })
     })
     updateCalendar()
+}
+
+function showHideTab(number) {
+    const tab1 = document.getElementById('tab1')
+    const tab2 = document.getElementById('tab2')
+    switch (number) {
+        case 1:
+            if (tab1.classList.contains('visually-hidden')) {
+                tab1.classList.remove('visually-hidden')
+            }
+            tab2.classList.add('visually-hidden')
+            break;
+        case 2:
+            if (tab2.classList.contains('visually-hidden')) {
+                tab2.classList.remove('visually-hidden')
+            }
+            tab1.classList.add('visually-hidden')
+        default:
+            break;
+    }
 }
