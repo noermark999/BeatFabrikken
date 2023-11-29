@@ -41,10 +41,20 @@ async function addHold(hold) {
 }
 
 async function getHold(holdNavn) {
-    const docRef = doc(db, 'Hold', holdNavn)
-    const holdQueryDoc = await getDoc(docRef)
-    let hold = holdQueryDoc.data()
-    return hold
+  try {
+    let holdQueryDocs = await getDocs(holdCollection)
+    const holdDoc = holdQueryDocs.docs.find(doc => doc.data().holdNavn === holdNavn)
+    if (holdDoc) {
+      const hold = holdDoc.data()
+      return hold
+    } else {
+      console.log('Hold not found')
+      return undefined
+    }
+  } catch (error) {
+    console.error('Error getting Hold', error)
+    return undefined
+  }
   }
 
   async function getAlleHold() {
