@@ -43,14 +43,10 @@ async function addUser() {
 }
 
 async function addHold() {
-    console.log("vi er her")
     document.getElementById('opretHoldForm').addEventListener('submit', function (event) {
         event.preventDefault();
     });
     const inputFields = document.querySelectorAll(".form-control")
-    inputFields.forEach(elem => {
-        console.log(elem.value)
-    })
     let validationFailed = false
     inputFields.forEach(elem => {
         if (elem.value.trim() === '') {

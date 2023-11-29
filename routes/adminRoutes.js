@@ -18,10 +18,9 @@ router.post('/opretHold', async (req, res) => {
         const {alder, holdNavn, instruktør, pris} = req.body
         const hold = {alder: alder, holdNavn: holdNavn, instruktør: instruktør, pris: pris}
         const svar = await administratorDBFunctions.getHold(holdNavn)
-        console.log(svar)
         if (svar) {
             res.status(210)
-            res.end
+            res.end()
         } else {
             let id = await administratorDBFunctions.addHold(hold)
             if (id != false) {
