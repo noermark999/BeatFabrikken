@@ -190,6 +190,7 @@ async function updateCalendar() {
     const response = await fetch(url)
     const data = await response.json();
 
+    console.log(data);
 
     for (let i = 0; i < theadTh.length - 1; i++) {
         let currentDay = new Date(getPreviousMonday(date).setDate(getPreviousMonday(date).getDate() + i)).toISOString().slice(0, 10)
@@ -200,6 +201,10 @@ async function updateCalendar() {
                 if (data[k].tid === time[h].innerHTML && data[k].dato === currentDay) {
                     const td = tr.insertCell(-1)
                     td.classList.add("text-bg-danger")
+                    if (data[k].username == "åben træning") {
+                        td.classList.add("aaben")
+                        td.innerHTML = "åben træning"
+                    }
                     boxCreated = true
                     break
                 }
@@ -218,7 +223,7 @@ function clearCalendar() {
     tbodyTr.forEach(tr => {
         const tds = tr.querySelectorAll("td")
         tds.forEach(td => {
-            if (td.innerHTML == '') {
+            if (td.innerHTML == '' || td.innerHTML == "åben træning") {
                 td.remove()
             }
         })
