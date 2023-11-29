@@ -225,3 +225,23 @@ function clearCalendar() {
     })
     updateCalendar()
 }
+
+function showHideTab(number) {
+    const tab1 = document.getElementById('tab1')
+    const tab2 = document.getElementById('tab2')
+    switch (number) {
+        case 1:
+            if (tab1.classList.contains('visually-hidden')) {
+                tab1.classList.remove('visually-hidden')
+            }
+            tab2.classList.add('visually-hidden')
+            break;
+        case 2:
+            if (tab2.classList.contains('visually-hidden')) {
+                tab2.classList.remove('visually-hidden')
+            }
+            tab1.classList.add('visually-hidden')
+        default:
+            break;
+    }
+}
