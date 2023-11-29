@@ -5,7 +5,11 @@ import loginDBFunctions from "../service/loginDBFunctions.js"
 import administratorDBFunctions from "../service/administratorDBFunctions.js";
 
 router.get('/', (req, res) => {
-    res.render('admin', { title: 'admin' });
+    if (req.session.isLoggedIn) {
+        res.render('admin', { title: 'admin' });
+    } else {
+        res.redirect('/')
+    }
 })
 
 
