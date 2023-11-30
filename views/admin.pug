@@ -31,11 +31,12 @@ div(class="container")
                             input(type="text" name="pris" class="form-control" id="floatingPris" placeholder="Pris" required)
                             label(for="floatingPris") Pris
                         button(onclick="addHold()" class="btn btn-primary w-100 py-2") Opret hold
+            
             div(class="visually-hidden" id="tab2")
                 h1(class="text-center mb-4") Bookinger
                 div(class="ms-auto mx-auto w-340px")
                     div(class="form-floating")
-                        select(class="form-select" id="lokaleSelect" onChange="" aria-label="Floating label select example")
+                        select(class="form-select" id="lokaleSelect" aria-label="Floating label select example")
                             if lokaler && lokaler.length
                                 each lokale in lokaler
                                     option(selected value=`${lokale.docID}`) #{lokale.docID}
@@ -56,8 +57,7 @@ div(class="container")
                                     th Lokale
                                     th Handling
                             tbody
-                                each booking in bookinger
-                                    if booking.lokale == 
+                                each booking in bookinger 
                                     tr
                                         td #{booking.username}
                                         td #{booking.dato}
@@ -68,9 +68,7 @@ div(class="container")
                                                 form(action=`/profil/manageBookings/delete/${booking.docID}` method="post")
                                                     button(type="submit" onclick="return confirm('Er du sikker på, at du vil slette denne booking?');" class="btn btn-danger") Annuller
                                             else
-                                                span.text-succes Færdig
-                    else
-                        p Ingen bookinger fundet.
-            
+                                                span.text-success Færdig
+                                       
                 
 include includes/footer
