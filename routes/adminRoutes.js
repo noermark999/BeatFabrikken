@@ -4,9 +4,10 @@ import bookingDBFunctions from "../service/BookingDBFunctions.js"
 import loginDBFunctions from "../service/loginDBFunctions.js"
 import administratorDBFunctions from "../service/administratorDBFunctions.js";
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     if (req.session.isLoggedIn) {
-        res.render('admin', { title: 'admin' });
+       let lokaler = await bookingDBFunctions.getLokaler();
+        res.render('admin', { title: 'admin', lokaler: lokaler}); 
     } else {
         res.redirect('/')
     }
@@ -36,4 +37,6 @@ router.post('/opretHold', async (req, res) => {
         res.end()
     }
 })
+
+
 export default router;
