@@ -32,5 +32,18 @@ div(class="container")
                             label(for="floatingPris") Pris
                         button(onclick="addHold()" class="btn btn-primary w-100 py-2") Opret hold
             div(class="visually-hidden" id="tab2")
-                h1(class="text-center mb-4") Lorem ipsum
+                h1(class="text-center mb-4") Bookinger
+                ul(class="list-group" id="adminBookinger")
+                    
+                div(class="ms-auto mx-auto w-340px")
+                    div(class="form-floating")
+                        select(class="form-select" id="lokaleSelect" onChange="clearCalendar()" aria-label="Floating label select example")
+                            if lokaler && lokaler.length
+                                each lokale in lokaler
+                                    option(selected value=`${lokale.docID}`) #{lokale.docID}
+                            else
+                                // Handle the case where lokaler is undefined or empty
+                                option(value='') No Lokaler Available
+                            label(for="lokaleSelect") Vælg lokale
+                
 include includes/footer

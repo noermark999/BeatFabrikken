@@ -310,3 +310,7 @@ function showHideForm(number) {
             break;
     }
 }
+
+function updateAdminBookinger() {
+    
+}
