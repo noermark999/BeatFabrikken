@@ -286,3 +286,27 @@ function showHideTab(number) {
             break;
     }
 }
+
+function showHideForm(number) {
+    const fastBookForm = document.getElementById('fastBookForm')
+    const eventBookForm = document.getElementById('eventBookForm')
+    switch (number) {
+        case 1:
+            fastBookForm.classList.add('visually-hidden')
+            eventBookForm.classList.add('visually-hidden')
+            break;
+        case 2:
+            if (fastBookForm.classList.contains('visually-hidden')) {
+                fastBookForm.classList.remove('visually-hidden')
+            }
+            eventBookForm.classList.add('visually-hidden')
+            break;
+        case 3:
+            if (eventBookForm.classList.contains('visually-hidden')) {
+                eventBookForm.classList.remove('visually-hidden')
+            }
+            fastBookForm.classList.add('visually-hidden')
+        default:
+            break;
+    }
+}

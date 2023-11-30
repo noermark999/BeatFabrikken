@@ -101,24 +101,68 @@ div(class="container")
               option(value="22:00") 22:00
           label(for="tidSelect") Vælg tid
           br
-          div(class="mx-auto")
-            if isAdmin
-              div(class="btn-group" role="group" aria-label="Basic checkbox toggle button group")
-                input(type="checkbox" class="btn-check" id="btncheck1" autocomplete="off")
-                label(class="btn btn-outline-primary" for="btncheck1") Fast booking
-              br
-              br
-              div(class="form-floating")
+        div(class="mx-auto")
+          if isAdmin
+            div(class="btn-group-vertical gap-2" role="group" aria-label="Basic radio toggle button group")
+                input(onclick="showHideForm(1)" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked)
+                label(class="btn btn-outline-primary" for="btnradio1") Enkelt booking
+                input(onclick="showHideForm(2)" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off")
+                label(class="btn btn-outline-primary" for="btnradio2") Fast booking
+                input(onclick="showHideForm(3)" type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off")
+                label(class="btn btn-outline-primary" for="btnradio3") Event booking
+            br
+            br
+            div(class="container visually-hidden px-0" id="fastBookForm")
+              div(class="form-floating mb-3")
                 select(class="form-select" id="holdSelect" aria-label="Floating label select example")
                   each h in hold
                     option(selected value=`${h.holdNavn}`) #{h.holdNavn}
                   option(value="åben træning") Åben træning
                 label(for="holdSelect") Vælg for hvilket hold eller åben træning
-              br
               div(class="mx-auto w-340px")
                 label(for="datepickerSlut")  Vælg slutdato for træning
                 br
                 input(type="date" id="datepickerSlut")
               br  
+            div(class="container visually-hidden px-0 mb-3" id="eventBookForm")
+              div(class="form-floating mb-3")
+                input(type="text" name="eventNavn" class="form-control" id="floatingInput" placeholder="eventNavn" required)
+                label(for="floatingInput") Eventnavn
+              div(class="form-floating mb-3")
+                input(type="text" name="eventDeltagere" class="form-control" id="floatingInput" placeholder="eventDeltagere" required)
+                label(for="floatingInput") Antal deltagere
+              div(class="mx-auto w-340px")
+                label(for="datepickerSlut")  Vælg slutdato for event
+                br
+                input(type="date" id="datepickerSlut")
+              br
+              div(class="mx-auto w-340px")
+                div(class="form-floating")
+                  select(class="form-select" id="tidSelect" aria-label="Floating label select example")
+                    option(selected value="01:00") 01:00
+                    option(value="02:00") 02:00
+                    option(value="03:00") 03:00
+                    option(value="04:00") 04:00
+                    option(value="05:00") 05:00
+                    option(value="06:00") 06:00
+                    option(value="07:00") 07:00
+                    option(value="08:00") 08:00
+                    option(value="09:00") 09:00
+                    option(value="10:00") 10:00
+                    option(value="11:00") 11:00
+                    option(value="12:00") 12:00
+                    option(value="13:00") 13:00
+                    option(value="14:00") 14:00
+                    option(value="15:00") 15:00
+                    option(value="16:00") 16:00
+                    option(value="17:00") 17:00
+                    option(value="18:00") 18:00
+                    option(value="19:00") 19:00
+                    option(value="20:00") 20:00
+                    option(value="21:00") 21:00
+                    option(value="22:00") 22:00
+                    option(value="23:00") 23:00
+                    option(value="24:00") 24:00
+                  label(for="tidSelect") Vælg tid  
         button(onclick="book()" class="btn btn-primary w-100 py-2") Book
 include includes/footer
