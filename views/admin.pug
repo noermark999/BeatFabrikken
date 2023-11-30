@@ -9,7 +9,7 @@ div(class="container")
                     input(onclick="showHideTab(1)" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked)
                     label(class="btn btn-outline-primary" for="btnradio1") Opret hold
                     input(onclick="showHideTab(2)" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off")
-                    label(class="btn btn-outline-primary" for="btnradio2") Radio 2
+                    label(class="btn btn-outline-primary" for="btnradio2") Bookinger
                     input(type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off")
                     label(class="btn btn-outline-primary" for="btnradio3") Radio 3
         div(class="col")
@@ -33,17 +33,44 @@ div(class="container")
                         button(onclick="addHold()" class="btn btn-primary w-100 py-2") Opret hold
             div(class="visually-hidden" id="tab2")
                 h1(class="text-center mb-4") Bookinger
-                ul(class="list-group" id="adminBookinger")
-                    
                 div(class="ms-auto mx-auto w-340px")
                     div(class="form-floating")
-                        select(class="form-select" id="lokaleSelect" onChange="clearCalendar()" aria-label="Floating label select example")
+                        select(class="form-select" id="lokaleSelect" onChange="" aria-label="Floating label select example")
                             if lokaler && lokaler.length
                                 each lokale in lokaler
                                     option(selected value=`${lokale.docID}`) #{lokale.docID}
                             else
                                 // Handle the case where lokaler is undefined or empty
-                                option(value='') No Lokaler Available
+                                option(value='') Ingen lokaler
                             label(for="lokaleSelect") Vælg lokale
+
+                div(class="container mt-4")
+                    h2(class="text-center mb-4") Bookinger
+                    if bookinger && bookinger.length > 0
+                        table(class="table")
+                            thead
+                                tr
+                                    th Bruger
+                                    th Dato
+                                    th Tid
+                                    th Lokale
+                                    th Handling
+                            tbody
+                                each booking in bookinger
+                                    if booking.lokale == 
+                                    tr
+                                        td #{booking.username}
+                                        td #{booking.dato}
+                                        td #{booking.tid}
+                                        td #{booking.lokaleId}
+                                        td
+                                            if booking.erFremtidig
+                                                form(action=`/profil/manageBookings/delete/${booking.docID}` method="post")
+                                                    button(type="submit" onclick="return confirm('Er du sikker på, at du vil slette denne booking?');" class="btn btn-danger") Annuller
+                                            else
+                                                span.text-succes Færdig
+                    else
+                        p Ingen bookinger fundet.
+            
                 
 include includes/footer
