@@ -7,7 +7,8 @@ import administratorDBFunctions from "../service/administratorDBFunctions.js";
 router.get('/', async (req, res) => {
     if (req.session.isLoggedIn) {
        let lokaler = await bookingDBFunctions.getLokaler();
-        res.render('admin', { title: 'admin', lokaler: lokaler}); 
+       let bookinger = await bookingDBFunctions.getBookinger();
+        res.render('admin', { title: 'admin', lokaler: lokaler, bookinger: bookinger}); 
     } else {
         res.redirect('/')
     }
