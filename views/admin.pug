@@ -64,11 +64,6 @@ div(class="container")
                                         td #{booking.tid}
                                         td #{booking.lokaleId}
                                         td
-                                            if booking.erFremtidig
-                                                form(action=`/profil/manageBookings/delete/${booking.docID}` method="post")
-                                                    button(type="submit" onclick="return confirm('Er du sikker på, at du vil slette denne booking?');" class="btn btn-danger") Annuller
-                                            else
-                                                span.text-success Færdig
                                        
                 
 include includes/footer
