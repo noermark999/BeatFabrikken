@@ -184,4 +184,22 @@ async function addFastBooking(fastBooking, startDate, slutDate) {
   return res;
 }
 
-export default { getLokale, getLokaler, addBooking, getBookinger, getBookingerForUgen, getBooking, getBookingerByUser, deleteBooking, addFastBooking }
+async function addEventBooking(eventBooking, startDate, slutDate) {
+  let res = [];
+  let done = false
+
+  while (!done) {
+    //console.log(eventBooking);
+    //res.push(await addBooking(fastBooking));
+    if (startDate.getTime() > slutDate.getTime()) {
+      done = true;
+    } else {
+      eventBooking.dato = startDate
+      startDate.setHours(startDate.getHours() + 1)
+      eventBooking.tid = startDate.getHours() + ":00"
+    }
+  }
+  return res;
+}
+
+export default { getLokale, getLokaler, addBooking, getBookinger, getBookingerForUgen, getBooking, getBookingerByUser, deleteBooking, addFastBooking, addEventBooking }

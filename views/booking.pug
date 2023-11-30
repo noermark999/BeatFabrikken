@@ -126,19 +126,19 @@ div(class="container")
               br  
             div(class="container visually-hidden px-0 mb-3" id="eventBookForm")
               div(class="form-floating mb-3")
-                input(type="text" name="eventNavn" class="form-control" id="floatingInput" placeholder="eventNavn" required)
-                label(for="floatingInput") Eventnavn
+                input(type="text" name="eventNavn" class="form-control" id="eventNavn" placeholder="eventNavn" required)
+                label(for="eventNavn") Eventnavn
               div(class="form-floating mb-3")
-                input(type="text" name="eventDeltagere" class="form-control" id="floatingInput" placeholder="eventDeltagere" required)
-                label(for="floatingInput") Antal deltagere
+                input(type="text" name="eventDeltagere" class="form-control" id="eventDeltagere" placeholder="eventDeltagere" required)
+                label(for="eventDeltagere") Antal deltagere
               div(class="mx-auto w-340px")
-                label(for="datepickerSlut")  Vælg slutdato for event
+                label(for="datepickerSlutEvent")  Vælg slutdato for event
                 br
-                input(type="date" id="datepickerSlut")
+                input(type="date" id="datepickerSlutEvent")
               br
               div(class="mx-auto w-340px")
                 div(class="form-floating")
-                  select(class="form-select" id="tidSelect" aria-label="Floating label select example")
+                  select(class="form-select" id="sluttidSelect" aria-label="Floating label select example")
                     option(selected value="01:00") 01:00
                     option(value="02:00") 02:00
                     option(value="03:00") 03:00
@@ -163,6 +163,6 @@ div(class="container")
                     option(value="22:00") 22:00
                     option(value="23:00") 23:00
                     option(value="24:00") 24:00
-                  label(for="tidSelect") Vælg tid  
+                  label(for="sluttidSelect") Vælg sluttid 
         button(onclick="book()" class="btn btn-primary w-100 py-2") Book
 include includes/footer
