@@ -36,7 +36,7 @@ div(class="container")
                 h1(class="text-center mb-4") Bookinger
                 div(class="ms-auto mx-auto w-340px")
                     div(class="form-floating")
-                        select(class="form-select" id="lokaleSelect" aria-label="Floating label select example")
+                        select(class="form-select" id="lokaleSelect" onChange="clearBookingsFromTable()" aria-label="Floating label select example")
                             if lokaler && lokaler.length
                                 each lokale in lokaler
                                     option(selected value=`${lokale.docID}`) #{lokale.docID}
@@ -48,7 +48,7 @@ div(class="container")
                 div(class="container mt-4")
                     h2(class="text-center mb-4") Bookinger
                     if bookinger && bookinger.length > 0
-                        table(class="table")
+                        table(class="booking table")
                             thead
                                 tr
                                     th Bruger
@@ -57,13 +57,7 @@ div(class="container")
                                     th Lokale
                                     th Handling
                             tbody
-                                each booking in bookinger 
-                                    tr
-                                        td #{booking.username}
-                                        td #{booking.dato}
-                                        td #{booking.tid}
-                                        td #{booking.lokaleId}
-                                        td
+                                
                                        
                 
 include includes/footer

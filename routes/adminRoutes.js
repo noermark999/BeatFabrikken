@@ -39,5 +39,10 @@ router.post('/opretHold', async (req, res) => {
     }
 })
 
+router.get('/bookinger/:lokaleId', async (req, res) => {
+    let bookinger = await bookingDBFunctions.getBookingForLokale(req.params.lokaleId);
+    res.json(bookinger);
+})
+
 
 export default router;
