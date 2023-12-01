@@ -11,6 +11,8 @@ describe('addUser Function', () => {
     const testUser = {
       username: 'testuser',
       password: 'testpassword',
+      firstname: 'test',
+      lastname: 'user',
       email: 'test@example.com',
       mobilnummer: '12345678',
       admin: false
@@ -18,17 +20,11 @@ describe('addUser Function', () => {
 
     const userId = await registreringDBFunctions.addUser(testUser);
 
-    const db = getFirestore(loginDBFunctions.firebase_app);
-    const brugere = collection(db, 'Bruger');
-    const docRef = doc(db, 'Bruger', userId);
-    const docSnap = await getDoc(docRef);
-
-    expect(docSnap.exists()).to.be.true;
-    const addedUser = docSnap.data();
+    const addedUser = await loginDBFunctions.getUser(testUser.username)
 
     expect(addedUser.username).to.equal(testUser.username);
     expect(addedUser.email).to.equal(testUser.email);
     expect(addedUser.mobilnummer).to.equal(testUser.mobilnummer);
-    expect(addedUser.password).to.equal(testUser.password);
+    //expect(addedUser.password).to.equal(testUser.password); Vil ikke virke da password bliver krypteret!
   });
 });

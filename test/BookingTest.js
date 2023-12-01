@@ -14,9 +14,8 @@ const assert = chai.assert;
 describe('test af booking', () => {
   it('burde oprette en booking', async () => {
     // data for at lave bookningen
-    const lokale = await BookingDBFunctions.getLokale("DanceZone-sal")
-    const dato = "2023-11-29"
-    const tid = "12:00"
+    const dato = "2023-11-24"
+    const tid = "15:00"
     const booking = {lokaleId: 'Sal 1', dato: dato, tid: tid, username: 'test'}
 
     supertest(app).post('/login').send({username: 'test', password: 'test'})

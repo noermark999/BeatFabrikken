@@ -2,12 +2,12 @@ import chai, { expect } from 'chai';
 import supertest from 'supertest';
 import appModule from '../app.js';
 import { describe, it } from 'mocha';
+import request from 'supertest';
 import { getFirestore, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import administratorDBFunctions from '../service/administratorDBFunctions.js';
 import e from 'express';
 
 const app = appModule.app;
-const request = supertest(app);
 
 const assert = chai.assert;
 
@@ -39,8 +39,8 @@ describe('test af opret hold', () => {
 });
 
 
-describe('Holdet er allerde oprettet', () => {
-    it('skal retunere 210, hvis hold navnet allerede eksistere', (done) => {
+describe('Holdet er allerede oprettet', () => {
+    it('skal returnere 210, hvis holdnavnet allerede eksisterer', (done) => {
         const holdData = {
             alder: '13',
             holdNavn: 'TEST HOLD',
@@ -48,7 +48,7 @@ describe('Holdet er allerde oprettet', () => {
             pris: '100'
         };
 
-        supertest(app)
+        request(app)
             .post('/admin/opretHold')
             .send(holdData)
             .expect(210)
@@ -57,4 +57,5 @@ describe('Holdet er allerde oprettet', () => {
                 done();
             });
     });
-})
+});
+
