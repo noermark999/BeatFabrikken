@@ -350,6 +350,10 @@ function updateAdminBookinger() {
 
 }
 
+if (window.location.pathname == '/admin') {
+    addBookingToTable()
+}
+
 function clearBookingsFromTable(){
     const tableBody = document.querySelector(".booking tbody")
     tableBody.innerHTML = '';
