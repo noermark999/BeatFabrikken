@@ -376,7 +376,23 @@ async function addBookingToTable(){
         tr.insertCell(-1).innerHTML = data.dato
         tr.insertCell(-1).innerHTML = data.tid
         tr.insertCell(-1).innerHTML = data.lokaleId
-        tr.insertCell(-1)
+        const handling = tr.insertCell(-1)
+        const form = document.createElement('form')
+        form.action = '/admin/delete/' + data.docID;
+        form.method = 'post'
+        handling.appendChild(form);
+
+        const button = document.createElement('button');
+        button.type = 'submit';
+        button.classList.add('btn','btn-danger')
+        button.innerText = 'Annuller';
+
+        button.onclick = function(){
+            return confirm('Er du sikker på, at du vil slette denne booking?')
+        }
+        
+        form.appendChild(button);
+
     })
     
 }
