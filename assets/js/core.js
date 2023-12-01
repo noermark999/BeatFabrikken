@@ -349,3 +349,31 @@ function showHideForm(number) {
 function updateAdminBookinger() {
 
 }
+
+function clearBookingsFromTable(){
+    const tableBody = document.querySelector(".booking tbody")
+    tableBody.innerHTML = '';
+    addBookingToTable();
+}
+
+async function addBookingToTable(){
+    const tableBody = document.querySelector(".booking tbody")
+    const lokaleId = document.getElementById("lokaleSelect").value;
+
+    let url = '/admin/bookinger/' + lokaleId;
+    const response = await fetch(url)
+    const data = await response.json();
+
+    data.forEach(data => {
+        const tr = document.createElement('tr');
+        tableBody.appendChild(tr);
+
+        tr.insertCell(-1).innerHTML = data.username
+        tr.insertCell(-1).innerHTML = data.dato
+        tr.insertCell(-1).innerHTML = data.tid
+        tr.insertCell(-1).innerHTML = data.lokaleId
+        tr.insertCell(-1)
+    })
+    
+}
+
