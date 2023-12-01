@@ -12,25 +12,42 @@ const assert = chai.assert;
 
 describe('test af opret hold', () => {
     it('burde oprette et hold', async () => {
-      // data for at lave holdet
-      const alder = "13"
-      const holdNavn = "TEST HOLD"
-      const instruktør = "JAKOB"
-      const pris = "100"
-  
-      supertest(app).post('/opretHold').send({hold})
-      
-      // kald på funktionen der opretter bookningen
-      await administratorDBFunctions.addHold(hold);
-  
-      
-      // hent bookningen og tjek om det er korrekt
-      const oprettetHold = await administratorDBFunctions.getHold(holdNavn)
-  
-      // Assertions
-      expect(response.status).to.equal(200);
-      expect(oprettetHold).to.not.be.null;
-      expect(oprettetHold.holdNavn).to.equal(holdNavn);
+        // Data for at oprette holdet
+        const holdData = {
+            alder: '13',
+            holdNavn: 'TEST HOLD',
+            instruktør: 'JAKOB',
+            pris: '100'
+        };
+    
+        // Opret holdet
+        const response = await request.post('/opretHold').send({holdData});
+
+        // Hent holdet og tjek om det er korrekt
+        const oprettetHold = await administratorDBFunctions.getHold(holdData.holdNavn);
+
+        // Assertions
+        expect(response.status).to.equal(200);
+        expect(oprettetHold).to.not.be.null;
+        expect(oprettetHold.holdNavn).to.equal(holdNavn);
     });
-  });
-  
+});
+describe('Holdet er allerde oprettet', () => {
+    it('skal retunere 210, hvis hold navnet allerede eksistere', (done) => {
+        const holdData = {
+            alder: '13',
+            holdNavn: 'TEST HOLD',
+            instruktør: 'JAKOB',
+            pris: '100'
+        };
+    
+        request(app)
+            .post('/opretHold')
+            .send(holdData)
+            .expect(210)
+            .end((err, res) => {
+                if (err) return done(err);
+                done();
+            });
+    });
+})
