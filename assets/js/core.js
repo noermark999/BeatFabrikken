@@ -386,13 +386,8 @@ async function addBookingToTable(){
         button.type = 'submit';
         button.classList.add('btn','btn-danger')
         button.innerText = 'Annuller';
-
-        button.onclick = function(){
-            return confirm('Er du sikker på, at du vil slette denne booking?')
-        }
-        
+        button.setAttribute('onclick', "return confirm('Er du sikker på, at du vil slette denne booking?');")
         form.appendChild(button);
-
     })
     
 }
