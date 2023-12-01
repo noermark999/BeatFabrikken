@@ -172,13 +172,12 @@ async function addFastBooking(fastBooking, startDate, slutDate) {
   let done = false
 
   while (!done) {
-    res.push(await addBooking(fastBooking));
-
     if (startDate.getTime() > slutDate.getTime()) {
       done = true;
     } else {
-      fastBooking.dato = startDate
+      res.push(await addBooking(fastBooking));
       startDate.setDate(startDate.getDate() + 7)
+      fastBooking.dato = startDate
     }
   }
   return res;
@@ -189,11 +188,10 @@ async function addEventBooking(eventBooking, startDate, slutDate) {
   let done = false
 
   while (!done) {
-    //console.log(eventBooking);
-    //res.push(await addBooking(fastBooking));
     if (startDate.getTime() > slutDate.getTime()) {
       done = true;
     } else {
+      res.push(await addBooking(fastBooking));
       eventBooking.dato = startDate
       startDate.setHours(startDate.getHours() + 1)
       eventBooking.tid = startDate.getHours() + ":00"

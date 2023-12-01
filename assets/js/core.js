@@ -183,6 +183,9 @@ async function eventBook() {
     } else if (response.status == 210) {
         const bookingFailureAlert = document.getElementById("BookingFailureAlert")
         bookingFailureAlert.classList.remove("visually-hidden")
+    } else if (response.status == 216) {
+        const bookingDateFailureAlert = document.getElementById("BookingDateFailureAlert")
+        bookingDateFailureAlert.classList.remove("visually-hidden")
     }
 }
 

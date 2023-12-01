@@ -139,7 +139,8 @@ div(class="container")
               div(class="mx-auto w-340px")
                 div(class="form-floating")
                   select(class="form-select" id="sluttidSelect" aria-label="Floating label select example")
-                    option(selected value="01:00") 01:00
+                    option(selected value="00:00") 00:00
+                    option(value="01:00") 01:00
                     option(value="02:00") 02:00
                     option(value="03:00") 03:00
                     option(value="04:00") 04:00
@@ -162,7 +163,6 @@ div(class="container")
                     option(value="21:00") 21:00
                     option(value="22:00") 22:00
                     option(value="23:00") 23:00
-                    option(value="24:00") 24:00
                   label(for="sluttidSelect") Vælg sluttid 
         button(onclick="book()" class="btn btn-primary w-100 py-2") Book
 include includes/footer
