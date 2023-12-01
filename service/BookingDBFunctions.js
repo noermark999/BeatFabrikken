@@ -200,4 +200,27 @@ async function addEventBooking(eventBooking, startDate, slutDate) {
   return res;
 }
 
-export default { getLokale, getLokaler, addBooking, getBookinger, getBookingerForUgen, getBooking, getBookingerByUser, deleteBooking, addFastBooking, addEventBooking }
+async function getBookingForLokale(lokaleId) {
+  try {
+    let bookingQueryDocs = await getDocs(bookingCollection);
+    let bookingerForLokale = bookingQueryDocs.docs
+    .map(doc => {
+      let data = doc.data();
+      if(data && data.lokaleId === lokaleId) {
+        data.docID = doc.id;
+        return data;
+      }
+      return null;
+    })
+    .filter(booking => booking !== null);
+
+    bookingerForLokale.sort((a, b) => new Date(a.dato) - new Date(b.dato) || a.tid.localeCompare(b.tid));
+
+    return bookingerForLokale;
+  } catch (error) {
+    console.error('Fejl ved hentning af bookinger for lokaler')
+    return [];
+  }
+}
+
+export default { getLokale, getLokaler, addBooking, getBookinger, getBookingerForUgen, getBooking, getBookingerByUser, deleteBooking, addFastBooking, addEventBooking, getBookingForLokale }

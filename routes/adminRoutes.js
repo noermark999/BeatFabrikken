@@ -4,6 +4,7 @@ import bookingDBFunctions from "../service/BookingDBFunctions.js"
 import loginDBFunctions from "../service/loginDBFunctions.js"
 import administratorDBFunctions from "../service/administratorDBFunctions.js";
 
+
 router.get('/', async (req, res) => {
     if (req.session.isLoggedIn) {
        let lokaler = await bookingDBFunctions.getLokaler();
@@ -39,5 +40,21 @@ router.post('/opretHold', async (req, res) => {
     }
 })
 
+router.get('/bookinger/:lokaleId', async (req, res) => {
+    let bookinger = await bookingDBFunctions.getBookingForLokale(req.params.lokaleId);
+    res.json(bookinger);
+})
+
+router.post('/delete/:bookingId', async (req, res) => {
+    if (req.session.isLoggedIn) {
+        const bookingId = req.params.bookingId;
+        const deleted = await bookingDBFunctions.deleteBooking(bookingId);
+        if (deleted) {
+          res.redirect('/admin'); // Redirect tilbage til booking management side
+        } else {
+          res.status(500).send('Kunne ikke slette bookingen');
+        }
+      }
+    });
 
 export default router;
