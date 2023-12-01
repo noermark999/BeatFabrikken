@@ -11,6 +11,10 @@ const app = appModule.app;
 
 const assert = chai.assert;
 
+const adminUser = supertest.agent(app)
+await adminUser.post('/login').send({username: 'test', password: 'test'})
+
+
 describe('test af opret hold', () => {
     it('burde oprette et hold', async () => {
         // Data for at oprette holdet
@@ -48,7 +52,7 @@ describe('Holdet er allerede oprettet', () => {
             pris: '100'
         };
 
-        request(app)
+        adminUser
             .post('/admin/opretHold')
             .send(holdData)
             .expect(210)
