@@ -382,11 +382,10 @@ async function addBookingToTable(){
 
         const handling = tr.insertCell(-1)
 
-        let bookingDato = new Date(data.dato);
-        bookingDato.setHours(data.tid.slice(0,2), 0,0)
+        let bookingDato = new Date(data.dato + " " + data.tid);
         let nu = new Date();
         
-        if(bookingDato.getDate() >= nu.getDate() && bookingDato.getHours() >= nu.getHours()) {
+        if(bookingDato >= nu){
         const form = document.createElement('form')
         form.action = '/admin/delete/' + data.docID;
         form.method = 'post'

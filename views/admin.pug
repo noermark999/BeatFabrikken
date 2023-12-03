@@ -31,7 +31,7 @@ div(class="container")
                         button(onclick="addHold()" class="btn btn-primary w-100 py-2") Opret hold
             
             div(class="visually-hidden" id="tab2")
-                h1(class="text-center mb-4") Bookinger
+                h2(class="text-center mb-4") Vælg lokale
                 div(class="ms-auto mx-auto w-340px")
                     div(class="form-floating")
                         select(class="form-select" id="lokaleSelect" onChange="clearBookingsFromTable()" aria-label="Floating label select example")
@@ -41,12 +41,12 @@ div(class="container")
                             else
                                 // Handle the case where lokaler is undefined or empty
                                 option(value='') Ingen lokaler
-                            label(for="lokaleSelect") Vælg lokale
+                            
 
                 div(class="container mt-4")
                     h2(class="text-center mb-4") Bookinger
                     if bookinger && bookinger.length > 0
-                        table(class="booking table")
+                        table(class="booking table booking table-striped mt-3")
                             thead
                                 tr
                                     th Bruger
