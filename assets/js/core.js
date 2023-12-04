@@ -86,14 +86,16 @@ async function book() {
     })
 
 
-    if (document.getElementById('btnradio1').checked) {
-        await enkeltBook();
-    } else if (document.getElementById('btnradio2').checked) {
-        await fastBook();
-    } else if (document.getElementById('btnradio3').checked) {
-        await eventBook();
-    } else {
-        alert("På en eller anden måde er der sket en fejl")
+    try {
+        if (document.getElementById('btnradio1').checked) {
+            await enkeltBook();
+        } else if (document.getElementById('btnradio2').checked) {
+            await fastBook();
+        } else if (document.getElementById('btnradio3').checked) {
+            await eventBook();
+        }
+    } catch (error) {
+        await enkeltBook()
     }
 }
 

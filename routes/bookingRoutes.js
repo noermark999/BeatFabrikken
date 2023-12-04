@@ -7,8 +7,7 @@ import administratorDBFunctions from "../service/administratorDBFunctions.js"
 router.get('/', async (req, res) => {
     let lokaler = await bookingDBFunctions.getLokaler();
     let hold = await administratorDBFunctions.getAlleHold();
-    res.render('booking', { title: 'Booking', lokaler: lokaler, hold: hold });
-    
+    res.render('booking', { title: 'Booking', lokaler: lokaler, hold: hold, isAdmin: req.session.isAdmin });
 })
 
 router.post('/', async (req, res) => {
