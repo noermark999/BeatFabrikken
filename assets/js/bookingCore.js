@@ -1,84 +1,3 @@
-async function addUser() {
-    document.getElementById('registrationForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-    });
-    const inputFields = document.querySelectorAll('input')
-    let validationFailed = false
-    inputFields.forEach(elem => {
-        if (elem.value.trim() === '') {
-            validationFailed = true;
-            return
-        }
-        if (elem.id === 'floatingEmail') {
-            const char1 = '@'
-            if (!elem.value.includes(char1)) {
-                validationFailed = true;
-                return
-            }
-        }
-    })
-    if (!validationFailed) {
-        const username = inputFields[0].value.trim();
-        const password = inputFields[1].value.trim();
-        const firstName = inputFields[2].value.trim();
-        const lastName = inputFields[3].value.trim();
-        const email = inputFields[4].value.trim();
-        const mobileNumber = inputFields[5].value.trim();
-        let data = { username: username, password: password, firstName: firstName, lastName: lastName, email: email, mobilnummer: mobileNumber }
-        let url = '/registrering';
-        const response = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' }
-        })
-        if (response.status == 200) {
-            window.location = "/login";
-        } else {
-            const usernameInput = document.getElementById("floatingUsername")
-            usernameInput.classList.add("is-invalid")
-            const usernameExistsAlert = document.getElementById("username-exists")
-            usernameExistsAlert.classList.remove("visually-hidden")
-        }
-    }
-}
-
-async function addHold() {
-    document.getElementById('opretHoldForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-    });
-    const inputFields = document.querySelectorAll(".form-control")
-    let validationFailed = false
-    inputFields.forEach(elem => {
-        if (elem.value.trim() === '') {
-            validationFailed = true;
-            return
-        }
-    })
-    if (!validationFailed) {
-        const alder = inputFields[0].value.trim();
-        const holdNavn = inputFields[1].value.trim();
-        const instruktør = inputFields[2].value.trim();
-        const pris = inputFields[3].value.trim();
-        let data = { alder: alder, holdNavn: holdNavn, instruktør: instruktør, pris: pris }
-        let url = '/admin/opretHold'
-        const response = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' }
-        })
-        if (response.status == 200) {
-            window.location = "/admin";
-        } else {
-            const usernameInput = document.getElementById("floatingHoldNavn")
-            usernameInput.classList.add("is-invalid")
-            const holdNavnExistsAlert = document.getElementById("holdNavn-exists")
-            holdNavnExistsAlert.classList.remove("visually-hidden")
-        }
-
-    }
-}
-
-//Booking function
 async function book() {
     //Fjerner alerts
     document.querySelectorAll('[role="alert"]').forEach((e) => {
@@ -199,49 +118,6 @@ async function eventBook() {
     }
 }
 
-async function updateUser() {
-    document.getElementById('redigeringsForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-    });
-    const inputFields = document.querySelectorAll('input')
-    let validationFailed = false
-    inputFields.forEach(elem => {
-        if (elem.value.trim() === '') {
-            validationFailed = true;
-            return
-        }
-        if (elem.id === 'floatingEmail') {
-            const char1 = '@'
-            if (!elem.value.includes(char1)) {
-                validationFailed = true;
-                return
-            }
-        }
-    })
-    if (!validationFailed) {
-        const username = inputFields[0].value.trim();
-        const email = inputFields[1].value.trim();
-        const firstName = inputFields[2].value.trim();
-        const lastName = inputFields[3].value.trim();
-        const mobileNumber = inputFields[4].value.trim();
-        let data = { username: username, email: email, firstname: firstName, lastname: lastName, mobilnummer: mobileNumber }
-        let url = '/profil/edit';
-        const response = await fetch(url, {
-            method: 'PUT',
-            body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' }
-        })
-        if (response.status == 200) {
-            window.location = "/profil";
-        } else {
-            const usernameInput = document.getElementById("floatingUsername")
-            usernameInput.classList.add("is-invalid")
-            const usernameExistsAlert = document.getElementById("username-exists")
-            usernameExistsAlert.classList.remove("visually-hidden")
-        }
-    }
-}
-
 const getPreviousMonday = (date = null) => {
     const prevMonday = date && new Date(date.valueOf()) || new Date()
     prevMonday.setDate(prevMonday.getDate() - (prevMonday.getDay() + 6) % 7)
@@ -317,26 +193,6 @@ function clearCalendar() {
     updateCalendar()
 }
 
-function showHideTab(number) {
-    const tab1 = document.getElementById('tab1')
-    const tab2 = document.getElementById('tab2')
-    switch (number) {
-        case 1:
-            if (tab1.classList.contains('visually-hidden')) {
-                tab1.classList.remove('visually-hidden')
-            }
-            tab2.classList.add('visually-hidden')
-            break;
-        case 2:
-            if (tab2.classList.contains('visually-hidden')) {
-                tab2.classList.remove('visually-hidden')
-            }
-            tab1.classList.add('visually-hidden')
-        default:
-            break;
-    }
-}
-
 function showHideForm(number) {
     const fastBookForm = document.getElementById('fastBookForm')
     const eventBookForm = document.getElementById('eventBookForm')
@@ -359,14 +215,6 @@ function showHideForm(number) {
         default:
             break;
     }
-}
-
-function updateAdminBookinger() {
-
-}
-
-if (window.location.pathname == '/admin') {
-    addBookingToTable()
 }
 
 function clearBookingsFromTable(){
