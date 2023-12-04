@@ -117,6 +117,7 @@ async function getBooking(dato, tid, lokaleId) {
     const bookingDoc = bookingQueryDocs.docs.find(doc => doc.data().dato === dato && doc.data().tid === tid && doc.data().lokaleId === lokaleId)
     if (bookingDoc) {
       const booking = bookingDoc.data()
+      booking.docID = bookingDoc.id
       return booking
     } else {
       console.log('Booking not found')

@@ -17,6 +17,8 @@ await adminUser.post('/login').send({username: 'test', password: 'test'})
 
 describe('test af opret fast booking', () => {
     it('burde oprette en fast booking over tre uger', async () => {
+
+
         let startDato = '2023-12-10'
 
         let slutDato = '2023-12-24'
@@ -29,10 +31,6 @@ describe('test af opret fast booking', () => {
             slutDato: slutDato
         };
 
-        await adminUser.post('/booking/fastbooking').send(bookingData).expect(200);
-        //await bookingDBFunctions.addFastBooking(bookingData, bookingData.startDato, slutDato)
-
-
         const bookingData1 = {dato: '2023-12-10',lokaleId: 'Sal 2',tid: '09:00',username: 'test'};
         const bookingData2 = {dato: '2023-12-17',lokaleId: 'Sal 2',tid: '09:00',username: 'test'};
         const bookingData3 = {dato: '2023-12-24',lokaleId: 'Sal 2',tid: '09:00',username: 'test'};
@@ -42,6 +40,12 @@ describe('test af opret fast booking', () => {
         const fastBooking1 = await bookingDBFunctions.getBooking('2023-12-10', '09:00', 'Sal 2');
         const fastBooking2 = await bookingDBFunctions.getBooking('2023-12-17', '09:00', 'Sal 2');
         const fastBooking3 = await bookingDBFunctions.getBooking('2023-12-24', '09:00', 'Sal 2');
+
+        console.log(fastBooking1);
+
+
+        await adminUser.post('/booking/fastbooking').send(bookingData).expect(200);
+        //await bookingDBFunctions.addFastBooking(bookingData, bookingData.startDato, slutDato)
 
         // Assertions
         //expect(response.status).to.equal(200);
