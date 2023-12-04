@@ -17,35 +17,20 @@ await adminUser.post('/login').send({username: 'test', password: 'test'})
 
 describe('test af opret fast booking', () => {
     it('burde oprette en fast booking over tre uger', async () => {
-        // Data for booking
-        // Declare and initialize startDato
-        let startDato = new Date();
-        let Dato = '2023-12-10'
+        let startDato = '2023-12-10'
 
-        // Adjust startDato based on the values extracted from the 'date' string
-        startDato.setFullYear(Dato.substring(0, 4), Dato.substring(5, 7) - 1, Dato.substring(8, 10));
-
-        // Declare and initialize startDato
-        let slutDato = new Date();
-        Dato = '2023-12-24'
-
-        // Adjust startDato based on the values extracted from the 'date' string
-        slutDato.setFullYear(Dato.substring(0, 4), Dato.substring(5, 7) - 1, Dato.substring(8, 10));
-
+        let slutDato = '2023-12-24'
 
         const bookingData = {
-            startDato: startDato,
+            date: startDato,
             lokaleId: 'Sal 2',
             tid: '09:00',
-            username: 'test'
+            username: 'test',
+            slutDato: slutDato
         };
-        
 
-        // Logger ind
-        await supertest(app).post('/login').send({username: 'test', password: 'test'})
-
-        //const response = await supertest(app).post('/admin/opretHold').send({holdData});
-        await bookingDBFunctions.addFastBooking(bookingData, bookingData.startDato, slutDato)
+        await adminUser.post('/booking/fastbooking').send(bookingData).expect(200);
+        //await bookingDBFunctions.addFastBooking(bookingData, bookingData.startDato, slutDato)
 
 
         const bookingData1 = {startDato: '2023-12-10',lokaleId: 'Sal 2',tid: '09:00',username: 'test'};
@@ -64,9 +49,9 @@ describe('test af opret fast booking', () => {
         expect(fastBooking1).to.equal(bookingData1);
 
         expect(fastBooking2).to.not.be.null;
-        expect(fastBooking2).to.equal(bookingData1);
+        expect(fastBooking2).to.equal(bookingData2);
 
         expect(fastBooking3).to.not.be.null;
-        expect(fastBooking3).to.equal(bookingData1);
+        expect(fastBooking3).to.equal(bookingData3);
     });
 });
