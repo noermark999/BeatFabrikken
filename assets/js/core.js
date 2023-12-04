@@ -176,9 +176,16 @@ async function eventBook() {
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' }
     })
+
+    const responseData = await response.json();
+
     if (response.status == 200) {
         const bookingOprettetAlert = document.getElementById("BookingSuccessAlert")
         bookingOprettetAlert.classList.remove("visually-hidden")
+        if (responseData.hasdeleted) {
+            const bookingDeletedAlert = document.getElementById("BookingDeletedAlert")
+        bookingDeletedAlert.classList.remove("visually-hidden")
+        }
         clearCalendar()
     } else if (response.status == 208) {
         const bookingLoginFailureAlert = document.getElementById("BookingLoginFailureAlert")
