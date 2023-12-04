@@ -85,14 +85,17 @@ async function book() {
         e.classList.add("visually-hidden")
     })
 
-    if (document.getElementById('btnradio1').checked) {
-        await enkeltBook();
-    } else if (document.getElementById('btnradio2').checked) {
-        await fastBook();
-    } else if (document.getElementById('btnradio3').checked) {
-        await eventBook();
-    } else {
-        alert("På en eller anden måde er der sket en fejl")
+
+    try {
+        if (document.getElementById('btnradio1').checked) {
+            await enkeltBook();
+        } else if (document.getElementById('btnradio2').checked) {
+            await fastBook();
+        } else if (document.getElementById('btnradio3').checked) {
+            await eventBook();
+        }
+    } catch (error) {
+        await enkeltBook()
     }
 }
 
@@ -173,9 +176,16 @@ async function eventBook() {
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' }
     })
+
+    const responseData = await response.json();
+
     if (response.status == 200) {
         const bookingOprettetAlert = document.getElementById("BookingSuccessAlert")
         bookingOprettetAlert.classList.remove("visually-hidden")
+        if (responseData.hasdeleted) {
+            const bookingDeletedAlert = document.getElementById("BookingDeletedAlert")
+        bookingDeletedAlert.classList.remove("visually-hidden")
+        }
         clearCalendar()
     } else if (response.status == 208) {
         const bookingLoginFailureAlert = document.getElementById("BookingLoginFailureAlert")
@@ -276,6 +286,8 @@ async function updateCalendar() {
                     const td = tr.insertCell(-1)
                     if (data[k].username == "åben træning") {
                         td.classList.add("text-bg-warning")
+                    } else if (data[k].isEvent) {
+                        td.classList.add("text-bg-primary")
                     } else {
                         td.classList.add("text-bg-danger")
                     }

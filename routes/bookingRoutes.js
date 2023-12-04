@@ -7,7 +7,7 @@ import administratorDBFunctions from "../service/administratorDBFunctions.js"
 router.get('/', async (req, res) => {
     let lokaler = await bookingDBFunctions.getLokaler();
     let hold = await administratorDBFunctions.getAlleHold();
-    res.render('booking', { title: 'Booking', lokaler: lokaler, hold: hold });
+    res.render('booking', { title: 'Booking', lokaler: lokaler, hold: hold, isAdmin: req.session.isAdmin });
 })
 
 router.post('/', async (req, res) => {
@@ -117,7 +117,9 @@ router.post('/eventbooking', async (req, res) => {
 
             let loopdate = new Date(startDate);
 
-            let eventBooking = { dato: date, lokaleId: lokaleId, tid: tid, username: eventNavn }
+            let hasdeleted = false
+
+            let eventBooking = { dato: date, lokaleId: lokaleId, tid: tid, username: eventNavn, isEvent: true }
             let loopBooking = eventBooking
 
             let done = false;
@@ -137,7 +139,7 @@ router.post('/eventbooking', async (req, res) => {
                             res.status(210)
                             res.end()
                         } else {
-                            bookingDBFunctions.deleteBooking(svar.id)
+                            hasdeleted = bookingDBFunctions.deleteBooking(svar.docID)
                         }
                     }
                     if (loopdate.getTime() > slutDate.getTime()) {
@@ -152,7 +154,7 @@ router.post('/eventbooking', async (req, res) => {
                     eventBooking.tid = tid
                     let ids = await bookingDBFunctions.addEventBooking(eventBooking, startDate, slutDate);
                     if (ids) {
-                        res.status(200)
+                        res.status(200).json({hasdeleted: hasdeleted})
                         res.end()
                     } else {
                         res.status(204)
