@@ -25,7 +25,7 @@ describe('test af opret fast booking', () => {
             date: startDato,
             lokaleId: 'Sal 2',
             tid: '09:00',
-            username: 'test',
+            hold: 'test',
             slutDato: slutDato
         };
 
@@ -33,9 +33,9 @@ describe('test af opret fast booking', () => {
         //await bookingDBFunctions.addFastBooking(bookingData, bookingData.startDato, slutDato)
 
 
-        const bookingData1 = {startDato: '2023-12-10',lokaleId: 'Sal 2',tid: '09:00',username: 'test'};
-        const bookingData2 = {startDato: '2023-12-17',lokaleId: 'Sal 2',tid: '09:00',username: 'test'};
-        const bookingData3 = {startDato: '2023-12-24',lokaleId: 'Sal 2',tid: '09:00',username: 'test'};
+        const bookingData1 = {dato: '2023-12-10',lokaleId: 'Sal 2',tid: '09:00',username: 'test'};
+        const bookingData2 = {dato: '2023-12-17',lokaleId: 'Sal 2',tid: '09:00',username: 'test'};
+        const bookingData3 = {dato: '2023-12-24',lokaleId: 'Sal 2',tid: '09:00',username: 'test'};
         
 
         // Hent bookinger og tjek
