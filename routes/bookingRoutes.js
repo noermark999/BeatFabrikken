@@ -139,7 +139,7 @@ router.post('/eventbooking', async (req, res) => {
                             res.status(210)
                             res.end()
                         } else {
-                            hasdeleted = bookingDBFunctions.deleteBooking(svar.docID)
+                            hasdeleted = await bookingDBFunctions.deleteBooking(svar.docID)
                         }
                     }
                     if (loopdate.getTime() > slutDate.getTime()) {
