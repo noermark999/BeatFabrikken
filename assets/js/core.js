@@ -85,6 +85,7 @@ async function book() {
         e.classList.add("visually-hidden")
     })
 
+
     if (document.getElementById('btnradio1').checked) {
         await enkeltBook();
     } else if (document.getElementById('btnradio2').checked) {
@@ -276,6 +277,8 @@ async function updateCalendar() {
                     const td = tr.insertCell(-1)
                     if (data[k].username == "åben træning") {
                         td.classList.add("text-bg-warning")
+                    } else if (data[k].isEvent) {
+                        td.classList.add("text-bg-primary")
                     } else {
                         td.classList.add("text-bg-danger")
                     }

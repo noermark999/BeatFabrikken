@@ -191,7 +191,7 @@ async function addEventBooking(eventBooking, startDate, slutDate) {
     if (startDate.getTime() > slutDate.getTime()) {
       done = true;
     } else {
-      res.push(await addBooking(fastBooking));
+      res.push(await addBooking(eventBooking));
       eventBooking.dato = startDate
       startDate.setHours(startDate.getHours() + 1)
       eventBooking.tid = startDate.getHours() + ":00"

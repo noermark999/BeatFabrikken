@@ -8,6 +8,7 @@ router.get('/', async (req, res) => {
     let lokaler = await bookingDBFunctions.getLokaler();
     let hold = await administratorDBFunctions.getAlleHold();
     res.render('booking', { title: 'Booking', lokaler: lokaler, hold: hold });
+    
 })
 
 router.post('/', async (req, res) => {
@@ -117,7 +118,7 @@ router.post('/eventbooking', async (req, res) => {
 
             let loopdate = new Date(startDate);
 
-            let eventBooking = { dato: date, lokaleId: lokaleId, tid: tid, username: eventNavn }
+            let eventBooking = { dato: date, lokaleId: lokaleId, tid: tid, username: eventNavn, isEvent: true }
             let loopBooking = eventBooking
 
             let done = false;
