@@ -88,6 +88,10 @@ describe('test af åbentræning tilføjelser', () => {
         const fastBooking2 = await bookingDBFunctions.getBooking('2024-06-17', '09:00', 'Sal 1');
         const fastBooking3 = await bookingDBFunctions.getBooking('2024-06-24', '09:00', 'Sal 1');
 
+        await bookingDBFunctions.deleteBooking(fastBooking1.docID)
+        await bookingDBFunctions.deleteBooking(fastBooking2.docID)
+        await bookingDBFunctions.deleteBooking(fastBooking3.docID)
+
         expect(fastBooking1).to.not.be.null;
         expect(fastBooking1).to.equal(bookingData1);
 
