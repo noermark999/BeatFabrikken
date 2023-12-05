@@ -35,6 +35,7 @@ const firebase_app = initializeApp(firebaseConfig);
 const db = getFirestore(firebase_app);
 const lokalerCollection = collection(db, 'Lokaler')
 const bookingCollection = collection(db, 'Bookinger')
+const eventCollection = collection(db, 'Events')
 
 async function getLokale(lokaleID) {
   const docRef = doc(db, 'Lokaler', lokaleID)
@@ -201,6 +202,11 @@ async function addEventBooking(eventBooking, startDate, slutDate) {
   return res;
 }
 
+async function addEvent(event) {
+  const docRef = await addDoc(eventCollection, event)
+  return docRef.id
+}
+
 async function getBookingForLokale(lokaleId) {
   try {
     let bookingQueryDocs = await getDocs(bookingCollection);
@@ -224,4 +230,4 @@ async function getBookingForLokale(lokaleId) {
   }
 }
 
-export default { getLokale, getLokaler, addBooking, getBookinger, getBookingerForUgen, getBooking, getBookingerByUser, deleteBooking, addFastBooking, addEventBooking, getBookingForLokale }
+export default { getLokale, getLokaler, addBooking, getBookinger, getBookingerForUgen, getBooking, getBookingerByUser, deleteBooking, addFastBooking, addEventBooking, getBookingForLokale, addEvent }
