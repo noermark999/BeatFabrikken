@@ -77,9 +77,6 @@ describe('test af åbentræning tilføjelser', () => {
             slutDato: '2024-06-24'
         };
 
-        const response = await adminUser.post('/booking/fastbooking').send(bookingData);
-        expect(response.status).to.equal(200);
-
         const bookingData1 = {dato: '2024-06-10',lokaleId: 'Sal 1',tid: '09:00', hold: 'Åben træning'};
         const bookingData2 = {dato: '2024-06-17',lokaleId: 'Sal 1',tid: '09:00', hold: 'Åben træning'};
         const bookingData3 = {dato: '2024-06-24',lokaleId: 'Sal 1',tid: '09:00', hold: 'Åben træning'};
@@ -91,6 +88,9 @@ describe('test af åbentræning tilføjelser', () => {
         await bookingDBFunctions.deleteBooking(fastBooking1.docID)
         await bookingDBFunctions.deleteBooking(fastBooking2.docID)
         await bookingDBFunctions.deleteBooking(fastBooking3.docID)
+
+        const response = await adminUser.post('/booking/fastbooking').send(bookingData);
+        expect(response.status).to.equal(200);
 
         expect(fastBooking1).to.not.be.null;
         expect(fastBooking1).to.equal(bookingData1);
