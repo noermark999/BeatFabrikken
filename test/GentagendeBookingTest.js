@@ -55,3 +55,36 @@ describe('test af opret fast booking', () => {
         expect(fastBooking3).to.equal(bookingData3);
     });
 });
+
+describe('test af åbentræning tilføjelser', () => {
+    it('skal tillade en admin at oprette fast bookinger med åbentræning', async () => {
+        const bookingData = {
+            date: '2024-06-10',
+            lokaleId: 'Sal 1',
+            tid: '09:00',
+            hold: 'Åben træning',
+            slutDato: '2024-06-24'
+        };
+
+        const response = await adminUser.post('/booking/fastbooking').send(bookingData);
+        expect(response.status).to.equal(200);
+
+        const bookingData1 = {dato: '2024-06-10',lokaleId: 'Sal 1',tid: '09:00', hold: 'Åben træning'};
+        const bookingData2 = {dato: '2024-06-17',lokaleId: 'Sal 1',tid: '09:00', hold: 'Åben træning'};
+        const bookingData3 = {dato: '2024-06-24',lokaleId: 'Sal 1',tid: '09:00', hold: 'Åben træning'};
+
+        const fastBooking1 = await bookingDBFunctions.getBooking('2024-06-10', '09:00', 'Sal 1');
+        const fastBooking2 = await bookingDBFunctions.getBooking('2024-06-17', '09:00', 'Sal 1');
+        const fastBooking3 = await bookingDBFunctions.getBooking('2024-06-24', '09:00', 'Sal 1');
+
+        expect(fastBooking1).to.not.be.null;
+        expect(fastBooking1).to.equal(bookingData1);
+
+        expect(fastBooking2).to.not.be.null;
+        expect(fastBooking2).to.equal(bookingData2);
+
+        expect(fastBooking3).to.not.be.null;
+        expect(fastBooking3).to.equal(bookingData3);
+
+    });
+});
