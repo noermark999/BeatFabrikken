@@ -119,6 +119,8 @@ router.post('/eventbooking', async (req, res) => {
 
             let hasdeleted = false
 
+            let event = { eventNavn: eventNavn, dato: date, tid: tid, antalDeltagere: antalDeltagere }
+
             let eventBooking = { dato: date, lokaleId: lokaleId, tid: tid, username: eventNavn, isEvent: true }
             let loopBooking = eventBooking
 
@@ -154,6 +156,7 @@ router.post('/eventbooking', async (req, res) => {
                     eventBooking.tid = tid
                     let ids = await bookingDBFunctions.addEventBooking(eventBooking, startDate, slutDate);
                     if (ids) {
+                        await bookingDBFunctions.addEvent(event)
                         res.status(200).json({hasdeleted: hasdeleted})
                         res.end()
                     } else {
