@@ -41,9 +41,11 @@ describe('test af opret fast booking', () => {
         const fastBooking2 = await bookingDBFunctions.getBooking('2023-12-17', '09:00', 'Sal 2');
         const fastBooking3 = await bookingDBFunctions.getBooking('2023-12-24', '09:00', 'Sal 2');
 
-        await bookingDBFunctions.deleteBooking(fastBooking1.docID)
-        await bookingDBFunctions.deleteBooking(fastBooking2.docID)
-        await bookingDBFunctions.deleteBooking(fastBooking3.docID)
+        if (fastBooking1) {
+            await bookingDBFunctions.deleteBooking(fastBooking1.docID)
+            await bookingDBFunctions.deleteBooking(fastBooking2.docID)
+            await bookingDBFunctions.deleteBooking(fastBooking3.docID)
+        }
 
         await adminUser.post('/booking/fastbooking').send(bookingData).expect(200);
         //await bookingDBFunctions.addFastBooking(bookingData, bookingData.startDato, slutDato)
