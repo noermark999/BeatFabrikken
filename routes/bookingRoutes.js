@@ -180,7 +180,6 @@ router.get('/:dato/:lokale', async (req, res) => {
     res.json(bookinger);
 })
 
-router.get
 
 
 

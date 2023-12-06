@@ -39,9 +39,6 @@ const db = getFirestore(firebase_app);
 const brugere = collection(db, 'Bruger')
 
 
-const editUser = async (user) => {
-
-}
 
 const updateUser = async (user, oldUsername) => {
   try {
