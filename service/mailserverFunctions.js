@@ -24,8 +24,10 @@ async function sendConfirmationEmail(email){
   try {
     await transporter.sendMail(mailOptions);
     console.log('Email sendt success')
+    return true;
   } catch (error) {
     console.error('Fejl ved afsending af mail:', error);
+    return false;
   }
 }
 
