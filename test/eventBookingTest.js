@@ -149,8 +149,6 @@ describe('test af event booking via DB', () => {
         await bookingDBFunctions.deleteBooking(oprettetBooking20.docID)
         await bookingDBFunctions.deleteBooking(oprettetBooking21.docID)
         await bookingDBFunctions.deleteBooking(oprettetBooking22.docID)
-        const oprettetBooking = await bookingDBFunctions.getBooking(date, "21:00", lokaleId)
-        await bookingDBFunctions.deleteBooking(oprettetBooking.docID)
     });
     it('burde fejle uden login ved at oprette en event', async () => {
         // data for at lave bookningen
